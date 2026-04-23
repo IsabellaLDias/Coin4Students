@@ -6,13 +6,12 @@
 
 <table>
   <tr>
-    <td width="800px">
+    <td width="650px">
       <div align="justify">
         O <b>Coin4Students</b> é um sistema desenvolvido para promover o reconhecimento do mérito estudantil por meio de uma moeda virtual. A proposta é incentivar o engajamento, a participação e o bom desempenho acadêmico, permitindo que professores distribuam moedas aos alunos como forma de recompensa. Essas moedas podem ser acumuladas e posteriormente trocadas por benefícios oferecidos por empresas parceiras, como descontos, produtos ou serviços.
         <br><br>
         O sistema contempla diferentes perfis de usuários: alunos, professores e empresas, cada um com funcionalidades específicas, incluindo cadastro, autenticação, consulta de saldo e gerenciamento de transações. Além disso, o sistema realiza notificações por e-mail para manter os usuários informados sobre recebimento e utilização das moedas.
         <br><br>
-        Desenvolvido seguindo a arquitetura <b>MVC (Model-View-Controller)</b>, o projeto busca garantir organização, escalabilidade e manutenção eficiente do código. Este projeto também serve como aplicação prática de conceitos de engenharia de software, incluindo modelagem UML, boas práticas de desenvolvimento e integração entre front-end e back-end.
       </div>
     </td>
     <td>
@@ -709,20 +708,16 @@ Liste aqui links para documentação técnica, referências de bibliotecas compl
 ---
 
 ## 👥 Autores
-Liste os principais contribuidores. Você pode usar links para seus perfis.
 
 | 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📤 Gmail |
 |---------|----------|-----------------|-------------|-----------|
-| Nome 1  | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/user1"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/user1"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:user1@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
-| Nome 2  | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/user2"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/user2"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:user2@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
-
-> [!TIP]
-> 💡 **Dica:** Escolha uma foto profissional, preferencialmente de rosto, evitando imagens com baixa qualidade, filtros excessivos ou elementos distrativos.
+| Isabella Luiza Dias dos Santos  | <div align="center"><img src="https://github.com/IsabellaLDias/Portfolio-das-Meninas/blob/main/images/1733095978637.jpg?raw=true" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/IsabellaLDias"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/isabella-dias-s/"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="isabellamg2017@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+| Sofia Vasconcelos Moreira e Silva  | <div align="center"><img src="https://github.com/IsabellaLDias/Portfolio-das-Meninas/blob/main/images/imagemSo.jpeg?raw=true" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/sofiavasconcelosms"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/sofia-vasconcelos-a360b7327/"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="sofiavasconcelosmsilva@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+| Maria Clara Gomes Silva de Oliveira  | <div align="center"><img src="https://github.com/IsabellaLDias/Portfolio-das-Meninas/blob/main/images/EUEUEUEU.jpg?raw=true" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/mariaoliveira27"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/maria-clara-gomes-01b64b16a/"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mariaclariagomes@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
 
 ---
 
 ## 🤝 Contribuição
-Guia para contribuições ao projeto.
 
 1.  Faça um `fork` do projeto.
 2.  Crie uma branch para sua feature (`git checkout -b feature/minha-feature`).
@@ -730,21 +725,14 @@ Guia para contribuições ao projeto.
 4.  Faça o `push` para a branch (`git push origin feature/minha-feature`).
 5.  Abra um **Pull Request (PR)**.
 
-> [!IMPORTANT]
-> 📝 **Regras:** Por favor, verifique o arquivo [`CONTRIBUTING.md`](./CONTRIBUTING.md) para detalhes sobre nosso guia de estilo de código e o processo de submissão de PRs.
-
 ---
 
 ## 🙏 Agradecimentos
-Em ambiente acadêmico, citar fontes e inspirações é crucial (integridade acadêmica). Em ambiente profissional, mostra humildade e conexão com a comunidade.
 
 Gostaria de agradecer aos seguintes canais e pessoas que foram fundamentais para o desenvolvimento deste projeto:
 
 * [**Engenharia de Software PUC Minas**](https://www.instagram.com/engsoftwarepucminas/) - Pelo apoio institucional, estrutura acadêmica e fomento à inovação e boas práticas de engenharia.
 * [**Prof. Dr. João Paulo Aramuni**](https://github.com/joaopauloaramuni) - Pelos valiosos ensinamentos sobre **Arquitetura de Software** e **Padrões de Projeto**.
-* [**Fernanda Kipper**](https://www.instagram.com/kipper.dev/) - Pelos valiosos ensinamentos em **Desenvolvimento Web**, **DevOps** e melhores práticas em **Front-end**.
-* [**Rodrigo Branas**](https://branas.io/) - Pela didática excepcional em **Clean Architecture** e **Clean Code**.
-* [**Código Fonte TV**](https://codigofonte.tv/) - Pelo vasto conteúdo e cobertura de notícias, tutoriais e apoio à comunidade de **Desenvolvimento Web**.
 
 ---
 
