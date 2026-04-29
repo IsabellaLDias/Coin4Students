@@ -1,0 +1,19 @@
+# Proteção de credenciais (todos os serviços)
+**/src/main/resources/application.properties
+
+# build
+target/
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.vscode/
+.idea/
+
+# logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
