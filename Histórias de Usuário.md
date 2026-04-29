@@ -45,6 +45,6 @@
 
 - **US17** - Como usuário, quero autenticar minhas credenciais para acessar o sistema com segurança.  
 
-- **US18** - Como sistema, quero enviar e-mails automáticos para notificar usuários sobre eventos importantes.  
+- **US18** - Como usuário, quero receber e-mails automáticos para ser notificado sobre eventos importantes.  
 
-- **US19** - Como sistema, quero gerar um código de cupom para cada resgate para garantir a validação da troca.  
+- **US19** - Como usuário, quero receber um código de cupom ao realizar um resgate para validar a troca.
