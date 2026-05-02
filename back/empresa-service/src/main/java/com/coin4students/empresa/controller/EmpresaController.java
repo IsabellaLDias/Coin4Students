@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.coin4students.empresa.model.Empresa;
 import com.coin4students.empresa.service.EmpresaService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/empresas")
 @CrossOrigin(origins = "*")

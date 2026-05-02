@@ -1,11 +1,13 @@
 package com.coin4students.aluno.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.coin4students.aluno.model.Aluno;
 import com.coin4students.aluno.service.AlunoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/alunos")
 @CrossOrigin(origins = "*")
