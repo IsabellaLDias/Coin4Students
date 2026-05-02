@@ -1,3 +1,6 @@
+const ALUNO_API = "https://aluno-service.onrender.com/alunos";
+const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
+
 document.getElementById("formAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -12,7 +15,7 @@ document.getElementById("formAluno").addEventListener("submit", async (e) => {
     saldoMoedas: 0
   };
 
-  await fetch("http://localhost:8080/alunos", {
+  await fetch(ALUNO_API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(aluno)
@@ -31,7 +34,7 @@ document.getElementById("formEmpresa").addEventListener("submit", async (e) => {
     cnpj: document.getElementById("cnpjEmpresa").value
   };
 
-  await fetch("http://localhost:8081/empresas", {
+  await fetch(EMPRESA_API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(empresa)
