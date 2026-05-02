@@ -1,4 +1,4 @@
-const ALUNO_API = "https://aluno-service.onrender.com/alunos";
+const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
 
 document.getElementById("formAluno").addEventListener("submit", async (e) => {
