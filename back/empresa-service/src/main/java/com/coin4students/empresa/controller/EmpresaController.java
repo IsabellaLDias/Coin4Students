@@ -18,7 +18,6 @@ import com.coin4students.empresa.service.EmpresaService;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/empresas")
-@CrossOrigin(origins = "*")
 public class EmpresaController {
 
     private final EmpresaService service;
