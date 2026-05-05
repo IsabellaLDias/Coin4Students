@@ -75,19 +75,26 @@ async function atualizarPerfil() {
     }
 }
 
-async function excluirConta() {
-    if (confirm("Tem certeza que deseja excluir sua conta? Esta ação é permanente!")) {
-        try {
-            const response = await fetch(`${ALUNO_API}/${dadosDoAlunoGlobal.id}`, {
-                method: 'DELETE'
-            });
-            if (response.ok) {
-                showToast("Conta excluída.", 'info');
-                setTimeout(() => logout(), 1500);
-            }
-        } catch (error) {
-            showToast("Erro ao excluir.", 'error');
+function excluirConta() {
+    document.getElementById('confirmModal').style.display = 'flex';
+}
+
+function fecharConfirmModal() {
+    document.getElementById('confirmModal').style.display = 'none';
+}
+
+async function confirmarExclusao() {
+    fecharConfirmModal();
+    try {
+        const response = await fetch(`${ALUNO_API}/${dadosDoAlunoGlobal.id}`, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            showToast("Conta excluída.", 'info');
+            setTimeout(() => logout(), 1500);
         }
+    } catch (error) {
+        showToast("Erro ao excluir.", 'error');
     }
 }
 

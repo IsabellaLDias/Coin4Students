@@ -117,6 +117,18 @@
     </main>
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- Modal de Confirmação de Exclusão-->
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirmar Exclusão</h3>
+            <p>Tem certeza que deseja excluir sua conta? Esta ação é permanente!</p>
+            <div class="modal-buttons">
+                <button class="btn-modal-cancel" onclick="fecharConfirmModal()">Cancelar</button>
+                <button class="btn-modal-confirm" onclick="confirmarExclusao()">Excluir Conta</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showToast(message, type = 'info', duration = 4000) {
             const container = document.getElementById('toastContainer');
