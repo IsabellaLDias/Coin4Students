@@ -1,4 +1,3 @@
-/* Reset básico para a Home */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +6,7 @@
 }
 
 body {
-    background-color: #f4f7f6; /* Cor de fundo leve para as seções brancas */
+    background-color: #f4f7f6;
     color: #333;
     line-height: 1.6;
 }
@@ -17,7 +16,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 10%;
+    padding: 14px 10%;
     background: white;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     position: sticky;
@@ -26,9 +25,14 @@ body {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2e7d32;
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
 }
 
 .btn-acesso {
@@ -48,7 +52,7 @@ body {
 
 /* Hero Section */
 .hero {
-    height: 60vh;
+    height: 65vh;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
                 url('imagem.png') no-repeat center/cover;
     display: flex;
@@ -59,9 +63,24 @@ body {
     padding: 0 20px;
 }
 
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-logo {
+    height: 180px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4));
+}
+
 .hero-content h1 {
     font-size: 2.5rem;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 .btn-principal {
@@ -74,6 +93,11 @@ body {
     text-decoration: none;
     font-weight: bold;
     transition: 0.3s;
+}
+
+.btn-principal:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
 }
 
 /* Seção de Conteúdo */
@@ -103,11 +127,23 @@ body {
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-info:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(46,125,50,0.12);
 }
 
 .icon {
-    font-size: 40px;
+    display: flex;
+    justify-content: center;
     margin-bottom: 15px;
+}
+
+.icon svg {
+    width: 72px;
+    height: 72px;
 }
 
 /* Vantagens */
@@ -132,6 +168,20 @@ body {
     color: #2e7d32;
     font-weight: 600;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.lista-badges span:hover {
+    background: #2e7d32;
+    color: white;
+}
+
+.lista-badges span:hover svg path,
+.lista-badges span:hover svg line,
+.lista-badges span:hover svg rect {
+    stroke: white;
 }
 
 footer {
@@ -140,4 +190,77 @@ footer {
     background: #333;
     color: white;
     font-size: 14px;
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: #333;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    min-width: 250px;
+    max-width: 350px;
+    animation: toastSlideIn 0.3s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toast.success {
+    background: #2e7d32;
+}
+
+.toast.error {
+    background: #c62828;
+}
+
+.toast.info {
+    background: #1565c0;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    opacity: 0.7;
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+@keyframes toastSlideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toastFadeOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }
