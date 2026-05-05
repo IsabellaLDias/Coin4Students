@@ -19,7 +19,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const response = await fetch(`${EMPRESA_API}/${empresaId}`);
 
-        if (!response.ok) throw new Error("Erro ao buscar empresa");
+        if (!response.ok) {
+            logout();
+            return;
+        }
 
         const empresa = await response.json();
         dadosDaEmpresaGlobal = empresa;
@@ -115,7 +118,7 @@ async function confirmarExclusao() {
 
         if (response.ok) {
             showToast("Empresa removida com sucesso.", 'info');
-            setTimeout(() => logout(), 1500);
+            logout();
         }
 
     } catch (error) {
@@ -127,7 +130,7 @@ async function confirmarExclusao() {
 // LOGOUT
 // ==========================================
 function logout() {
-    localStorage.removeItem("empresaIdLogada");
+    localStorage.clear();
     window.location.href = "coin4students.html";
 }
 
