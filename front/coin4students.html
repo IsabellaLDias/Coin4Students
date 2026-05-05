@@ -1,48 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="coin4students.css">
   <title>Document</title>
 </head>
+
 <body>
-  
-<div class="container">
-  <div class="titulo">Acesso / Cadastro</div>
 
-  <div class="accordion-item">
-    <button class="accordion-header">Cadastro de Aluno</button>
-    <div class="accordion-content">
-  
-<form id="formAluno">
-  <input id="nomeAluno" placeholder="Nome">
-  <input id="emailAluno" placeholder="Email">
-  <input id="senhaAluno" placeholder="Senha">
-  <input id="cpfAluno" placeholder="CPF">
-  <input id="rgAluno" placeholder="RG">
-  <input id="enderecoAluno" placeholder="Endereço">
-  <input id="cursoAluno" placeholder="Curso">
-  <button type="submit">Cadastrar Aluno</button>
-</form>
+  <div class="container">
+    <div id="secaoCadastro">
+      <div class="titulo">Acesso / Cadastro</div>
+
+
+      <div class="accordion-item">
+        <button class="accordion-header">Cadastro de Aluno</button>
+        <div class="accordion-content">
+
+          <form id="formAluno">
+            <input id="nomeAluno" placeholder="Nome">
+            <input id="emailAluno" placeholder="Email">
+            <input id="senhaAluno" placeholder="Senha">
+            <input id="cpfAluno" placeholder="CPF">
+            <input id="rgAluno" placeholder="RG">
+            <input id="enderecoAluno" placeholder="Endereço">
+            <input id="cursoAluno" placeholder="Curso">
+            <button type="submit">Cadastrar Aluno</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">Cadastro de Empresa</button>
+        <div class="accordion-content">
+
+          <form id="formEmpresa">
+            <input id="nomeEmpresa" placeholder="Nome">
+            <input id="emailEmpresa" placeholder="Email">
+            <input id="senhaEmpresa" placeholder="Senha">
+            <input id="cnpjEmpresa" placeholder="CNPJ">
+            <button type="submit">Cadastrar Empresa</button>
+          </form>
+        </div>
+      </div>
+
+      <p style="margin-top: 20px;">
+        Já tem uma conta? <a href="#" id="btnIrParaLogin" style="color: #d4af37; font-weight: bold;">Fazer Login</a>
+      </p>
     </div>
+    <div id="secaoLogin" style="display: none;">
+      <div class="titulo">Bem-vinda de volta!</div>
+      <form id="formLogin">
+        <input id="loginEmail" type="email" placeholder="E-mail" required>
+        <input id="loginSenha" type="password" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+      </form>
+      <p style="margin-top: 20px;">
+        Não tem conta? <a href="#" id="btnIrParaCadastro" style="color: #d4af37; font-weight: bold;">Criar Cadastro</a>
+      </p>
+    </div>
+
+
+
   </div>
 
-  <div class="accordion-item">
-    <button class="accordion-header">Cadastro de Empresa</button>
-    <div class="accordion-content">
- 
-<form id="formEmpresa">
-  <input id="nomeEmpresa" placeholder="Nome">
-  <input id="emailEmpresa" placeholder="Email">
-  <input id="senhaEmpresa" placeholder="Senha">
-  <input id="cnpjEmpresa" placeholder="CNPJ">
-  <button type="submit">Cadastrar Empresa</button>
-</form>
-    </div>
-  </div>
 
-</div>
-<script src="coin4students.js"></script>
+  <script src="coin4students.js"></script>
 </body>
+
 </html>

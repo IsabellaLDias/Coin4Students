@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portal do Aluno - Coin4Students</title>
+    <link rel="stylesheet" href="style-aluno.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body class="dashboard-body">
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <i class="ph ph-coins"></i>
+            <span>Coin4Students</span>
+        </div>
+        <nav class="menu">
+            <a href="#" onclick="trocarTab('home')" id="btn-home" class="active"><i class="ph ph-house"></i> Home</a>
+            <a href="#" onclick="trocarTab('vantagens')" id="btn-vantagens"><i class="ph ph-ticket"></i> Resgatar</a>
+            <a href="#" onclick="trocarTab('extrato')" id="btn-extrato"><i class="ph ph-article"></i> Extrato</a>
+            <a href="#" onclick="trocarTab('perfil')" id="btn-perfil"><i class="ph ph-user"></i> Meu Perfil</a>
+        </nav>
+        <button class="btn-logout" onclick="logout()"><i class="ph ph-sign-out"></i> Sair</button>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="user-info">
+                <span>Bem-vindo, <strong id="nomeAluno">Carregando...</strong></span>
+            </div>
+        </header>
+
+        <div id="secao-home">
+            <div class="saldo-card">
+                <p>Saldo Disponível</p>
+                <span class="saldo-valor" id="valorSaldo">0</span> Moedas
+            </div>
+
+            <section class="content-grid">
+                <div class="card">
+                    <h3><i class="ph ph-article"></i> Transações Recentes</h3>
+                    <div id="extratoHome" class="lista-dinamica"></div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="ph ph-shopping-cart"></i> Sugestões de Resgate</h3>
+                    <div id="vantagensHome" class="grid-vantagens"></div>
+                </div>
+            </section>
+        </div>
+
+        <div id="secao-extrato" style="display:none">
+            <div class="card">
+                <h3><i class="ph ph-article"></i> Histórico Completo de Transações</h3>
+                <div id="extratoLista" class="lista-dinamica"></div>
+            </div>
+        </div>
+
+        <div id="secao-vantagens" style="display:none">
+            <div class="card">
+                <h3><i class="ph ph-shopping-cart"></i> Todas as Vantagens</h3>
+                <div id="vantagensLista" class="grid-vantagens"></div>
+            </div>
+        </div>
+
+        <div id="secao-perfil" style="display:none">
+            <div class="card perfil-card">
+                <h3><i class="ph ph-user-gear"></i> Meu Perfil</h3>
+                <form id="formPerfil" onsubmit="event.preventDefault();">
+                    <div class="perfil-grid">
+                        <div>
+                            <label>Nome Completo:</label>
+                            <input type="text" id="perfilNome">
+                        </div>
+                        <div>
+                            <label>E-mail:</label>
+                            <input type="email" id="perfilEmail">
+                        </div>
+                        <div>
+                            <label>CPF:</label>
+                            <input type="text" id="perfilCPF" readonly
+                                style="background: #f0f0f0; cursor: not-allowed;">
+                        </div>
+                        <div>
+                            <label>RG:</label>
+                            <input type="text" id="perfilRG" readonly style="background: #f0f0f0; cursor: not-allowed;">
+                        </div>
+                        <div>
+                            <label>Endereço:</label>
+                            <input type="text" id="perfilEndereco">
+                        </div>
+                        <div>
+                            <label>Curso:</label>
+                            <input type="text" id="perfilInstituicao">
+                        </div>
+                    </div>
+
+                    <div class="perfil-acoes">
+                        <button type="button" class="btn-salvar-perfil" onclick="atualizarPerfil()">Salvar
+                            Alterações</button>
+                        <button type="button" class="btn-excluir-perfil" onclick="excluirConta()">Excluir Conta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </main>
+    <script src="aluno.js"></script>
+</body>
+
+</html>
