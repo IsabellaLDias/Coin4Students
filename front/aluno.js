@@ -1,41 +1,41 @@
+const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
+const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
+
 let dadosDoAlunoGlobal = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // 1. Busca o ID que foi salvo lá no momento do cadastro ou login
     const alunoId = localStorage.getItem("alunoIdLogado");
 
-    // 2. Se não tiver ID, manda de volta para a tela inicial
     if (!alunoId) {
         window.location.href = "coin4students.html";
         return;
     }
 
     try {
-        // 3. Busca os dados desse aluno específico
-        const response = await fetch(`http://localhost:8080/alunos/${alunoId}`);
+        const response = await fetch(`${ALUNO_API}/${alunoId}`);
         
         if (response.ok) {
             const aluno = await response.json();
             dadosDoAlunoGlobal = aluno;
 
-            // Atualiza a interface
             document.getElementById("nomeAluno").innerText = aluno.nome;
             document.getElementById("valorSaldo").innerText = aluno.saldoMoedas;
 
-            // Preenche o formulário de perfil
             preencherCamposFormulario(aluno);
-
-            // Carrega as listas
             carregarVantagens();
             carregarExtrato();
+
+            criarBotaoOlhinhoPerfil();
+            criarBotaoOlhinho("perfilNovaSenha");
+            criarBotaoOlhinho("perfilConfirmarSenha");
         } else {
             throw new Error("Erro ao buscar dados do aluno");
         }
 
     } catch (error) {
         console.error("Erro:", error);
-        alert("Sessão inválida. Faça login novamente.");
-        logout();
+        showToast("Sessão inválida. Faça login novamente.", 'error');
+        setTimeout(() => logout(), 2000);
     }
 });
 
@@ -52,42 +52,41 @@ async function atualizarPerfil() {
     if (!dadosDoAlunoGlobal) return;
 
     const dadosAtualizados = {
-        ...dadosDoAlunoGlobal, // Mantém dados sensíveis como senha e saldo
+        ...dadosDoAlunoGlobal,
         nome: document.getElementById("perfilNome").value,
         email: document.getElementById("perfilEmail").value,
         endereco: document.getElementById("perfilEndereco").value,
         curso: document.getElementById("perfilInstituicao").value
-        // CPF e RG geralmente não mudam, mas se mudar no form, adicione aqui
     };
 
     try {
-        const response = await fetch(`http://localhost:8080/alunos/${dadosDoAlunoGlobal.id}`, {
+        const response = await fetch(`${ALUNO_API}/${dadosDoAlunoGlobal.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosAtualizados)
         });
 
         if (response.ok) {
-            alert("Perfil atualizado com sucesso!");
-            location.reload(); 
+            showToast("Perfil atualizado com sucesso!", 'success');
+            setTimeout(() => location.reload(), 1500);
         }
     } catch (error) {
-        alert("Erro ao conectar com o servidor.");
+        showToast("Erro ao conectar com o servidor.", 'error');
     }
 }
 
 async function excluirConta() {
     if (confirm("Tem certeza que deseja excluir sua conta? Esta ação é permanente!")) {
         try {
-            const response = await fetch(`http://localhost:8080/alunos/${dadosDoAlunoGlobal.id}`, {
+            const response = await fetch(`${ALUNO_API}/${dadosDoAlunoGlobal.id}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
-                alert("Conta excluída.");
-                logout();
+                showToast("Conta excluída.", 'info');
+                setTimeout(() => logout(), 1500);
             }
         } catch (error) {
-            alert("Erro ao excluir.");
+            showToast("Erro ao excluir.", 'error');
         }
     }
 }
@@ -105,10 +104,9 @@ function trocarTab(tab) {
     if(btnAtivo) btnAtivo.classList.add('active');
 }
 
-// 1. Carregar Vantagens do Back-end (Empresa Service na porta 8081)
 async function carregarVantagens() {
     try {
-        const response = await fetch("http://localhost:8081/vantagens"); // URL do seu serviço de empresas/vantagens
+        const response = await fetch("https://empresa-service.onrender.com/vantagens");
         if (!response.ok) throw new Error("Erro ao buscar vantagens");
         
         const vantagens = await response.json();
@@ -134,11 +132,9 @@ async function carregarVantagens() {
     }
 }
 
-// 2. Carregar Extrato Real do Aluno
 async function carregarExtrato() {
     try {
-        // Supondo que você tenha um endpoint de extrato no seu aluno-service
-        const response = await fetch(`http://localhost:8080/alunos/${dadosDoAlunoGlobal.id}/extrato`);
+        const response = await fetch(`${ALUNO_API}/${dadosDoAlunoGlobal.id}/extrato`);
         if (!response.ok) throw new Error("Erro ao buscar extrato");
 
         const transacoes = await response.json();
@@ -164,26 +160,120 @@ async function carregarExtrato() {
         document.getElementById("extratoHome").innerHTML = html;
         document.getElementById("extratoLista").innerHTML = html;
     } catch (error) {
-        // Se ainda não tiver o endpoint de extrato, deixamos uma mensagem amigável
         document.getElementById("extratoHome").innerHTML = "Sem transações recentes.";
     }
 }
 
-// 3. Função extra: Resgatar Vantagem (Lógica da Sprint 2)
 async function resgatarVantagem(vantagemId, valor) {
     if (dadosDoAlunoGlobal.saldoMoedas < valor) {
-        alert("Saldo insuficiente, diva! 💸");
+        showToast("Saldo insuficiente, diva! 💸", 'error');
         return;
     }
 
     if (confirm("Deseja resgatar esta vantagem?")) {
-        // Aqui você faria um POST para o seu service de transações/resgates
-        alert("Resgate realizado! O código foi enviado para o seu e-mail.");
-        // O ideal aqui é atualizar o saldo no banco e dar um location.reload()
+        showToast("Resgate realizado! O código foi enviado para o seu e-mail.", 'success');
     }
+}
+
+function criarBotaoOlhinhoPerfil() {
+    const senhaInput = document.getElementById("perfilSenha");
+    if (!senhaInput) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.style.cssText = "position:relative; display:flex; align-items:center;";
+    senhaInput.parentNode.insertBefore(wrapper, senhaInput);
+    wrapper.appendChild(senhaInput);
+
+    senhaInput.style.paddingRight = "42px";
+    senhaInput.style.width = "100%";
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.setAttribute("aria-label", "Mostrar/ocultar senha");
+    btn.style.cssText = `
+        position: absolute;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        color: #888;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+    `;
+    btn.innerHTML = olhinhoAberto();
+
+    btn.addEventListener("click", () => {
+        const isPassword = senhaInput.type === "password";
+        senhaInput.type = isPassword ? "text" : "password";
+        btn.innerHTML = isPassword ? olhinhoFechado() : olhinhoAberto();
+    });
+
+    wrapper.appendChild(btn);
+}
+
+function olhinhoAberto() {
+    return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+    </svg>`;
+}
+
+function olhinhoFechado() {
+    return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+        <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>`;
 }
 
 function logout() {
     localStorage.removeItem("alunoIdLogado");
     window.location.href = "coin4students.html";
+}
+
+function criarBotaoOlhinho(inputId) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.style.cssText = "position:relative; display:flex; align-items:center;";
+    input.parentNode.insertBefore(wrapper, input);
+    wrapper.appendChild(input);
+
+    input.style.paddingRight = "42px";
+    input.style.marginBottom = "10px";
+    input.style.width = "100%";
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.setAttribute("aria-label", "Mostrar/ocultar senha");
+    btn.style.cssText = `
+        position: absolute;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        color: #888;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+        margin-bottom: 10px;
+    `;
+    btn.innerHTML = olhinhoAberto();
+
+    btn.addEventListener("click", () => {
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+        btn.innerHTML = isPassword ? olhinhoFechado() : olhinhoAberto();
+    });
+
+    btn.addEventListener("mouseenter", () => btn.style.opacity = "1");
+    btn.addEventListener("mouseleave", () => btn.style.opacity = "0.8");
+
+    wrapper.appendChild(btn);
 }

@@ -66,7 +66,30 @@
 
   </div>
 
+  <div id="toastContainer" class="toast-container"></div>
 
+  <script>
+    function showToast(message, type = 'info', duration = 4000) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <span>${message}</span>
+            <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = 'toastFadeOut 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+
+    window.showSystemMessage = showToast;
+  </script>
   <script src="coin4students.js"></script>
 </body>
 
