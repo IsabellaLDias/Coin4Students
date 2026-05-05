@@ -1,5 +1,5 @@
-const ALUNO_API = "http://localhost:8080/alunos";
-const EMPRESA_API = "http://localhost:8081/empresas";
+const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
+const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
 
 // --- LÓGICA DE TROCA DE TELAS ---
 const secaoCadastro = document.getElementById("secaoCadastro");
