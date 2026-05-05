@@ -51,6 +51,20 @@ function preencherCamposFormulario(aluno) {
 async function atualizarPerfil() {
     if (!dadosDoAlunoGlobal) return;
 
+    const novaSenha = document.getElementById("perfilNovaSenha").value;
+    const confirmarSenha = document.getElementById("perfilConfirmarSenha").value;
+
+    if (novaSenha || confirmarSenha) {
+        if (novaSenha !== confirmarSenha) {
+            showToast("As senhas não coincidem!", 'error');
+            return;
+        }
+        if (novaSenha.length < 4) {
+            showToast("A senha deve ter pelo menos 4 caracteres.", 'error');
+            return;
+        }
+    }
+
     const dadosAtualizados = {
         ...dadosDoAlunoGlobal,
         nome: document.getElementById("perfilNome").value,
@@ -58,6 +72,10 @@ async function atualizarPerfil() {
         endereco: document.getElementById("perfilEndereco").value,
         curso: document.getElementById("perfilInstituicao").value
     };
+
+    if (novaSenha) {
+        dadosAtualizados.senha = novaSenha;
+    }
 
     try {
         const response = await fetch(`${ALUNO_API}/${dadosDoAlunoGlobal.id}`, {
@@ -67,6 +85,8 @@ async function atualizarPerfil() {
         });
 
         if (response.ok) {
+            document.getElementById("perfilNovaSenha").value = "";
+            document.getElementById("perfilConfirmarSenha").value = "";
             showToast("Perfil atualizado com sucesso!", 'success');
             setTimeout(() => location.reload(), 1500);
         }
