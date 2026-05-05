@@ -29,14 +29,15 @@ body {
     color: #2e7d32;
     margin-bottom: 40px;
     display: flex;
-    align-items: center;
+    flex-direction: column; /* 👈 isso resolve */
+    align-items: center;     /* centraliza horizontalmente */
     gap: 10px;
+    text-align: center;  
 }
 
 .logo-area img {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
+    height: 125px;
+
 }
 
 .menu {
@@ -139,7 +140,7 @@ h3 { margin-bottom: 15px; color: #333; }
     margin-top: 20px;
 }
 
-#formPerfil label {
+#formPerfil label, #formPerfilEmpresa label {
     display: block;
     font-size: 14px;
     font-weight: 600;
@@ -147,7 +148,7 @@ h3 { margin-bottom: 15px; color: #333; }
     margin-bottom: 5px;
 }
 
-#formPerfil input {
+#formPerfil input, #formPerfilEmpresa input {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -155,7 +156,7 @@ h3 { margin-bottom: 15px; color: #333; }
     background: white;
 }
 
-#formPerfil input[readonly] {
+#formPerfil input[readonly], #formPerfilEmpresa input[readonly] {
     background: #f9f9f9;
     color: #999;
     cursor: not-allowed;

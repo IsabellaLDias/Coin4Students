@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portal da Empresa - Coin4Students</title>
+    <link rel="stylesheet" href="./css/style-aluno.css"> 
+    <link rel="stylesheet" href="./css/empresa.css">
+   
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body class="dashboard-body">
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <img src="./img/logo - Copia.png" alt="Coin4Students">
+            <span>Coin4Students <strong>Business</strong></span>
+        </div>
+        <nav class="menu">
+            <a href="#" onclick="trocarTab('home')" id="btn-home" ><i class="ph ph-house"></i> Dashboard</a>
+            <a href="#" onclick="trocarTab('cadastrar-vantagem')" id="btn-vantagens"><i class="ph ph-plus-circle"></i> Criar Vantagem</a>
+            <a href="#" onclick="trocarTab('minhas-vantagens')" id="btn-extrato"><i class="ph ph-tag"></i> Minhas Ofertas</a>
+            <a href="#" onclick="trocarTab('perfil')" id="btn-perfil"><i class="ph ph-buildings"></i> Dados da Empresa</a>
+        </nav>
+        <button class="btn-logout" onclick="logout()"><i class="ph ph-sign-out"></i> Sair</button>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="user-info">
+                <span>Empresa: <strong id="nomeEmpresa">Tech Solutions Ltda</strong></span>
+            </div>
+        </header>
+
+        <div id="secao-home">
+            <div class="saldo-card">
+                <p>Vantagens Ativas</p>
+                <span class="saldo-valor" id="totalVantagens">0</span> itens
+            </div>
+
+            <section class="content-grid">
+                <div class="card">
+                    <h3><i class="ph ph-chart-line-up"></i> Resgates Recentes</h3>
+                    <div id="resgatesRecentes" class="lista-dinamica">
+                        </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="ph ph-star"></i> Vantagem em Destaque</h3>
+                    <div id="destaqueEmpresa" class="grid-vantagens"></div>
+                </div>
+            </section>
+        </div>
+
+        <div id="secao-perfil" style="display:none">
+            <div class="card perfil-card">
+                <h3><i class="ph ph-buildings"></i> Perfil Corporativo</h3>
+                <form id="formPerfilEmpresa" onsubmit="event.preventDefault();">
+                    <div class="perfil-grid">
+                        <div>
+                            <label>Razão Social / Nome Fantasia:</label>
+                            <input type="text" id="perfilNome" value="Tech Solutions Ltda">
+                        </div>
+                        <div>
+                            <label>E-mail Corporativo:</label>
+                            <input type="email" id="perfilEmail" readonly style="background: #f0f0f0; cursor: not-allowed;">
+                        </div>
+                        <div>
+                            <label>CNPJ:</label>
+                            <input type="text" id="perfilCNPJ" readonly style="background: #f0f0f0; cursor: not-allowed;">
+                        </div>
+                        <div>
+                            <label>Nova Senha:</label>
+                            <input type="password" id="perfilNovaSenha" placeholder="Deixe em branco para manter atual">
+                        </div>
+                        <div>
+                            <label>Confirmar Nova Senha:</label>
+                            <input type="password" id="perfilConfirmarSenha" placeholder="Repita a nova senha">
+                        </div>
+                    </div>
+
+                    <div class="perfil-acoes">
+                        <button type="button" class="btn-salvar-perfil" onclick="atualizarPerfil()">Atualizar Dados</button>
+                        <button type="button" class="btn-excluir-perfil" onclick="excluirConta()">Encerrar Parceria</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="secao-cadastrar-vantagem" style="display:none">
+             <div class="card">
+                <h3><i class="ph ph-plus-circle"></i> Nova Vantagem/Produto</h3>
+                </div>
+        </div>
+
+    </main>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirmar Encerramento</h3>
+            <p>Tem certeza que deseja remover sua empresa da plataforma?</p>
+            <div class="modal-buttons">
+                <button class="btn-modal-cancel" onclick="fecharConfirmModal()">Cancelar</button>
+                <button class="btn-modal-confirm" onclick="confirmarExclusao()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/empresa.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,67 @@
+#secao-perfil .card {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.perfil-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#formPerfil label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+#formPerfil input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+}
+
+#formPerfil input[readonly] {
+    background: #f9f9f9;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.perfil-acoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-salvar-perfil, .btn-excluir-perfil {
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-salvar-perfil {
+    background: linear-gradient(45deg, #2e7d32, #689f38);
+    color: white;
+}
+
+.btn-excluir-perfil {
+    background: #e57373;
+    color: white;
+}
+
+.btn-salvar-perfil:hover, .btn-excluir-perfil:hover {
+    transform: scale(1.02);
+}
