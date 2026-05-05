@@ -10,7 +10,7 @@
 body {
   height: 100vh;
   background: linear-gradient(rgba(104, 102, 102, 0.75), rgba(197, 246, 147, 0.75)),
-              url('imagem.png') no-repeat center/cover;
+              url('/front/img/imagem.png') no-repeat center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,3 +115,4 @@ button {
 button:hover {
   opacity: 0.9;
 }
+
