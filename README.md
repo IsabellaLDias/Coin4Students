@@ -30,16 +30,14 @@
 
 ## 🚧 Status do Projeto
 
-### Exemplos de badges básicos:
-
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/joaopauloaramuni/joaopauloaramuni/main.yml?branch=main)](https://github.com/joaopauloaramuni/joaopauloaramuni/actions/workflows/main.yml)
-[![Test Coverage](https://codecov.io/gh/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software/branch/main/graph/badge.svg)](https://codecov.io/gh/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software)
-[![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue)](https://github.com/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software/releases)
-[![Licença](https://img.shields.io/github/license/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software)](#licença)
-
-### Outros exemplos de badges:
-
-[![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge)](https://github.com/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software/releases) ![React](https://img.shields.io/badge/React-19.1.1-007ec6?style=for-the-badge&logo=react&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-7.1.2-007ec6?style=for-the-badge&logo=vite&logoColor=white) ![Java](https://img.shields.io/badge/Java-17-007ec6?style=for-the-badge&logo=openjdk&logoColor=white) ![Maven](https://img.shields.io/badge/Maven-3.9.9-007ec6?style=for-the-badge&logo=apachemaven&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.5-007ec6?style=for-the-badge&logo=springboot&logoColor=white) ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3.1.1-007ec6?style=for-the-badge&logo=thymeleaf&logoColor=white) ![GitHub repo size](https://img.shields.io/github/repo-size/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&logo=files) ![GitHub directory file count](https://img.shields.io/github/directory-file-count/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&logo=files) ![GitHub stars](https://img.shields.io/github/stars/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&logo=github) ![GitHub forks](https://img.shields.io/github/forks/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&logo=git) ![GitHub language count](https://img.shields.io/github/languages/count/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&logo=python) ![GitHub license](https://img.shields.io/github/license/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&color=007ec6&logo=opensourceinitiative) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&color=007ec6&logo=gitkraken) ![GitHub last commit](https://img.shields.io/github/last-commit/joaopauloaramuni/laboratorio-de-desenvolvimento-de-software?style=for-the-badge&logo=clockify) ![Vercel](https://vercelbadge.vercel.app/api/joaopauloaramuni/joaopauloaramuni-portfolio?style=for-the-badge) ![Views Counter](https://views-counter.vercel.app/badge?pageId=https%3A%2F%2Fgithub%2Ecom%2Fjoaopauloaramuni%2Flaboratorio-de-desenvolvimento-de-software&leftColor=555555&rightColor=007ec6&type=total&label=RepoViews)
+[![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-blue)]()
+[![Versão](https://img.shields.io/badge/Versão-v1.0.0-6A5ACD)]()
+[![Licença](https://img.shields.io/badge/Licença-MIT-green)](#-licença)
+[![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)]()
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.6-6DB33F?logo=springboot&logoColor=white)]()
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-336791?logo=postgresql&logoColor=white)]()
+[![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=black)]()
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)]()
 
 ---
 
@@ -49,22 +47,10 @@
 - [Funcionalidades Principais](#-funcionalidades-principais)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Arquitetura](#-arquitetura)
-  - [Exemplos de diagramas](#exemplos-de-diagramas)
 - [Instalação e Execução](#-instalação-e-execução)
-  - [Pré-requisitos](#pré-requisitos)
   - [Variáveis de Ambiente](#-variáveis-de-ambiente)
-     - [1 Back-end (Spring Boot)](#1-back-end-spring-boot)
-     - [2 Front-end (React, Vite)](#2-front-end-react-vite)
-     - [3 Exemplos de Variáveis de Ambiente na Vercel](#3-exemplos-de-variáveis-de-ambiente-na-vercel)
   - [Instalação de Dependências](#-instalação-de-dependências)
-    - [Front-end (React)](#front-end-react)
-    - [Back-end (Spring Boot)](#back-end-spring-boot)
-  - [Inicialização do Banco de Dados (PostgreSQL)](#-inicialização-do-banco-de-dados-postgresql)
   - [Como Executar a Aplicação](#-como-executar-a-aplicação)
-    - [Terminal 1: Back-end (Spring Boot)](#terminal-1-back-end-spring-boot)
-    - [Terminal 2: Front-end (React, Vite)](#terminal-2-front-end-react-vite)
-    - [Execução Local Completa com Docker Compose (Incluindo Banco de Dados)](#-execução-local-completa-com-docker-compose-incluindo-banco-de-dados)
-    - [Passos para build, inicialização e execução](#-passos-para-build-inicialização-e-execução)
 - [Deploy](#-deploy)
 - [Estrutura de Pastas](#-estrutura-de-pastas)
 - [Demonstração](#-demonstração)
@@ -91,490 +77,801 @@
 ---
 
 ## 📝 Sobre o Projeto
-Nesta seção, descreva de forma clara e objetiva **o propósito do seu projeto**, explicando:
+O **Coin4Students** é uma plataforma acadêmica desenvolvida com o objetivo de incentivar e reconhecer o desempenho estudantil por meio de um sistema de moedas virtuais. A proposta surgiu da necessidade de criar uma forma mais dinâmica, motivadora e interativa de estimular a participação dos alunos em atividades acadêmicas, projetos e ações educacionais.
 
-- **Por que ele existe** — qual motivação levou à sua criação.  
-- **Qual problema ele resolve** — que dor, necessidade ou oportunidade ele atende.  
-- **Qual o contexto** — acadêmico, profissional, pessoal, experimental, etc.  
-- **Onde ele pode ser utilizado** — cenários reais ou simulados.  
+O sistema funciona permitindo que professores distribuam moedas virtuais para alunos como forma de recompensa por mérito acadêmico, participação em sala, desempenho em atividades ou colaboração em projetos. Essas moedas podem ser acumuladas e posteriormente trocadas por benefícios oferecidos por empresas parceiras cadastradas na plataforma, como descontos, produtos ou serviços.
 
-Procure responder perguntas como:
-- *Qual foi a ideia inicial do projeto?*
-- *O que ele entrega de valor ao usuário?*
-- *Por que alguém utilizaria ou contribuiria com esse projeto?*
-- *O que o torna relevante ou interessante?*
+O projeto foi desenvolvido no contexto acadêmico da disciplina de Laboratório de Desenvolvimento de Software, do curso de Engenharia de Software da PUC Minas, envolvendo conceitos de arquitetura de software, APIs REST, microsserviços, persistência de dados, deploy em nuvem e integração entre front-end e back-end.
 
-Escreva de forma objetiva, mas completa, para que qualquer pessoa entenda rapidamente **o que é** e **por que importa**.
+Atualmente, o sistema conta com serviços independentes para gerenciamento de alunos e empresas parceiras, utilizando arquitetura baseada em microsserviços com Spring Boot, PostgreSQL (Supabase) e deploy em nuvem via Render. Além disso, a aplicação possui integração completa entre interface web, APIs REST e banco de dados relacional.
 
-> [!NOTE]
-> Esta seção segue boas práticas de documentação profissional e deve ser ajustada conforme o tipo e o objetivo do seu projeto.
+O Coin4Students busca entregar valor tanto para instituições de ensino quanto para estudantes, promovendo engajamento, reconhecimento acadêmico e aproximação entre universidades e empresas parceiras. O projeto também serve como experiência prática no desenvolvimento de aplicações modernas escaláveis e distribuídas.
+
 
 ---
 
 ## ✨ Funcionalidades Principais
-Liste as funcionalidades de forma clara e objetiva.
 
-- 🔐 **Autenticação Segura:** Login, Cadastro e Recuperação de Senha.
-- 📈 **Painel de Controle:** Visualização de dados em tempo real com gráficos.
-- ⚙️ **Gerenciamento de CRUD:** Criação, Leitura, Atualização e Deleção de recursos (e.g., Usuários, Itens, Posts).
-- 📊 **Relatórios Exportáveis:** Exportação de dados em PDF, CSV ou Excel.
-- 🌐 **Internacionalização (i18n):** Suporte a múltiplos idiomas.
-- 🧵 **Logs e Monitoramento:** Registro detalhado de atividades e análise de desempenho.
-- 🔄 **Integração com APIs Externas:** Conexão com serviços de terceiros (pagamentos, mapas, autenticação, etc.).
-- 📨 **Sistema de Notificações:** Envio de alertas por e-mail, push ou notificações internas.
+- 🔐 **Cadastro de Usuários:** Permite o cadastro de alunos e empresas parceiras na plataforma.
+
+- 👨‍🎓 **Gerenciamento de Alunos:** CRUD completo para cadastro, edição, consulta e remoção de alunos.
+
+- 🏢 **Gerenciamento de Empresas Parceiras:** CRUD completo para gerenciamento das empresas participantes do sistema.
+
+- 💰 **Sistema de Moedas Virtuais:** Controle de saldo de moedas acadêmicas dos alunos.
+
+- 🎁 **Troca de Benefícios:** Possibilidade de utilização das moedas em vantagens oferecidas por empresas parceiras.
+
+- 🌐 **Arquitetura em Microsserviços:** Separação dos serviços de alunos e empresas para maior escalabilidade e organização.
+
+- 🔄 **Integração Front-end + Back-end:** Comunicação completa entre interface web e APIs REST.
+
+- ☁️ **Deploy em Nuvem:** Serviços hospedados no Render com banco PostgreSQL no Supabase.
+
+- 🗄️ **Persistência de Dados:** Armazenamento seguro das informações utilizando PostgreSQL.
+
+- 🧪 **Testes de API:** Endpoints validados utilizando Postman.
+
+- 🐳 **Containerização com Docker:** Estrutura preparada para deploy e execução isolada dos serviços.
+
+- 📡 **APIs RESTful:** Endpoints padronizados para comunicação entre os serviços.
+
+- 🔒 **Configuração de CORS:** Integração segura entre front-end e back-end hospedados separadamente.
 
 ---
 
 ## 🛠 Tecnologias Utilizadas
 
-As seguintes ferramentas, frameworks e bibliotecas foram utilizados na construção deste projeto. Recomenda-se o uso das versões listadas (ou superiores) para garantir a compatibilidade.
+As seguintes ferramentas, frameworks e bibliotecas foram utilizadas na construção do projeto **Coin4Students**.
 
 ### 💻 Front-end
 
-* **Framework/Biblioteca:** [Ex: React v18, Vue.js v3, Angular v17]
-* **Linguagem/Superset:** [Ex: TypeScript, JavaScript ES6+]
-* **Estilização:** [Ex: Tailwind CSS, Sass, Styled Components, Material UI]
-* **Gerenciamento de Estado:** [Ex: Redux Toolkit, Zustand, Context API]
-* **Build Tool:** [Ex: Vite, Webpack]
+* **Linguagens:** HTML5, CSS3 e JavaScript
+* **Estilização:** CSS3
+* **Comunicação HTTP:** Fetch API
+* **Build Tool:** Estrutura web simples (sem framework SPA)
+
+---
 
 ### 🖥️ Back-end
 
-* **Linguagem/Runtime:** [Ex: Java 17 (JDK), Node.js v20, Python 3.11]
-* **Framework:** [Ex: Spring Boot 3.x, NestJS, Express, Django]
-* **Banco de Dados:** [Ex: PostgreSQL, MySQL, MongoDB]
-* **ORM / Query Builder:** [Ex: Hibernate/JPA, Prisma, TypeORM]
-* **Autenticação:** [Ex: JWT, OAuth2, Spring Security]
+* **Linguagem/Runtime:** Java 21 (JDK)
+* **Framework:** Spring Boot 4.0.6
+* **Banco de Dados:** PostgreSQL
+* **ORM:** Spring Data JPA / Hibernate
+* **Gerenciador de Dependências:** Maven
+* **API:** RESTful API
+* **Servidor Web:** Apache Tomcat Embedded
 
-### 📱 Mobile (Opcional)
+---
 
-* **Framework:** [Ex: React Native, Flutter, Kotlin Multiplatform]
-* **Ferramentas:** [Ex: Expo, Android Studio, Xcode]
+### 🗄️ Banco de Dados
+
+* **Plataforma:** Supabase
+* **SGBD:** PostgreSQL
+* **Persistência:** Hibernate/JPA
+
+---
 
 ### ⚙️ Infraestrutura & DevOps
 
-* **Containerização:** [Ex: Docker, Docker Compose]
-* **Orquestração:** [Ex: Kubernetes (K8s)]
-* **Cloud:** [Ex: AWS (EC2, RDS, S3), Vercel, Heroku, Google Cloud]
-* **CI/CD:** [Ex: GitHub Actions, Jenkins, SonarQube]
+* **Containerização:** Docker
+* **Deploy Back-end:** Render
+* **Banco em Nuvem:** Supabase
+* **Versionamento:** Git e GitHub
+* **Testes de API:** Postman
+
+---
+
+### 🧰 Ferramentas de Desenvolvimento
+
+* **IDE:** Visual Studio Code
+* **Gerenciamento de Projeto:** GitHub Projects
+* **Documentação:** Markdown
+* **Modelagem:** PlantUML e Mermaid
 
 ---
 
 ## 🏗 Arquitetura
 
-Descreva aqui a **arquitetura completa do sistema**, explicando como as camadas, módulos e componentes foram organizados. Informe também **por que** essa arquitetura foi escolhida e **quais problemas ela ajuda a resolver**.
+O **Coin4Students** utiliza uma arquitetura baseada em **microsserviços**, separando responsabilidades principais do sistema em serviços independentes. Essa abordagem foi escolhida para facilitar a organização do código, permitir evolução gradual do sistema e tornar os módulos mais independentes entre si.
 
-Você pode incluir:
+Atualmente, a aplicação está dividida em:
 
-- **Visão geral da arquitetura** (ex.: camadas, módulos, microsserviços, monólito modular, hexagonal, MVC etc.)
-- **Principais componentes** e o papel de cada um
-- **Padrões de design adotados** (ex.: Repository, Service Layer, DTOs, Factory, Observer)
-- **Fluxo de dados** entre as partes do sistema
-- **Tecnologias utilizadas em cada camada**
-- **Decisões arquiteturais importantes**
-- **Trade-offs** ou limitações relevantes
+- **Front-end:** interface web responsável pela interação com o usuário.
+- **Aluno Service:** microsserviço responsável pelo CRUD de alunos.
+- **Empresa Service:** microsserviço responsável pelo CRUD de empresas parceiras.
+- **Banco de Dados:** PostgreSQL hospedado no Supabase.
+- **Deploy:** microsserviços hospedados no Render com Docker.
 
-### Exemplos de diagramas
+Cada microsserviço segue uma arquitetura em camadas:
 
-Para melhor visualização e entendimento da estrutura do sistema, os diagramas principais estão organizados lado a lado.
+- **Controller:** recebe as requisições HTTP e expõe os endpoints REST.
+- **Service:** concentra a lógica de negócio da aplicação.
+- **Repository:** realiza a comunicação com o banco utilizando Spring Data JPA.
+- **Model:** representa as entidades persistidas no banco de dados.
 
-| Diagrama de Arquitetura | Detalhe da Arquitetura |
-| :---: | :---: |
-| **Visão Geral (Macro)** | **Camada de Serviço (Micro)** |
-| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Diagrama de Visão Geral do Sistema" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Diagrama de Componentes ou Serviço X" width="120px" height="120px"> |
-| **Modelo de Dados (Entidades)** | **Fluxo de Autenticação** |
-| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Diagrama de Entidade-Relacionamento (DER)" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Diagrama de Sequência de Login" width="120px" height="120px"> |
-| **Infraestrutura (Cloud)** | **API Gateway (Rotas)** |
-| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Diagrama de Deploy na AWS/Vercel" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Mapa de Endpoints da API" width="120px" height="120px"> |
+---
+
+### 🔄 Fluxo da Aplicação
+
+```txt
+Usuário
+   ↓
+Front-end (HTML/CSS/JS)
+   ↓ HTTP/REST + JSON
+Microsserviços Spring Boot
+   ↓ Hibernate/JPA
+PostgreSQL (Supabase)
+```
+
+---
+
+### 🧩 Componentes Principais
+
+| Componente | Responsabilidade |
+|---|---|
+| Front-end | Interface visual e interação com o usuário |
+| Aluno Service | Gerenciamento de alunos |
+| Empresa Service | Gerenciamento de empresas |
+| PostgreSQL | Persistência de dados |
+| Supabase | Hospedagem do banco PostgreSQL |
+| Render | Deploy e execução dos microsserviços |
+| Docker | Containerização da aplicação |
+
+---
+
+### 🏛️ Padrões Arquiteturais Utilizados
+
+- Microsserviços
+- REST API
+- MVC (Model-View-Controller)
+- Repository Pattern
+- Service Layer
+- Containerização com Docker
+
+---
+
+### ⚙️ Tecnologias por Camada
+
+| Camada | Tecnologias |
+|---|---|
+| Front-end | HTML5, CSS3, JavaScript |
+| Back-end | Java 21, Spring Boot |
+| Persistência | Spring Data JPA, Hibernate |
+| Banco de Dados | PostgreSQL |
+| Cloud/Deploy | Render e Supabase |
+| DevOps | Docker e GitHub |
+
+---
+
+### 📌 Decisões Arquiteturais
+
+A escolha da arquitetura baseada em microsserviços permite:
+
+- Separação de responsabilidades;
+- Maior organização do código;
+- Facilidade de manutenção;
+- Escalabilidade futura;
+- Deploy independente dos serviços;
+- Melhor modularização do sistema.
+
+Além disso, o uso do Supabase resolveu a limitação do banco gratuito do Render, garantindo maior estabilidade para o projeto acadêmico.
+
+---
+
+### ⚠️ Trade-offs e Limitações
+
+- Maior complexidade de configuração em relação a um monólito simples;
+- Necessidade de configuração de CORS entre front-end e back-end;
+- Deploy separado para cada microsserviço;
+- Dependência de serviços externos gratuitos (Render e Supabase).
+
+---
+
+## 📊 Diagramas do Projeto
+
+### 📌 Diagrama de Classes
+
+![Diagrama de Classes](https://github.com/IsabellaLDias/Coin4Students/blob/main/Diagramas/DiagramaDeClasses.png?raw=true)
+
+---
+
+### 📌 Diagrama de Casos de Uso
+
+![Diagrama de Casos de Uso](https://github.com/IsabellaLDias/Coin4Students/blob/main/Diagramas/DiagramaDeCasosDeUso.png?raw=true)
+
+---
+
+### 📌 Diagrama de Componentes
+
+![Diagrama de Componentes](https://github.com/IsabellaLDias/Coin4Students/blob/main/Diagramas/DiagramaDeComponentes.png?raw=true)
+
+---
+
+### 📌 Modelo Entidade-Relacionamento (ER)
+
+![Modelo ER](https://github.com/IsabellaLDias/Coin4Students/blob/main/Diagramas/Modelo%20ER.png?raw=true)
 
 ---
 
 ## 🔧 Instalação e Execução
 
-### Pré-requisitos
-Certifique-se de que o usuário tenha o ambiente configurado.
+### 📋 Pré-requisitos
 
-* **Java JDK:** Versão **17** ou superior (Necessário para o **Back-end Spring Boot**)
-* **Node.js:** Versão LTS (v18.x ou superior) (Necessário para o **Front-end React**)
-* **Gerenciador de Pacotes:** npm ou yarn
-* **Docker** (Opcional, mas **altamente recomendado** para rodar o Banco de Dados)
+Antes de executar o projeto, certifique-se de possuir os seguintes requisitos instalados na máquina:
+
+* **Java JDK:** Versão **21** ou superior  
+  > Necessário para execução dos microsserviços Spring Boot.
+
+* **Apache Maven:** Versão **3.9+**
+  > Utilizado para gerenciamento de dependências e build do projeto.
+
+* **Git**
+  > Necessário para clonar o repositório.
+
+* **Docker Desktop** (Opcional)
+  > Utilizado para containerização e deploy local.
+
+* **IDE recomendada:** Visual Studio Code
+  > Recomendado para facilitar o desenvolvimento do projeto.
+
+---
+
+### 📥 Clonando o Repositório
+
+```bash
+git clone https://github.com/IsabellaLDias/Coin4Students.git
+```
+
+---
+
+### 📂 Acesse a pasta do projeto
+
+```bash
+cd Coin4Students
+```
+
+---
+
+### ⚙️ Configuração do Back-end
+
+Cada microsserviço possui seu próprio arquivo de configuração.
+
+Crie um arquivo:
+
+```txt
+application.properties
+```
+
+com base no arquivo:
+
+```txt
+application-example.properties
+```
+
+---
+
+### 🗄️ Configuração do Banco de Dados (Supabase)
+
+Exemplo de configuração:
+
+```properties
+spring.datasource.url=jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require
+spring.datasource.username=postgres.flecjjdbxjmpytnkbfal
+spring.datasource.password=SENHA
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+server.port=${PORT:8080}
+```
+
+---
+
+### ▶️ Executando o Aluno Service
+
+```bash
+cd back/aluno-service
+mvn spring-boot:run
+```
+
+O serviço ficará disponível em:
+
+```txt
+http://localhost:8080
+```
+
+---
+
+### ▶️ Executando o Empresa Service
+
+```bash
+cd back/empresa-service
+mvn spring-boot:run
+```
+
+O serviço ficará disponível em:
+
+```txt
+http://localhost:8081
+```
+
+---
+
+### 🌐 Executando o Front-end
+
+Abra o arquivo HTML principal do projeto:
+
+```txt
+home.html
+```
+
+ou utilize uma extensão como:
+
+- Live Server (VSCode)
+
+---
+
+### 🧪 Testando a Aplicação
+
+Os endpoints podem ser testados utilizando:
+
+- Postman
+- Navegador
+- Front-end integrado
+
+---
+
+### ☁️ Deploy
+
+O sistema atualmente utiliza:
+
+| Serviço | Plataforma |
+|---|---|
+| Microsserviços | Render |
+| Banco de Dados | Supabase |
+| Containerização | Docker |
+
+---
+
+### 🔗 Endpoints Públicos
+
+#### 👨‍🎓 Aluno Service
+
+```txt
+https://aluno-service.onrender.com/alunos
+```
+
+#### 🏢 Empresa Service
+
+```txt
+https://empresa-service.onrender.com/empresas
+```
+
 
 ---
 
 ### 🔑 Variáveis de Ambiente
 
-Crie arquivos `.env` específicos e/ou configure as variáveis de ambiente no seu sistema para cada parte da aplicação.
+O projeto utiliza variáveis de ambiente para configuração dos microsserviços e conexão com o banco de dados PostgreSQL hospedado no Supabase.
 
-#### 1 Back-end (Spring Boot)
+---
 
-Configure estas variáveis como **variáveis de ambiente do sistema** ou em um arquivo de configuração do Spring (ex: `application.properties`/`application.yml`).
+## 🖥️ Back-end (Spring Boot)
+
+As variáveis podem ser configuradas:
+
+- diretamente no arquivo `application.properties`
+- ou nas variáveis de ambiente do Render
+
+---
+
+### 📌 Variáveis Utilizadas
 
 | Variável | Descrição | Exemplo |
 | :--- | :--- | :--- |
-| `SERVER_PORT` | Porta onde o Back-end será executado. | `8080` |
-| `SPRING_DATASOURCE_URL` | URL de conexão JDBC (PostgreSQL). | `jdbc:postgresql://localhost:5432/meubanco` |
-| `SPRING_DATASOURCE_USERNAME` | Usuário do banco de dados. | `postgres` |
-| `SPRING_DATASOURCE_PASSWORD` | Senha do banco de dados. | `senha-segura-123` |
-| `JWT_SECRET` | Chave secreta para assinatura de tokens (Opcional). | `chave_super_segura_base64` |
-
-#### 2 Front-end (React, Vite)
-
-Crie um arquivo **`.env`** na raiz da pasta `/frontend` e use o prefixo `VITE_` (ou `REACT_APP_` se estiver usando CRA) para expor as variáveis ao *bundle* da aplicação.
-
-| Variável | Descrição | Exemplo |
-| :--- | :--- | :--- |
-| `VITE_API_URL` | URL base do endpoint do Backend Spring Boot. | `http://localhost:8080/api` |
-| `VITE_EMAILJS_PUBLIC_KEY` | Chave pública para serviços de e-mail (Exemplo). | `sua_public_key_aqui` |
-| `VITE_GOOGLE_MAPS_KEY` | Chave de API para serviços de mapas (Opcional). | `AIzaSy...` |
+| `PORT` | Porta utilizada pelo Render | `8080` |
+| `SPRING_DATASOURCE_URL` | URL JDBC do PostgreSQL no Supabase | `jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require` |
+| `SPRING_DATASOURCE_USERNAME` | Usuário do banco PostgreSQL | `postgres.flecjjdbxjmpytnkbfal` |
+| `SPRING_DATASOURCE_PASSWORD` | Senha do banco PostgreSQL | `SUA_SENHA_AQUI` |
 
 ---
 
-#### 3. Exemplos de Variáveis de Ambiente na Vercel
+### 📄 Exemplo (`application.properties`)
 
-A Vercel permite configurar variáveis no painel (Project Settings > Environment Variables).
-Aqui estão exemplos comuns utilizadas em aplicações front-end e full-stack:
+```properties
+spring.datasource.url=${SPRING_DATASOURCE_URL}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
 
----
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 
-##### **Exemplo 1 – Front-end com Next.js usando API externa**
-
-```
-NEXT_PUBLIC_API_URL=https://meu-backend.vercel.app/api
-NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=G-seu_google_analytics_id_aqui
+server.port=${PORT:8080}
 ```
 
 ---
 
-##### **Exemplo 2 – Aplicação Full-stack (Next.js + Prisma + PostgreSQL)**
+## 🌐 Front-end
 
-```
-DATABASE_URL=postgresql://admin:senha-super-segura@ep-meu-banco.aws.neon.tech:5432/verceldb
-NEXTAUTH_SECRET=uma_chave_muito_longa_e_segura
-NEXTAUTH_URL=https://meu-sistema.vercel.app
+O front-end realiza comunicação direta com os microsserviços hospedados no Render.
+
+Atualmente, as URLs das APIs estão configuradas diretamente no JavaScript utilizando `fetch`.
+
+---
+
+### 📌 Endpoints Utilizados
+
+| Serviço | URL |
+| :--- | :--- |
+| Aluno Service | `https://aluno-service.onrender.com/alunos` |
+| Empresa Service | `https://empresa-service.onrender.com/empresas` |
+
+---
+
+### 📄 Exemplo no JavaScript
+
+```javascript
+await fetch("https://aluno-service.onrender.com/alunos", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(aluno)
+});
 ```
 
 ---
 
-##### **Exemplo 3 – Integração com APIs externas**
+## ☁️ Variáveis no Render
 
-```
-STRIPE_SECRET_KEY=sk_live_seu_stripe_key_aqui
-OPENAI_API_KEY=sk-sua_openai_key_aqui
-SENDGRID_API_KEY=SG.sua_sendgrid_key_aqui
-```
+As seguintes variáveis devem ser configuradas em cada Web Service no Render:
 
----
-
-##### **Exemplo 4 – Frontend com Vite (EmailJS)**
-
-```
-VITE_EMAILJS_SERVICE_ID=seu_service_id_aqui
-VITE_EMAILJS_TEMPLATE_ID_FOR_ME=seu_template_id_for_me_aqui
-VITE_EMAILJS_TEMPLATE_ID_FOR_SENDER=seu_template_id_for_sender_aqui
-VITE_EMAILJS_PUBLIC_KEY=sua_public_key_aqui
-```
-
-> **Obs:** As variáveis de ambiente em projetos **Vite** precisam começar com `VITE_` para que o Vite as reconheça e as inclua no *bundle* do frontend; variáveis sem esse prefixo não ficam disponíveis no código do cliente.
+| Variável | Valor |
+| :--- | :--- |
+| `SPRING_DATASOURCE_URL` | URL JDBC do Supabase |
+| `SPRING_DATASOURCE_USERNAME` | Usuário PostgreSQL |
+| `SPRING_DATASOURCE_PASSWORD` | Senha PostgreSQL |
+| `PORT` | `8080` |
 
 ---
 
-Para adicionar essas variáveis:
+## 📦 Instalação de Dependências
 
-1.  Acesse a página de Environment Variables do seu projeto no Vercel (ex.: `https://vercel.com/<seu-usuario>/<seu-projeto>/settings/environment-variables`)
-2.  Clique em **"Add"** para adicionar cada variável com o nome e valor correspondente.
-
-Alternativamente, se estiver desenvolvendo localmente, crie um arquivo **`.env.local`** dentro da pasta **`frontend`** do seu projeto com o seguinte conteúdo:
-
-```
-# Variável essencial para conectar ao Back-end Spring Boot rodando localmente (normalmente na porta 8080)
-VITE_API_URL=http://localhost:8080/api
-
-# Variáveis para integrações externas de serviço de e-mail
-VITE_EMAILJS_SERVICE_ID=seu_service_id_aqui
-VITE_EMAILJS_TEMPLATE_ID_FOR_ME=seu_template_id_for_me_aqui
-VITE_EMAILJS_TEMPLATE_ID_FOR_SENDER=seu_template_id_for_sender_aqui
-VITE_EMAILJS_PUBLIC_KEY=sua_public_key_aqui
-
-# Outras chaves de serviço
-VITE_GOOGLE_MAPS_KEY=AIzaSy...
-```
-
-> 💡 **Localização:** Garanta que este arquivo esteja em **`/frontend/.env.local`** para que o **Vite** consiga carregá-lo e disponibilizar as variáveis para o Front-end durante o desenvolvimento.
-
-### 📦 Instalação de Dependências
-
-Clone o repositório e instale as dependências.
-
-1.  **Clone o Repositório:**
+### 1️⃣ Clone o Repositório
 
 ```bash
-git clone <URL_DO_SEU_REPOSITÓRIO>
-cd <pasta-do-projeto>
-```
-
-2.  **Instale as Dependências (Monorepo):**
-
-Como o projeto está dividido, você precisa instalar as dependências separadamente para o Front-end (React, usando NPM/Yarn) e garantir que o Back-end (Spring Boot, usando Maven/Gradle Wrapper) tenha suas dependências resolvidas.
-
-#### Front-end (React)
-
-Acesse a pasta do Front-end e instale as dependências do Node.js:
-
-```bash
-cd frontend
-npm install
-# ou
-yarn install
-cd .. # Retorna para a raiz
-```
-
-#### Back-end (Spring Boot)
-
-O Spring Boot utiliza o **Maven Wrapper** (`./mvnw`) ou **Gradle Wrapper** (`./gradlew`) para gerenciar dependências. Execute o comando de instalação/build limpo antes de rodar.
-
-* **Usando Maven (`pom.xml`):**
-    ```bash
-    cd backend
-    ./mvnw clean install
-    cd ..
-    ```
-
-* **Usando Gradle (`build.gradle`):**
-    ```bash
-    cd backend
-    ./gradlew clean build
-    cd ..
-    ```
-
----
-
-### 💾 Inicialização do Banco de Dados (PostgreSQL)
-
-O projeto utiliza **PostgreSQL**. A forma mais fácil de inicializar o banco é via Docker (para execução sem `docker-compose`):
-
-1. **Rode o Container do PostgreSQL:**  
-   (Certifique-se que o Docker está em execução)
-
-```bash
-docker run --name minha_db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=senha-segura-123 -e POSTGRES_DB=nome_do_banco -p 5432:5432 -d postgres:16
-```
-
-2. **Execute as Migrações:**  
-   O Back-end **Spring Boot** geralmente gerencia o schema do banco de dados automaticamente no startup (via Hibernate `ddl-auto`) ou utilizando ferramentas como **Flyway** ou **Liquibase**.
-
-* **Se o Spring Boot gerencia o schema (padrão):** Nenhuma ação manual é necessária, basta rodar o Back-end (veja a próxima seção).
-* **Se usar Flyway/Liquibase via Maven:**
-    ```bash
-    cd backend
-    ./mvnw flyway:migrate
-    # ou
-    ./mvnw liquibase:update
-    ```
----
-
-### ⚡ Como Executar a Aplicação
-Execute a aplicação em modo de desenvolvimento em **dois terminais separados**.
-
-#### Terminal 1: Back-end (Spring Boot)
-
-Inicie a API do Spring Boot. Ela tentará se conectar ao banco de dados rodando no Docker.
-
-```bash
-cd backend
-./mvnw spring-boot:run
-```
-🚀 *O Back-end estará disponível em **http://localhost:8080**.*
-
----
-
-#### Terminal 2: Front-end (React, Vite)
-
-Inicie o servidor de desenvolvimento do Front-end.
-
-```bash
-cd frontend
-npm run dev
-# ou
-yarn dev
-```
-🎨 *O Front-end estará disponível em **http://localhost:5173** (ou a porta configurada no Vite/CRA).*
-
----
-
-#### 🐳 Execução Local Completa com Docker Compose (Incluindo Banco de Dados)
-
-Para uma execução local que inclui o serviço de Back-end (**Spring Boot**), Front-end (**React**) e o banco de dados **PostgreSQL**, usaremos o **`docker-compose`** para orquestração.
-
-Antes de tudo, certifique-se de que o **Docker Desktop** (no Mac/Windows) ou o **serviço Docker** (em Linux) está em execução.
-
-- **No Mac/Windows**: basta abrir o aplicativo **Docker Desktop**.
-- **No Linux**: rode o comando abaixo para iniciar o serviço:
-
-```bash
-sudo systemctl start docker
+git clone https://github.com/IsabellaLDias/Coin4Students.git
+cd Coin4Students
 ```
 
 ---
 
-#### 📦 Passos para build, inicialização e execução
+### 2️⃣ Back-end (Spring Boot)
 
-1. Acesse a pasta raiz do projeto (onde o arquivo `docker-compose.yml` está localizado):
-
-```bash
-cd /caminho/do/projeto/nome-do-projeto
-```
-
-2. Suba todos os serviços (Back-end, Front-end e Banco de Dados) definidos no `docker-compose.yml`:
+#### ▶️ Aluno Service
 
 ```bash
-docker-compose up --build -d
+cd back/aluno-service
+mvn clean install
+mvn spring-boot:run
 ```
 
-> [!NOTE]
-> 💡 O parâmetro `--build` garante que as imagens mais recentes do projeto sejam geradas, e `-d` executa em segundo plano.
+O serviço ficará disponível em:
 
-3. Verifique se os containers estão rodando:
+```txt
+http://localhost:8080
+```
+
+---
+
+#### ▶️ Empresa Service
 
 ```bash
-docker ps
+cd back/empresa-service
+mvn clean install
+mvn spring-boot:run
 ```
 
-4. **Execute as Migrações do Banco de Dados:**
-   O Back-end **Spring Boot** geralmente gerencia o schema do banco de dados (via Flyway/Liquibase ou Hibernate) na **inicialização do serviço**.
+O serviço ficará disponível em:
 
-* **Verificação:** Se o serviço de Back-end (`backend` ou `api`) for o responsável pelas migrações, verifique os logs para confirmar se o processo foi concluído.
-    ```bash
-    docker logs <nome_do_container_backend>
-    ```
-* *Atenção:* O comando `npm run db:migrate` é exclusivo para Node.js e **não** deve ser usado.
+```txt
+http://localhost:8081
+```
 
-5. Abra no navegador:
-   O Front-end deve estar acessível na porta configurada no `docker-compose` (Exemplo: <http://localhost:3000> ou <http://localhost:5173>)
+---
 
-6. Para parar e remover todos os containers, redes e volumes (exceto volumes nomeados):
+### 3️⃣ Front-end
+
+O front-end é composto por HTML, CSS e JavaScript puro.
+
+Para executar:
+
+- abra o arquivo HTML principal diretamente no navegador
+- ou utilize uma extensão como Live Server no VSCode
+
+---
+
+## 💾 Banco de Dados PostgreSQL (Supabase)
+
+O projeto utiliza PostgreSQL hospedado no Supabase.
+
+Não é necessário instalar PostgreSQL localmente para utilizar o sistema já configurado em nuvem.
+
+---
+
+## ⚡ Como Executar a Aplicação
+
+A aplicação pode ser executada em três etapas:
+
+### Terminal 1 — Aluno Service
 
 ```bash
-docker-compose down
+cd back/aluno-service
+mvn spring-boot:run
 ```
 
-✅ **Em resumo:** Usar **`docker-compose`** simplifica a execução do ambiente completo, isolando as dependências de **Java (Spring Boot)** e **Node.js (React)** e garantindo que o PostgreSQL esteja disponível.
+---
+
+### Terminal 2 — Empresa Service
+
+```bash
+cd back/empresa-service
+mvn spring-boot:run
+```
+
+---
+
+### Front-end
+
+Abra o HTML principal do projeto no navegador.
+
+---
+
+## 🐳 Execução com Docker
+
+Cada microsserviço possui seu próprio `Dockerfile`.
+
+### Build da imagem
+
+```bash
+docker build -t aluno-service .
+```
+
+ou
+
+```bash
+docker build -t empresa-service .
+```
+
+---
+
+### Executar container
+
+```bash
+docker run -p 8080:8080 aluno-service
+```
+
+---
+
+## ☁️ Deploy
+
+O sistema atualmente utiliza:
+
+| Serviço | Plataforma |
+|---|---|
+| Microsserviços | Render |
+| Banco de Dados | Supabase |
+| Containerização | Docker |
+
+---
+
+## 🔗 Endpoints Públicos
+
+### 👨‍🎓 Aluno Service
+
+```txt
+https://aluno-service.onrender.com/alunos
+```
+
+---
+
+### 🏢 Empresa Service
+
+```txt
+https://empresa-service.onrender.com/empresas
+```
+
+---
+
+## ⚠️ Segurança
+
+> Nunca envie arquivos contendo senhas reais para o GitHub.
+
+O recomendado é:
+
+- utilizar `application-example.properties`
+- adicionar `application.properties` no `.gitignore`
+- utilizar variáveis de ambiente no Render
 
 ---
 
 ## 🚀 Deploy
-Instruções claras para deploy em produção.
+O deploy dos microsserviços é realizado no **Render**, utilizando **Docker**, enquanto o banco de dados PostgreSQL está hospedado no **Supabase**.
 
-1.  **Build do Projeto:**
-    Execute o build separadamente para os dois artefatos (JAR para o Back-end e arquivos estáticos para o Front-end).
+---
 
-```bash
-# 1. Build do Front-end (React/Vite) - Gera a pasta /dist com arquivos estáticos
-cd frontend
-npm run build
+### ☁️ Configuração dos Serviços
 
-# 2. Build do Back-end (Spring Boot/Maven) - Gera o arquivo .jar executável em /target
-cd ../backend
-./mvnw clean package
+| Serviço | Root Directory |
+|---|---|
+| aluno-service | `back/aluno-service` |
+| empresa-service | `back/empresa-service` |
+
+---
+
+### 🔑 Variáveis de Ambiente
+
+```txt
+SPRING_DATASOURCE_URL
+SPRING_DATASOURCE_USERNAME
+SPRING_DATASOURCE_PASSWORD
 ```
 
-2.  **Configuração do Ambiente de Produção:** Defina as variáveis de ambiente no seu provedor (e.g., Vercel, Railway, Heroku, DigitalOcean).
+---
 
-> 🔑 **Variáveis Cruciais:** Certifique-se de configurar as variáveis de **conexão com o banco de dados** (`SPRING_DATASOURCE_URL`, etc.) para o Back-end e a **URL da API de produção** (`VITE_API_URL`) para o Front-end.
+### 🐳 Dockerfile
 
-3.  **Execução em Produção:**
-    A forma de execução depende do seu provedor, mas geralmente envolve o seguinte:
+```dockerfile
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY . .
+
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+CMD ["sh", "-c", "java -jar target/*.jar"]
+```
+
+---
+
+### 🔄 Atualização do Deploy
 
 ```bash
-# ☕ Execução do Back-end Spring Boot (Java JAR)
-# Este comando inicia a API usando o artefato JAR gerado.
-java -jar backend/target/nome-do-do-projeto-0.0.1-SNAPSHOT.jar
+git add .
+git commit -m "Atualiza aplicação"
+git push origin main
+```
 
-# 🟢 Execução do Front-end (React/Vite)
-# O Front-end (arquivos estáticos) não é executado via Node, mas servido por um servidor web.
-# Exemplo de servidor de arquivos estáticos (usando Nginx, Vercel, Netlify, etc.)
-# Para simular a produção localmente ou rodar em uma VPS simples, use o pacote 'serve':
-npm install -g serve
-serve -s frontend/dist
+Depois:
+
+```txt
+Render → Manual Deploy → Deploy latest commit
+```
+
+---
+
+### 🌐 Endpoints
+
+```txt
+https://aluno-service.onrender.com/alunos
+
+https://empresa-service.onrender.com/empresas
 ```
 
 ---
 
 ## 📂 Estrutura de Pastas
 
-Descreva o propósito das pastas principais.
-
 ```
 .
-├── .editorconfig                # ✍️ Padronização de estilo de código.
-├── .env.local                   # 🔒 Variáveis SENSÍVEIS do ambiente LOCAL (não versionado).
-├── .env.test                    # 🧪 Variáveis de ambiente para TESTES AUTOMATIZADOS.
-├── .env.staging                 # ☁️ Variáveis de ambiente para STAGING/HOMOLOGAÇÃO.
-├── .env.example                 # 🧩 Exemplo de TODAS as variáveis necessárias (sem valores sensíveis).
-├── .gitignore                   # 🧹 Ignora arquivos/pastas não versionadas (.env, node_modules, target, etc.).
-├── .vscode/                     # ⚙️ Configurações de ambiente da IDE (opcional).
-├── .github/                     # 🤖 CI/CD (Actions), templates de Issues e Pull Requests.
-├── README.md                    # 📘 Documentação principal do projeto.
-├── CONTRIBUTING.md              # 🤝 Guia de contribuição.
-├── LICENSE                      # ⚖️ Licença do projeto.
-├── docker-compose.yml           # 🐳 Orquestração dos containers (front/back/db/etc).
-├── docker-compose.override.yml  # 🐳 Configurações extras apenas para desenvolvimento.
+├── .git/                        # 📁 Controle de versão Git
+├── .github/                     # 🤖 Configurações do GitHub (Actions, templates)
 │
-├── /frontend                    # 📁 Aplicação React
-│   ├── .env.example             # 🧩 Variáveis de ambiente do Front-end.
-│   ├── Dockerfile               # 🐳 Docker build do Front-end.
-│   ├── .eslintrc.js             # ✨ Regras do ESLint.
-│   ├── .prettierrc              # 🎨 Configuração do Prettier.
-│   ├── /public                  # 📂 Arquivos estáticos e index.html.
-│   ├── /src                     # 📂 Código-fonte React
-│   │   ├── /components          # 🧱 Componentes reutilizáveis (UI).
-│   │   ├── /pages               # 📄 Páginas/rotas da aplicação.
-│   │   ├── /services            # 🔌 Serviços e chamadas HTTP.
-│   │   ├── /hooks               # 🎣 Hooks personalizados.
-│   │   ├── /styles              # 🎨 Estilos globais, temas, Design System.
-│   │   ├── /assets              # 🖼️ Recursos estáticos importados
-│   │   │   ├── /images          # 🖼️ Imagens.
-│   │   │   ├── /icons           # 💡 Ícones.
-│   │   │   └── /fonts           # ✒️ Fontes personalizadas.
-│   │   └── /utils               # 🛠️ Funções utilitárias.
-│   ├── package.json             # 📦 Dependências e scripts.
-│   └── yarn.lock / package-lock.json # 🔒 Lockfile das dependências.
+├── README.md                    # 📘 Documentação principal do projeto
+├── Histórias de Usuário.md      # 📖 Histórias de usuário e requisitos
+├── Coin4Students.png            # 🖼️ Logo ou imagem principal do projeto
 │
-├── /backend                     # 📁 Aplicação Spring Boot
-│   ├── .env.example             # 🧩 Variáveis de ambiente do Back-end.
-│   ├── Dockerfile               # 🐳 Docker build do Back-end.
+├── /front                       # 📁 Aplicação Frontend (HTML/CSS/JavaScript)
+│   ├── home.html                # 🏠 Página inicial/landing page
+│   ├── coin4students.html       # 🔐 Página de login/cadastro
+│   ├── aluno.html               # 👨‍🎓 Dashboard do aluno
+│   ├── empresa.html             # 🏢 Dashboard da empresa
 │   │
-│   ├── /src/main/java           # 📂 Código-fonte Java
-│   │   └── /com/exemplo/app
-│   │       ├── /controller      # 🎮 Endpoints REST.
-│   │       ├── /service         # ⚙️ Regras e lógica de negócio.
-│   │       ├── /repository      # 🗄️ Repositórios (JPA/Hibernate).
-│   │       ├── /model           # 🧬 Entidades persistentes (JPA).
-│   │       ├── /domain          # 🌐 Objetos de Domínio puro (sem anotações).
-│   │       ├── /dto             # ✉️ Data Transfer Objects.
-│   │       ├── /config          # 🔧 Configurações gerais (DB, Swagger, CORS, etc.).
-│   │       ├── /exception       # 💥 Exceptions e handlers globais.
-│   │       └── /security        # 🛡️ Autenticação e Autorização (Spring Security).
+│   ├── /css                     # 📂 Estilos CSS
+│   │   ├── home.css             # 🎨 Estilos da página inicial
+│   │   ├── coin4students.css    # 🔐 Estilos da página de login/cadastro
+│   │   ├── style-aluno.css      # 👨‍🎓 Estilos do dashboard do aluno
+│   │   └── empresa.css          # 🏢 Estilos do dashboard da empresa
 │   │
-│   ├── /src/main/resources      # 📂 Recursos do Spring Boot
-│   │   ├── application.yml         # ⚙️ Configuração principal da aplicação
-│   │   ├── application-dev.yml     # 🧪 Configurações específicas do ambiente de DESENVOLVIMENTO
-│   │   ├── application-prod.yml    # 🚀 Configurações específicas para PRODUÇÃO
-│   │   ├── application-test.yml    # 🧪 Configurações usadas nos testes automatizados
-│   │   ├── /static                # 🌐 Arquivos estáticos (HTML/CSS/JS).
-│   │   ├── /templates             # 🖼️ Templates Thymeleaf/Freemarker.
-│   │   ├── /messages              # 🌎 Arquivos de internacionalização (i18n).
-│   │   └── /db                    # 💾 Scripts de banco usados pela aplicação
-│   │       └── /migration         # 📜 Migrações do banco (Flyway/Liquibase).
+│   ├── /js                      # 📂 Scripts JavaScript
+│   │   ├── coin4students.js     # 🔐 Lógica de login/cadastro
+│   │   ├── aluno.js             # 👨‍🎓 Funcionalidades do aluno
+│   │   └── empresa.js           # 🏢 Funcionalidades da empresa
 │   │
-│   ├── /src/test/java            # 🧪 Testes unitários e de integração.
-│   └── pom.xml / build.gradle    # 🛠️ Build e dependências.
+│   └── /img                     # 📂 Recursos de imagem
+│       ├── imagem.png           # 🖼️ Imagem de fundo (hero/login)
+│       ├── logo.png             # 🏷️ Logo principal
+│       └── logo - Copia.png     # 🏷️ Cópia do logo
 │
-├── /scripts                      # 📜 Scripts de automação
-│   ├── dev.sh                    # 🚀 Ambiente de desenvolvimento completo.
-│   ├── build_all.sh              # 🛠️ Build geral (front + back).
-│   └── deploy.sh                 # ☁️ Deploy em produção/homologação.
+├── /back                        # 📁 Aplicações Backend (Spring Boot)
+│   ├── /aluno-service           # 🧑‍🎓 Microserviço de Alunos
+│   │   ├── Dockerfile           # 🐳 Docker build do serviço de alunos
+│   │   ├── HELP.md              # 📖 Documentação de ajuda
+│   │   ├── mvnw                 # 🛠️ Wrapper Maven (Unix)
+│   │   ├── mvnw.cmd             # 🛠️ Wrapper Maven (Windows)
+│   │   ├── pom.xml              # 📦 Dependências e configuração Maven
+│   │   │
+│   │   ├── /src                 # 📂 Código-fonte
+│   │   │   └── /main
+│   │   │       ├── /java        # ☕ Código Java
+│   │   │       │   └── /com/coin4students/aluno
+│   │   │       │       ├── AlunoServiceApplication.java  # 🚀 Classe principal
+│   │   │       │       ├── /config      # ⚙️ Configurações (CORS, etc)
+│   │   │       │       │   └── CorsConfig.java
+│   │   │       │       ├── /controller  # 🎮 Endpoints REST
+│   │   │       │       │   └── AlunoController.java
+│   │   │       │       ├── /model       # 🧬 Entidades JPA
+│   │   │       │       │   └── Aluno.java
+│   │   │       │       ├── /repository  # 🗄️ Repositórios Spring Data
+│   │   │       │       │   └── AlunoRepository.java
+│   │   │       │       └── /service     # ⚙️ Lógica de negócio
+│   │   │       │           └── AlunoService.java
+│   │   │       │
+│   │   │       └── /resources   # 📂 Recursos da aplicação
+│   │   │           ├── application.properties           # ⚙️ Configuração principal
+│   │   │           ├── application-example.properties  # 🧩 Exemplo de configuração
+│   │   │           ├── /static      # 🌐 Arquivos estáticos
+│   │   │           └── /templates   # 🖼️ Templates (se houver)
+│   │   │
+│   │   └── /test                # 🧪 Testes unitários
+│   │       └── /java
+│   │           └── /com/coin4students/aluno
+│   │               └── AlunoServiceApplicationTests.java
+│   │
+│   └── /empresa-service         # 🏢 Microserviço de Empresas
+│       ├── Dockerfile           # 🐳 Docker build do serviço de empresas
+│       ├── HELP.md              # 📖 Documentação de ajuda
+│       ├── mvnw                 # 🛠️ Wrapper Maven (Unix)
+│       ├── mvnw.cmd             # 🛠️ Wrapper Maven (Windows)
+│       ├── pom.xml              # 📦 Dependências e configuração Maven
+│       │
+│       ├── /src                 # 📂 Código-fonte
+│       │   └── /main
+│       │       ├── /java        # ☕ Código Java
+│       │       │   └── /com/coin4students/empresa
+│       │       │       ├── EmpresaServiceApplication.java  # 🚀 Classe principal
+│       │       │       ├── /config      # ⚙️ Configurações (CORS, etc)
+│       │       │       │   └── CorsConfig.java
+│       │       │       ├── /controller  # 🎮 Endpoints REST
+│       │       │       │   └── EmpresaController.java
+│       │       │       ├── /model       # 🧬 Entidades JPA
+│       │       │       │   └── Empresa.java
+│       │       │       ├── /repository  # 🗄️ Repositórios Spring Data
+│       │       │       │   └── EmpresaRepository.java
+│       │       │       └── /service     # ⚙️ Lógica de negócio
+│       │       │           └── EmpresaService.java
+│       │       │
+│       │       └── /resources   # 📂 Recursos da aplicação
+│       │           ├── application.properties           # ⚙️ Configuração principal
+│       │           ├── application-example.properties  # 🧩 Exemplo de configuração
+│       │           ├── /static      # 🌐 Arquivos estáticos
+│       │           └── /templates   # 🖼️ Templates (se houver)
+│       │
+│       └── /test                # 🧪 Testes unitários
+│           └── /java
+│               └── /com/coin4students/empresa
+│                   └── EmpresaServiceApplicationTests.java
 │
-├── /docs                         # 📚 Documentação, arquitetura, modelos C4, Swagger/OpenAPI.
-└── /tests                        # 🧪 Testes End-to-End (Cypress/Playwright).
+└── /diagramas                   # 📊 Diagramas e documentação técnica
+    ├── DiagramaDeCasosDeUso.png # 📋 Diagrama de Casos de Uso
+    ├── DiagramaDeClasses.png    # 🏗️ Diagrama de Classes
+    ├── DiagramaDeComponentes.png # 🔧 Diagrama de Componentes
+    ├── Modelo ER.png            # 🗃️ Modelo Entidade-Relacionamento
+    └── test.md                  # 📄 Arquivo de teste/observações
 ```
 
 ---
@@ -696,14 +993,31 @@ npm run test:e2e
 
 ## 🔗 Documentações utilizadas
 
-Liste aqui links para documentação técnica, referências de bibliotecas complexas ou guias de estilo que foram cruciais para o projeto.
+* 📖 **Spring Boot:** https://docs.spring.io/spring-boot/documentation.html
 
-* 📖 **Framework/Biblioteca (Front-end):** [Documentação Oficial do **React**](https://react.dev/reference/react)
-* 📖 **Build Tool (Front-end):** [Guia de Configuração do **Vite**](https://vitejs.dev/config/)
-* 📖 **Framework (Back-end):** [Documentação Oficial do **Spring Boot**](https://docs.spring.io/spring-boot/docs/current/reference/html/)
-* 📖 **Containerização:** [Documentação de Referência do **Docker**](https://docs.docker.com/)
-* 📖 **Guia de Estilo:** [**Conventional Commits** (Padrão de Mensagens)](https://www.conventionalcommits.org/en/v1.0.0/)
-* 📖 **Documentação Interna:** [Design System do Projeto](./docs/design-system.md)
+* 📖 **Spring Data JPA:** https://spring.io/projects/spring-data-jpa
+
+* 📖 **Hibernate ORM:** https://hibernate.org/orm/documentation/
+
+* 📖 **PostgreSQL:** https://www.postgresql.org/docs/
+
+* 📖 **Supabase:** https://supabase.com/docs
+
+* 📖 **Render:** https://render.com/docs
+
+* 📖 **Docker:** https://docs.docker.com/
+
+* 📖 **Maven:** https://maven.apache.org/guides/
+
+* 📖 **GitHub Docs:** https://docs.github.com/
+
+* 📖 **Postman:** https://learning.postman.com/docs/getting-started/introduction/
+
+* 📖 **HTML, CSS e JavaScript (MDN):** https://developer.mozilla.org/
+
+* 📖 **PlantUML:** https://plantuml.com/
+
+* 📖 **Mermaid:** https://mermaid.js.org/
 
 ---
 
