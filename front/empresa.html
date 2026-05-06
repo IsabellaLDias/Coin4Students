@@ -70,13 +70,23 @@
                             <label>CNPJ:</label>
                             <input type="text" id="perfilCNPJ" readonly style="background: #f0f0f0; cursor: not-allowed;">
                         </div>
-                        <div>
+                        <div class="password-field">
                             <label>Nova Senha:</label>
-                            <input type="password" id="perfilNovaSenha" placeholder="Deixe em branco para manter atual">
+                            <div class="password-input-wrapper">
+                                <input type="password" id="perfilNovaSenha" placeholder="Deixe em branco para manter atual">
+                                <button type="button" class="password-toggle" onclick="togglePassword('perfilNovaSenha')">
+                                    <i class="ph ph-eye" id="perfilNovaSenha-icon"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div>
+                        <div class="password-field">
                             <label>Confirmar Nova Senha:</label>
-                            <input type="password" id="perfilConfirmarSenha" placeholder="Repita a nova senha">
+                            <div class="password-input-wrapper">
+                                <input type="password" id="perfilConfirmarSenha" placeholder="Repita a nova senha">
+                                <button type="button" class="password-toggle" onclick="togglePassword('perfilConfirmarSenha')">
+                                    <i class="ph ph-eye" id="perfilConfirmarSenha-icon"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 

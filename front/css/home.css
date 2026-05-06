@@ -54,7 +54,7 @@ body {
 .hero {
     height: 65vh;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                url('imagem.png') no-repeat center/cover;
+                url('../img/imagem.png') no-repeat center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
