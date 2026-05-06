@@ -80,19 +80,45 @@
                         <div>
                             <label>CPF:</label>
                             <input type="text" id="perfilCPF" readonly
-                                style="background: #f0f0f0; cursor: not-allowed;">
+                                style="background: #f0f0f0; cursor: not-allowed;" maxlength="14">
                         </div>
                         <div>
                             <label>RG:</label>
-                            <input type="text" id="perfilRG" readonly style="background: #f0f0f0; cursor: not-allowed;">
+                            <input type="text" id="perfilRG" readonly style="background: #f0f0f0; cursor: not-allowed;" maxlength="12">
                         </div>
                         <div>
-                            <label>Endereço:</label>
-                            <input type="text" id="perfilEndereco">
+                            <label>CEP:</label>
+                            <input type="text" id="perfilCEP" maxlength="9" oninput="formatarCEP(this); buscarEnderecoPerfil(this.value)">
                         </div>
-                        <div>
-                            <label>Curso:</label>
-                            <input type="text" id="perfilInstituicao">
+                        <div class="form-row">
+                            <div style="flex: 1;">
+                                <label>Endereço:</label>
+                                <input type="text" id="perfilEndereco">
+                            </div>
+                            <div style="flex: 1;">
+                                <label>Número:</label>
+                                <input type="text" id="perfilNumero">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div style="flex: 1;">
+                                <label>Bairro:</label>
+                                <input type="text" id="perfilBairro">
+                            </div>
+                            <div style="flex: 1;">
+                                <label>Cidade:</label>
+                                <input type="text" id="perfilCidade">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div style="flex: 1;">
+                                <label>Estado:</label>
+                                <input type="text" id="perfilEstado">
+                            </div>
+                            <div style="flex: 1;">
+                                <label>Curso:</label>
+                                <input type="text" id="perfilInstituicao">
+                            </div>
                         </div>
                         <div>
                             <label>Nova Senha:</label>

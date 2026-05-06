@@ -1,6 +1,156 @@
 const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
 
+// ==========================================
+// FUNÇÕES DE MÁSCARA
+// ==========================================
+function formatarCPF(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    
+    if (value.length > 9) {
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } else if (value.length > 6) {
+        value = value.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
+    } else if (value.length > 3) {
+        value = value.replace(/(\d{3})(\d{3})/, '$1.$2');
+    }
+    
+    input.value = value;
+}
+
+function formatarRG(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 9) value = value.slice(0, 9);
+    
+    if (value.length > 8) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, '$1.$2.$3-$4');
+    } else if (value.length > 5) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})/, '$1.$2.$3');
+    } else if (value.length > 2) {
+        value = value.replace(/(\d{2})(\d{3})/, '$1.$2');
+    }
+    
+    input.value = value;
+}
+
+function formatarCNPJ(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 14) value = value.slice(0, 14);
+    
+    if (value.length > 12) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    } else if (value.length > 8) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})/, '$1.$2.$3/$4');
+    } else if (value.length > 5) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})/, '$1.$2.$3');
+    } else if (value.length > 2) {
+        value = value.replace(/(\d{2})(\d{3})/, '$1.$2');
+    }
+    
+    input.value = value;
+}
+
+function formatarCEP(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 8) value = value.slice(0, 8);
+    
+    if (value.length > 5) {
+        value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+    }
+    
+    input.value = value;
+}
+
+async function buscarEnderecoPerfil(cep) {
+    const cepLimpo = cep.replace(/\D/g, '');
+    
+    if (cepLimpo.length !== 8) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+        
+        if (!response.ok) {
+            throw new Error('Erro na busca do CEP');
+        }
+        
+        const data = await response.json();
+        
+        if (data.erro) {
+            showToast('CEP não encontrado. Verifique o código digitado.', 'error');
+            return;
+        }
+
+        document.getElementById('perfilEndereco').value = data.logradouro || '';
+        document.getElementById('perfilBairro').value = data.bairro || '';
+        document.getElementById('perfilCidade').value = data.localidade || '';
+        document.getElementById('perfilEstado').value = data.uf || '';
+
+        document.getElementById('perfilNumero').focus();
+        
+    } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+        showToast('Erro ao buscar endereço. Tente novamente.', 'error');
+    }
+}
+
+function combinarEnderecoPerfil() {
+    const endereco = document.getElementById('perfilEndereco').value;
+    const numero = document.getElementById('perfilNumero').value;
+    const bairro = document.getElementById('perfilBairro').value;
+    const cidade = document.getElementById('perfilCidade').value;
+    const estado = document.getElementById('perfilEstado').value;
+    const cep = document.getElementById('perfilCEP').value;
+    
+    let enderecoCompleto = '';
+    if (endereco) enderecoCompleto += endereco;
+    if (numero) enderecoCompleto += `, ${numero}`;
+    if (bairro) enderecoCompleto += ` - ${bairro}`;
+    if (cidade) enderecoCompleto += `, ${cidade}`;
+    if (estado) enderecoCompleto += `/${estado}`;
+    if (cep) enderecoCompleto += ` - CEP: ${cep}`;
+    
+    return enderecoCompleto.trim();
+}
+
+function separarEndereco(enderecoCompleto) {
+    const dados = {
+        endereco: '',
+        numero: '',
+        bairro: '',
+        cidade: '',
+        estado: '',
+        cep: ''
+    };
+    
+    if (!enderecoCompleto) return dados;
+
+    const cepMatch = enderecoCompleto.match(/CEP:\s*([\d-]+)/);
+    if (cepMatch) {
+        dados.cep = cepMatch[1];
+        enderecoCompleto = enderecoCompleto.replace(/ - CEP:\s*[\d-]+/, '').trim();
+    }
+
+    const estadoMatch = enderecoCompleto.match(/\/([A-Z]{2})$/);
+    if (estadoMatch) {
+        dados.estado = estadoMatch[1];
+        enderecoCompleto = enderecoCompleto.replace(/\/[A-Z]{2}$/, '').trim();
+    }
+
+    const partes = enderecoCompleto.split(/,\s*|\s*-\s*/);
+    
+    if (partes.length >= 1) dados.endereco = partes[0] || '';
+    if (partes.length >= 2) dados.numero = partes[1] || '';
+    if (partes.length >= 3) dados.bairro = partes[2] || '';
+    if (partes.length >= 4) dados.cidade = partes[3] || '';
+    
+    return dados;
+}
+
+// ==========================================
+
 let dadosDoAlunoGlobal = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -42,7 +192,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 function preencherCamposFormulario(aluno) {
     document.getElementById("perfilNome").value = aluno.nome || "";
     document.getElementById("perfilEmail").value = aluno.email || "";
-    document.getElementById("perfilEndereco").value = aluno.endereco || "";
+
+    const enderecoSeparado = separarEndereco(aluno.endereco || "");
+    document.getElementById("perfilEndereco").value = enderecoSeparado.endereco;
+    document.getElementById("perfilNumero").value = enderecoSeparado.numero;
+    document.getElementById("perfilBairro").value = enderecoSeparado.bairro;
+    document.getElementById("perfilCidade").value = enderecoSeparado.cidade;
+    document.getElementById("perfilEstado").value = enderecoSeparado.estado;
+    document.getElementById("perfilCEP").value = enderecoSeparado.cep;
+    
     document.getElementById("perfilCPF").value = aluno.cpf || "";
     document.getElementById("perfilRG").value = aluno.rg || "";
     document.getElementById("perfilInstituicao").value = aluno.curso || "";
@@ -69,7 +227,7 @@ async function atualizarPerfil() {
         ...dadosDoAlunoGlobal,
         nome: document.getElementById("perfilNome").value,
         email: document.getElementById("perfilEmail").value,
-        endereco: document.getElementById("perfilEndereco").value,
+        endereco: combinarEnderecoPerfil(),
         curso: document.getElementById("perfilInstituicao").value
     };
 

@@ -25,10 +25,21 @@
             <input id="nomeAluno" placeholder="Nome">
             <input id="emailAluno" placeholder="Email">
             <input type="password" id="senhaAluno" placeholder="Digite sua senha">
-            <input id="cpfAluno" placeholder="CPF">
-            <input id="rgAluno" placeholder="RG">
-            <input id="enderecoAluno" placeholder="Endereço">
-            <input id="cursoAluno" placeholder="Curso">
+            <input id="cpfAluno" placeholder="CPF" maxlength="14" oninput="formatarCPF(this)">
+            <input id="rgAluno" placeholder="RG" maxlength="12" oninput="formatarRG(this)">
+            <input id="cepAluno" placeholder="CEP" maxlength="9" oninput="formatarCEP(this); buscarEndereco(this.value)">
+            <div class="form-row">
+              <input id="enderecoAluno" placeholder="Endereço">
+              <input id="numeroAluno" placeholder="Número">
+            </div>
+            <div class="form-row">
+              <input id="bairroAluno" placeholder="Bairro">
+              <input id="cidadeAluno" placeholder="Cidade">
+            </div>
+            <div class="form-row">
+              <input id="estadoAluno" placeholder="Estado">
+              <input id="cursoAluno" placeholder="Curso">
+            </div>
             <button type="submit">Cadastrar Aluno</button>
           </form>
         </div>
@@ -42,7 +53,7 @@
             <input id="nomeEmpresa" placeholder="Nome">
             <input id="emailEmpresa" placeholder="Email">
             <input type="password" id="senhaEmpresa" placeholder="Senha">
-            <input id="cnpjEmpresa" placeholder="CNPJ">
+            <input id="cnpjEmpresa" placeholder="CNPJ" maxlength="18" oninput="formatarCNPJ(this)">
             <button type="submit">Cadastrar Empresa</button>
           </form>
         </div>

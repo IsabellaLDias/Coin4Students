@@ -1,6 +1,122 @@
 const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
 
+// ==========================================
+// FUNÇÕES DE MÁSCARA
+// ==========================================
+function formatarCPF(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    
+    if (value.length > 9) {
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } else if (value.length > 6) {
+        value = value.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
+    } else if (value.length > 3) {
+        value = value.replace(/(\d{3})(\d{3})/, '$1.$2');
+    }
+    
+    input.value = value;
+}
+
+function formatarRG(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 9) value = value.slice(0, 9);
+    
+    if (value.length > 8) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, '$1.$2.$3-$4');
+    } else if (value.length > 5) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})/, '$1.$2.$3');
+    } else if (value.length > 2) {
+        value = value.replace(/(\d{2})(\d{3})/, '$1.$2');
+    }
+    
+    input.value = value;
+}
+
+function formatarCNPJ(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 14) value = value.slice(0, 14);
+    
+    if (value.length > 12) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    } else if (value.length > 8) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})/, '$1.$2.$3/$4');
+    } else if (value.length > 5) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})/, '$1.$2.$3');
+    } else if (value.length > 2) {
+        value = value.replace(/(\d{2})(\d{3})/, '$1.$2');
+    }
+    
+    input.value = value;
+}
+
+function formatarCEP(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 8) value = value.slice(0, 8);
+    
+    if (value.length > 5) {
+        value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+    }
+    
+    input.value = value;
+}
+
+async function buscarEndereco(cep) {
+    const cepLimpo = cep.replace(/\D/g, '');
+    
+    if (cepLimpo.length !== 8) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+        
+        if (!response.ok) {
+            throw new Error('Erro na busca do CEP');
+        }
+        
+        const data = await response.json();
+        
+        if (data.erro) {
+            showToast('CEP não encontrado. Verifique o código digitado.', 'error');
+            return;
+        }
+
+        document.getElementById('enderecoAluno').value = data.logradouro || '';
+        document.getElementById('bairroAluno').value = data.bairro || '';
+        document.getElementById('cidadeAluno').value = data.localidade || '';
+        document.getElementById('estadoAluno').value = data.uf || '';
+
+        document.getElementById('numeroAluno').focus();
+        
+    } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+        showToast('Erro ao buscar endereço. Tente novamente.', 'error');
+    }
+}
+
+function combinarEndereco() {
+    const endereco = document.getElementById('enderecoAluno').value;
+    const numero = document.getElementById('numeroAluno').value;
+    const bairro = document.getElementById('bairroAluno').value;
+    const cidade = document.getElementById('cidadeAluno').value;
+    const estado = document.getElementById('estadoAluno').value;
+    const cep = document.getElementById('cepAluno').value;
+    
+    let enderecoCompleto = '';
+    if (endereco) enderecoCompleto += endereco;
+    if (numero) enderecoCompleto += `, ${numero}`;
+    if (bairro) enderecoCompleto += ` - ${bairro}`;
+    if (cidade) enderecoCompleto += `, ${cidade}`;
+    if (estado) enderecoCompleto += `/${estado}`;
+    if (cep) enderecoCompleto += ` - CEP: ${cep}`;
+    
+    return enderecoCompleto.trim();
+}
+
+// ==========================================
+
 const secaoCadastro = document.getElementById("secaoCadastro");
 const secaoLogin = document.getElementById("secaoLogin");
 const btnIrParaLogin = document.getElementById("btnIrParaLogin");
@@ -35,7 +151,7 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
       return;
     }
 
-    // Busca empresas
+    // Busca Empresas
     const respEmpresas = await fetch(EMPRESA_API);
     const empresas = await respEmpresas.json();
     const empresa = empresas.find(e => e.email === email && e.senha === senha);
@@ -62,7 +178,7 @@ document.getElementById("formAluno").addEventListener("submit", async (e) => {
     senha: document.getElementById("senhaAluno").value,
     cpf: document.getElementById("cpfAluno").value,
     rg: document.getElementById("rgAluno").value,
-    endereco: document.getElementById("enderecoAluno").value,
+    endereco: combinarEndereco(),
     curso: document.getElementById("cursoAluno").value,
     saldoMoedas: 0
   };
@@ -116,15 +232,21 @@ items.forEach(item => {
     const isCurrentlyActive = item.classList.contains("active");
 
     items.forEach(otherItem => {
-      otherItem.classList.remove("active");
-      otherItem.querySelector(".accordion-content").style.maxHeight = null;
+      if (otherItem !== item) {
+        otherItem.classList.remove("active");
+        const otherContent = otherItem.querySelector(".accordion-content");
+        otherContent.style.maxHeight = null;
+      }
     });
 
-    // Se o clicado não estava aberto, abre ele
     if (!isCurrentlyActive) {
       item.classList.add("active");
       const content = item.querySelector(".accordion-content");
-      content.style.maxHeight = content.scrollHeight + "px";
+      content.style.maxHeight = "400px";
+    } else {
+      item.classList.remove("active");
+      const content = item.querySelector(".accordion-content");
+      content.style.maxHeight = null;
     }
   });
 });
@@ -133,7 +255,6 @@ function criarBotaoOlhinho(inputId) {
   const input = document.getElementById(inputId);
   if (!input) return;
 
-  // Cria wrapper
   const wrapper = document.createElement("div");
   wrapper.style.cssText = "position:relative; display:flex; align-items:center;";
   input.parentNode.insertBefore(wrapper, input);

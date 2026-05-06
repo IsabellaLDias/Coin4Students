@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
 }
 
 body {
@@ -26,7 +27,7 @@ body {
   z-index: -1;
 }
 
-/* Card central */
+/* Card Central */
 .container {
   width: 50%;
   max-width: 650px;
@@ -39,7 +40,7 @@ body {
 /* Título */
 .titulo {
   text-align: center;
-  font-size: 20px;
+  font-size: 28px;
   margin-bottom: 20px;
   font-weight: 600;
   color: #333;
@@ -74,7 +75,6 @@ body {
   transition: 0.3s;
 }
 
-/* Quando ativo */
 .accordion-item.active .accordion-header::after {
   transform: rotate(180deg);
 }
@@ -88,22 +88,55 @@ body {
   padding: 0 14px;
 }
 
-/* Form dentro */
+.accordion-item.active .accordion-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.accordion-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.accordion-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.accordion-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.accordion-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
 form {
   display: flex;
   flex-direction: column;
   padding: 15px 0;
 }
 
-/* Inputs */
-input {
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
-/* Focus verde */
+.form-row input {
+  flex: 1;
+}
+
+/* Inputs */
+input {
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Focus Verde */
 input:focus {
   outline: none;
   border-color: #2e7d32;
@@ -112,12 +145,13 @@ input:focus {
 
 /* Botão */
 button {
-  padding: 11px;
+  padding: 14px;
   border: none;
   border-radius: 6px;
   background: linear-gradient(45deg, #5c995f, #dbc252);
   color: #000;
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.2s;
 }

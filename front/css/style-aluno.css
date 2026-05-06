@@ -5,6 +5,17 @@
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
+/* Layout em colunas para campos de endereço */
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.form-row input {
+    flex: 1;
+}
+
 body {
     min-height: 100vh;
     background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5)),
