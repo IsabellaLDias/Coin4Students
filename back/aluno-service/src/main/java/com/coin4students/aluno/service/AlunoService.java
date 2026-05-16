@@ -46,4 +46,18 @@ public class AlunoService {
     public void deletar(Long id) {
         repository.deleteById(id);
     }
+
+    public Aluno adicionarMoedas(Long id, Integer valor) {
+
+        Aluno aluno = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        if (aluno.getSaldoMoedas() == null) {
+            aluno.setSaldoMoedas(0);
+        }
+
+        aluno.setSaldoMoedas(aluno.getSaldoMoedas() + valor);
+
+        return repository.save(aluno);
+    }
 }

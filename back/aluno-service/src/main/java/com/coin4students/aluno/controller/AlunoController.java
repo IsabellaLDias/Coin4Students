@@ -41,4 +41,12 @@ public class AlunoController {
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
     }
+
+    @PutMapping("/{id}/adicionar-moedas")
+    public Aluno adicionarMoedas(
+            @PathVariable Long id,
+            @RequestParam Integer valor
+    ) {
+        return service.adicionarMoedas(id, valor);
+    }
 }
