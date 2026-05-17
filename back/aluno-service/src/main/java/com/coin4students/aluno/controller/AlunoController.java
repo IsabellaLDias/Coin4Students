@@ -49,4 +49,12 @@ public class AlunoController {
     ) {
         return service.adicionarMoedas(id, valor);
     }
+
+    @PutMapping("/{id}/remover-moedas")
+    public Aluno removerMoedas(
+            @PathVariable Long id,
+            @RequestParam Integer valor
+    ) {
+        return service.removerMoedas(id, valor);
+    }
 }

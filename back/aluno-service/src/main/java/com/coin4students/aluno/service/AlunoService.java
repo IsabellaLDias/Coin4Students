@@ -60,4 +60,21 @@ public class AlunoService {
 
         return repository.save(aluno);
     }
+
+    public Aluno removerMoedas(Long id, Integer valor) {
+        Aluno aluno = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        if (aluno.getSaldoMoedas() == null) {
+            aluno.setSaldoMoedas(0);
+        }
+
+        if (aluno.getSaldoMoedas() < valor) {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+
+        aluno.setSaldoMoedas(aluno.getSaldoMoedas() - valor);
+
+        return repository.save(aluno);
+    }
 }
