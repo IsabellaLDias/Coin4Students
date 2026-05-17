@@ -9,6 +9,7 @@ import com.coin4students.professor.repository.ProfessorRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class ProfessorService {
     private final ProfessorRepository professorRepository;
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper objectMapper;
+    @Value("${aluno.service.url}")
+    private String alunoServiceUrl;
     private final RestTemplate restTemplate = new RestTemplate();
 
     public ProfessorService(
@@ -57,7 +60,7 @@ public class ProfessorService {
         professorRepository.save(professor);
 
         AlunoResponse aluno = restTemplate.getForObject(
-                "http://localhost:8080/alunos/" + dto.getIdAluno(),
+                alunoServiceUrl + "/alunos/" + dto.getIdAluno(),
                 AlunoResponse.class
         );
 

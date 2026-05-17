@@ -9,6 +9,8 @@ import com.coin4students.vantagem.model.Cupom;
 import com.coin4students.vantagem.repository.CupomRepository;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.UUID;
 
 import java.util.List;
@@ -18,15 +20,21 @@ public class VantagemService {
 
     private final VantagemRepository repository;
 
+    @Value("${aluno.service.url}")
+    private String alunoServiceUrl;
+
     private final CupomRepository cupomRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
     private final QRCodeService qrCodeService;
 
-    public VantagemService(VantagemRepository repository, CupomRepository cupomRepository, QRCodeService qrCodeService) {
+    private final EmailCupomService emailCupomService;
+
+    public VantagemService(VantagemRepository repository, CupomRepository cupomRepository, QRCodeService qrCodeService, EmailCupomService emailCupomService) {
         this.repository = repository;
         this.cupomRepository = cupomRepository;
         this.qrCodeService = qrCodeService;
+        this.emailCupomService = emailCupomService;
     }
 
     public Vantagem cadastrar(Vantagem vantagem) {
@@ -41,7 +49,7 @@ public class VantagemService {
         Vantagem vantagem = repository.findById(idVantagem)
                 .orElseThrow(() -> new RuntimeException("Vantagem não encontrada"));
 
-        String url = "http://localhost:8080/alunos/"
+        String url = alunoServiceUrl + "/alunos/"
                 + dto.getIdAluno()
                 + "/remover-moedas?valor="
                 + vantagem.getCustoMoedas();
@@ -57,7 +65,15 @@ public class VantagemService {
         String qrCode = qrCodeService.gerarQRCodeBase64(cupom.getCodigo());
         cupom.setQrCodeBase64(qrCode);
 
-        return cupomRepository.save(cupom);
+        Cupom cupomSalvo = cupomRepository.save(cupom);
+
+        emailCupomService.enviarCupomPorEmail(
+                dto.getEmailAluno(),
+                cupomSalvo,
+                vantagem
+        );
+
+        return cupomSalvo;
     }
 
     public Cupom validarCupom(String codigo) {

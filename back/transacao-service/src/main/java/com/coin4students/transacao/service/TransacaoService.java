@@ -6,6 +6,7 @@ import com.coin4students.transacao.model.Transacao;
 import com.coin4students.transacao.repository.TransacaoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +19,9 @@ public class TransacaoService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     private final EmailService emailService;
+
+    @Value("${aluno.service.url}")
+    private String alunoServiceUrl;
 
     public TransacaoService(TransacaoRepository repository, EmailService emailService) {
         this.repository = repository;
@@ -36,7 +40,7 @@ public class TransacaoService {
 
         Transacao transacaoSalva = repository.save(transacao);
 
-        String url = "http://localhost:8080/alunos/"
+        String url =  alunoServiceUrl + "/alunos/"
                 + evento.getIdAluno()
                 + "/adicionar-moedas?valor="
                 + evento.getValor();
