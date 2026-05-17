@@ -3,6 +3,8 @@ package com.coin4students.aluno.service;
 import com.coin4students.aluno.model.Aluno;
 import com.coin4students.aluno.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 

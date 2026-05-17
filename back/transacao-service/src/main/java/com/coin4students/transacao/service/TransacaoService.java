@@ -1,5 +1,6 @@
 package com.coin4students.transacao.service;
 
+import com.coin4students.transacao.service.EmailService;
 import com.coin4students.transacao.dto.EnvioMoedasEvent;
 import com.coin4students.transacao.model.Transacao;
 import com.coin4students.transacao.repository.TransacaoRepository;
@@ -16,8 +17,11 @@ public class TransacaoService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public TransacaoService(TransacaoRepository repository) {
+    private final EmailService emailService;
+
+    public TransacaoService(TransacaoRepository repository, EmailService emailService) {
         this.repository = repository;
+        this.emailService = emailService;
     }
 
     public Transacao registrarEnvioMoedas(EnvioMoedasEvent evento) {
@@ -38,6 +42,19 @@ public class TransacaoService {
                 + evento.getValor();
 
         restTemplate.put(url, null);
+
+        emailService.enviarEmailProfessor(
+                evento.getEmailProfessor(),
+                evento.getValor(),
+                evento.getNomeAluno()
+        );
+
+        emailService.enviarEmailAluno(
+                evento.getEmailAluno(),
+                evento.getValor(),
+                evento.getNomeProfessor(),
+                evento.getMensagem()
+        );
 
         return transacaoSalva;
     }

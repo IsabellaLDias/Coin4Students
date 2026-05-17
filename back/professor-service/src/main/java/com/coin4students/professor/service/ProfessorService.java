@@ -8,6 +8,7 @@ import com.coin4students.professor.model.Professor;
 import com.coin4students.professor.repository.ProfessorRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -17,13 +18,18 @@ public class ProfessorService {
     private final ProfessorRepository professorRepository;
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper objectMapper;
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    public ProfessorService(ProfessorRepository professorRepository, RabbitTemplate rabbitTemplate, ObjectMapper objectMapper) {
+    public ProfessorService(
+        ProfessorRepository professorRepository,
+        RabbitTemplate rabbitTemplate,
+        ObjectMapper objectMapper
+    ) {
         this.professorRepository = professorRepository;
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = objectMapper;
     }
-
+    
     public Professor cadastrar(Professor professor) {
         if (professor.getSaldoMoedas() == null) {
             professor.setSaldoMoedas(1000);
@@ -50,12 +56,22 @@ public class ProfessorService {
         professor.setSaldoMoedas(professor.getSaldoMoedas() - dto.getValor());
         professorRepository.save(professor);
 
+        AlunoResponse aluno = restTemplate.getForObject(
+                "http://localhost:8080/alunos/" + dto.getIdAluno(),
+                AlunoResponse.class
+        );
+
         EnvioMoedasEvent evento = new EnvioMoedasEvent(
                 idProfessor,
                 dto.getIdAluno(),
                 dto.getValor(),
                 dto.getMensagem()
         );
+
+        evento.setEmailProfessor(dto.getEmailProfessor());
+        evento.setEmailAluno(dto.getEmailAluno());
+        evento.setNomeProfessor(professor.getNome());
+        evento.setNomeAluno(aluno.getNome());
 
         try {
             String json = objectMapper.writeValueAsString(evento);
@@ -65,5 +81,18 @@ public class ProfessorService {
         }
 
         return professor;
+    }
+
+    static class AlunoResponse {
+        private Long id;
+        private String nome;
+
+        public Long getId() {
+            return id;
+        }
+
+        public String getNome() {
+            return nome;
+        }
     }
 }
