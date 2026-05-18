@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portal do Professor - Coin4Students</title>
+    <link rel="stylesheet" href="./css/professor.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-area">
+            <img src="./img/logo - Copia.png" alt="Coin4Students">
+            <span>Coin4Students</span>
+        </div>
+
+        <nav class="menu">
+            <a href="#" onclick="trocarTab('home')" id="btn-home" class="active">
+                <i class="ph ph-house"></i> Home
+            </a>
+
+            <a href="#" onclick="trocarTab('distribuir')" id="btn-distribuir">
+                <i class="ph ph-coins"></i> Distribuir Moedas
+            </a>
+
+            <a href="#" onclick="trocarTab('historico')" id="btn-historico">
+                <i class="ph ph-article"></i> Histórico
+            </a>
+
+            <a href="#" onclick="trocarTab('perfil')" id="btn-perfil">
+                <i class="ph ph-user"></i> Meu Perfil
+            </a>
+        </nav>
+
+        <button class="btn-logout" onclick="logout()">
+            <i class="ph ph-sign-out"></i> Sair
+        </button>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="user-info">
+                <span>Bem-vindo, <strong id="nomeProfessor">Carregando...</strong></span>
+            </div>
+        </header>
+
+        <!-- ================= HOME ================= -->
+        <div id="secao-home">
+            <div class="saldo-card">
+                <p>Saldo Disponível para Distribuição</p>
+                <span class="saldo-valor" id="valorSaldo">1000</span> Moedas
+            </div>
+
+            <section class="content-grid">
+                <div class="card">
+                    <h3>
+                        <i class="ph ph-clock-counter-clockwise"></i>
+                        Últimas Distribuições
+                    </h3>
+                    <div id="historicoHome" class="lista-dinamica"></div>
+                </div>
+
+                <div class="card">
+                    <h3>
+                        <i class="ph ph-users"></i>
+                        Alunos Recentes
+                    </h3>
+                    <div id="alunosHome" class="lista-dinamica"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============ DISTRIBUIR MOEDAS ============ -->
+        <div id="secao-distribuir" style="display:none">
+            <div class="card perfil-card">
+                <h3>
+                    <i class="ph ph-coins"></i>
+                    Distribuir Moedas
+                </h3>
+
+                <form id="formDistribuir" onsubmit="event.preventDefault(); distribuirMoedas();">
+                    <div class="perfil-grid">
+
+                        <div>
+                            <label>Aluno:</label>
+                            <select id="selectAluno" required>
+                                <option value="">Selecione um aluno</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Quantidade de Moedas:</label>
+                            <input type="number"
+                                   id="quantidadeMoedas"
+                                   min="1"
+                                   max="1000"
+                                   required>
+                        </div>
+
+                        <div>
+                            <label>Motivo:</label>
+                            <input type="text"
+                                   id="motivoMoedas"
+                                   placeholder="Ex.: Participação em aula"
+                                   required>
+                        </div>
+
+                    </div>
+
+                    <div class="perfil-acoes">
+                        <button type="submit" class="btn-salvar-perfil">
+                            Enviar Moedas
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ============== HISTÓRICO ============== -->
+        <div id="secao-historico" style="display:none">
+            <div class="card">
+                <h3>
+                    <i class="ph ph-article"></i>
+                    Histórico de Distribuições
+                </h3>
+                <div id="historicoLista" class="lista-dinamica"></div>
+            </div>
+        </div>
+
+        <!-- ================ PERFIL ================ -->
+        <div id="secao-perfil" style="display:none">
+            <div class="card perfil-card">
+                <h3>
+                    <i class="ph ph-user-gear"></i>
+                    Meu Perfil
+                </h3>
+
+                <form id="formPerfil" onsubmit="event.preventDefault();">
+                    <div class="perfil-grid">
+
+                        <div>
+                            <label>Nome Completo:</label>
+                            <input type="text" id="perfilNome">
+                        </div>
+
+                        <div>
+                            <label>CPF:</label>
+                            <input type="text"
+                                   id="perfilCPF"
+                                   readonly
+                                   style="background: #f0f0f0; cursor: not-allowed;">
+                        </div>
+
+                        <div>
+                            <label>Departamento:</label>
+                            <input type="text" id="perfilDepartamento">
+                        </div>
+
+                        <div>
+                            <label>Saldo de Moedas:</label>
+                            <input type="number"
+                                   id="perfilSaldo"
+                                   readonly
+                                   style="background: #f0f0f0; cursor: not-allowed;">
+                        </div>
+
+                        <div>
+                            <label>Nova Senha:</label>
+                            <input type="password"
+                                   id="perfilNovaSenha"
+                                   placeholder="Deixe em branco para manter a atual"
+                                   autocomplete="new-password">
+                        </div>
+
+                        <div>
+                            <label>Confirmar Nova Senha:</label>
+                            <input type="password"
+                                   id="perfilConfirmarSenha"
+                                   placeholder="Repita a nova senha"
+                                   autocomplete="new-password">
+                        </div>
+
+                    </div>
+
+                    <div class="perfil-acoes">
+                        <button type="button"
+                                class="btn-salvar-perfil"
+                                onclick="atualizarPerfil()">
+                            Salvar Alterações
+                        </button>
+
+                        <button type="button"
+                                class="btn-excluir-perfil"
+                                onclick="excluirConta()">
+                            Excluir Conta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Modal de Confirmação -->
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirmar Exclusão</h3>
+            <p>Tem certeza que deseja excluir sua conta? Esta ação é permanente!</p>
+
+            <div class="modal-buttons">
+                <button class="btn-modal-cancel"
+                        onclick="fecharConfirmModal()">
+                    Cancelar
+                </button>
+
+                <button class="btn-modal-confirm"
+                        onclick="confirmarExclusao()">
+                    Excluir Conta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Toast -->
+    <script>
+        function showToast(message, type = 'info', duration = 4000) {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="toast-close"
+                        onclick="this.parentElement.remove()">
+                    &times;
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'toastFadeOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        window.showSystemMessage = showToast;
+    </script>
+
+    <!-- JS do Professor -->
+    <script src="./js/professor.js"></script>
+</body>
+
+</html>
