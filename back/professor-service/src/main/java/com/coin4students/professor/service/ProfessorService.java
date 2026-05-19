@@ -40,6 +40,11 @@ public class ProfessorService {
         return professorRepository.save(professor);
     }
 
+    public Professor buscarPorId(Long id) {
+        return professorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
+    }
+
     public List<Professor> listar() {
         return professorRepository.findAll();
     }

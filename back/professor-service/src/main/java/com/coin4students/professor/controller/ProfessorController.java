@@ -22,6 +22,10 @@ public class ProfessorController {
     public Professor cadastrar(@RequestBody Professor professor) {
         return professorService.cadastrar(professor);
     }
+    @GetMapping("/{id}")
+    public Professor buscarPorId(@PathVariable Long id) {
+        return professorService.buscarPorId(id);
+    }
 
     @GetMapping
     public List<Professor> listar() {
