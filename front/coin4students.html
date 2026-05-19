@@ -58,7 +58,25 @@
           </form>
         </div>
       </div>
+        <!-- Cadastro de Professor -->
+<div class="accordion-item">
+  <button class="accordion-header">Cadastro de Professor</button>
+  <div class="accordion-content">
 
+    <form id="formProfessor">
+      <input id="nomeProfessor" placeholder="Nome" required>
+      <input id="emailProfessor" type="email" placeholder="Email" required>
+      <input type="password" id="senhaProfessor" placeholder="Senha" required>
+      <input id="cpfProfessor" placeholder="CPF" maxlength="14"
+             oninput="formatarCPF(this)" required>
+      <input id="departamentoProfessor" placeholder="Departamento" required>
+
+      <!-- saldoMoedas inicia em 0 automaticamente -->
+      <button type="submit">Cadastrar Professor</button>
+    </form>
+
+  </div>
+</div>
 
       <p style="margin-top: 20px;">
         Já tem uma conta? <a href="#" id="btnIrParaLogin" style="color: #d4af37; font-weight: bold;">Fazer Login</a>

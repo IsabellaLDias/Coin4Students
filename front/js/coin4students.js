@@ -1,5 +1,6 @@
 const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
+const PROFESSOR_API = "https://professor-service-0rvu.onrender.com/professores";
 
 // ==========================================
 // FUNÇÕES DE MÁSCARA
@@ -79,7 +80,7 @@ async function buscarEndereco(cep) {
         const data = await response.json();
         
         if (data.erro) {
-            showToast('CEP não encontrado. Verifique o código digitado.', 'error');
+            if (typeof showToast === "function") showToast('CEP não encontrado. Verifique o código digitado.', 'error');
             return;
         }
 
@@ -92,7 +93,7 @@ async function buscarEndereco(cep) {
         
     } catch (error) {
         console.error('Erro ao buscar CEP:', error);
-        showToast('Erro ao buscar endereço. Tente novamente.', 'error');
+        if (typeof showToast === "function") showToast('Erro ao buscar endereço. Tente novamente.', 'error');
     }
 }
 
@@ -115,6 +116,8 @@ function combinarEndereco() {
     return enderecoCompleto.trim();
 }
 
+// ==========================================
+// NAVEGAÇÃO E AUTENTICAÇÃO
 // ==========================================
 
 const secaoCadastro = document.getElementById("secaoCadastro");
@@ -140,34 +143,53 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
   const senha = document.getElementById("loginSenha").value;
 
   try {
+    // 1. Busca Alunos
     const respAlunos = await fetch(ALUNO_API);
     const alunos = await respAlunos.json();
     const aluno = alunos.find(a => a.email === email && a.senha === senha);
 
     if (aluno) {
       localStorage.setItem("alunoIdLogado", aluno.id);
-      showToast(`Bem-vindo, Aluno ${aluno.nome}!`, 'success');
+      if (typeof showToast === "function") showToast(`Bem-vindo, Aluno ${aluno.nome}!`, 'success');
       setTimeout(() => window.location.href = "aluno.html", 1000);
       return;
     }
 
-    // Busca Empresas
+    // 2. Busca Professores
+    const respProfessores = await fetch(PROFESSOR_API);
+    const professores = await respProfessores.json();
+    const professor = professores.find(p => p.email === email && p.senha === senha);
+    
+    if (professor) {
+      localStorage.setItem("professorIdLogado", professor.id);
+      if (typeof showToast === "function") showToast(`Bem-vindo, Professor ${professor.nome}!`, 'success');
+      setTimeout(() => window.location.href = "professor.html", 1000);
+      return;
+    }
+
+    // 3. Busca Empresas
     const respEmpresas = await fetch(EMPRESA_API);
     const empresas = await respEmpresas.json();
-    const empresa = empresas.find(e => e.email === email && e.senha === senha);
+    const empresa = empresas.find(emp => emp.email === email && emp.senha === senha);
 
     if (empresa) {
       localStorage.setItem("empresaIdLogada", empresa.id);
-      showToast(`Bem-vindo, Empresa ${empresa.nome}!`, 'success');
+      if (typeof showToast === "function") showToast(`Bem-vindo, Empresa ${empresa.nome}!`, 'success');
       setTimeout(() => window.location.href = "empresa.html", 1000);
       return;
     }
 
-    showToast("E-mail ou senha incorretos.", 'error');
+    // Se passou por todos e não encontrou, exibe o erro APENAS AQUI.
+    if (typeof showToast === "function") showToast("E-mail ou senha incorretos.", 'error');
+
   } catch (error) {
-    showToast("Erro ao conectar com o servidor.", 'error');
+    if (typeof showToast === "function") showToast("Erro ao conectar com o servidor.", 'error');
   }
 });
+
+// ==========================================
+// CADASTROS
+// ==========================================
 
 document.getElementById("formAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -193,17 +215,18 @@ document.getElementById("formAluno").addEventListener("submit", async (e) => {
     if (response.ok) {
       const alunoCriado = await response.json();
       localStorage.setItem("alunoIdLogado", alunoCriado.id);
-      showToast("Aluno cadastrado com sucesso!", 'success');
+      if (typeof showToast === "function") showToast("Aluno cadastrado com sucesso!", 'success');
       setTimeout(() => window.location.href = "aluno.html", 1000);
     } else {
-      showToast("Erro ao cadastrar: verifique os dados ou o servidor.", 'error');
+      if (typeof showToast === "function") showToast("Erro ao cadastrar: verifique os dados ou o servidor.", 'error');
     }
   } catch (error) {
     console.error("Erro técnico:", error);
-    showToast("O servidor está desligado ou houve um erro de conexão.", 'error');
+    if (typeof showToast === "function") showToast("O servidor está desligado ou houve um erro de conexão.", 'error');
   }
 });
 
+// CORREÇÃO APLICADA: Inclusão de try/catch, verificação de erro e redirecionamento.
 document.getElementById("formEmpresa").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -214,14 +237,68 @@ document.getElementById("formEmpresa").addEventListener("submit", async (e) => {
     cnpj: document.getElementById("cnpjEmpresa").value
   };
 
-  await fetch(EMPRESA_API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(empresa)
-  });
+  try {
+    const response = await fetch(EMPRESA_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(empresa)
+    });
 
-  showToast("Empresa cadastrada com sucesso!", 'success');
+    if (response.ok) {
+      const empresaCriada = await response.json();
+      localStorage.setItem("empresaIdLogada", empresaCriada.id);
+      if (typeof showToast === "function") showToast("Empresa cadastrada com sucesso!", 'success');
+      setTimeout(() => window.location.href = "empresa.html", 1000);
+    } else {
+      if (typeof showToast === "function") showToast("Erro ao cadastrar empresa.", 'error');
+    }
+  } catch (error) {
+    console.error("Erro técnico:", error);
+    if (typeof showToast === "function") showToast("Erro de conexão com o servidor.", 'error');
+  }
 });
+
+document.getElementById("formProfessor").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const professor = {
+    nome: document.getElementById("nomeProfessor").value,
+    email: document.getElementById("emailProfessor").value,
+    senha: document.getElementById("senhaProfessor").value,
+    cpf: document.getElementById("cpfProfessor").value,
+    departamento: document.getElementById("departamentoProfessor").value,
+    saldoMoedas: 0
+  };
+  console.log("Dados que estão indo para a API:", professor);
+
+  try {
+    const response = await fetch(PROFESSOR_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(professor)
+    });
+
+    if (response.ok) {
+      const professorCriado = await response.json();
+      localStorage.setItem("professorIdLogado", professorCriado.id);
+      if (typeof showToast === "function") showToast("Professor cadastrado com sucesso!", "success");
+      setTimeout(() => {
+        window.location.href = "professor.html";
+      }, 1000);
+    } else {
+      if (typeof showToast === "function") showToast("Erro ao cadastrar professor.", "error");
+    }
+  } catch (error) {
+    console.error("Erro ao cadastrar professor:", error);
+    if (typeof showToast === "function") showToast("Erro de conexão com o servidor.", "error");
+  }
+});
+
+// ==========================================
+// ACCORDION E UI
+// ==========================================
 
 const items = document.querySelectorAll(".accordion-item");
 
@@ -235,18 +312,17 @@ items.forEach(item => {
       if (otherItem !== item) {
         otherItem.classList.remove("active");
         const otherContent = otherItem.querySelector(".accordion-content");
-        otherContent.style.maxHeight = null;
+        if(otherContent) otherContent.style.maxHeight = null;
       }
     });
 
+    const content = item.querySelector(".accordion-content");
     if (!isCurrentlyActive) {
       item.classList.add("active");
-      const content = item.querySelector(".accordion-content");
-      content.style.maxHeight = "400px";
+      if(content) content.style.maxHeight = "400px";
     } else {
       item.classList.remove("active");
-      const content = item.querySelector(".accordion-content");
-      content.style.maxHeight = null;
+      if(content) content.style.maxHeight = null;
     }
   });
 });
@@ -312,4 +388,5 @@ function olhinhoFechado() {
 
 criarBotaoOlhinho("senhaAluno");
 criarBotaoOlhinho("senhaEmpresa");
+criarBotaoOlhinho("senhaProfessor");
 criarBotaoOlhinho("loginSenha");

@@ -1,6 +1,5 @@
-// ./js/professor.js
 
-const PROFESSOR_API = "https://professor-service.onrender.com/professores";
+const PROFESSOR_API = "https://professor-service-0rvu.onrender.com/professores";
 const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 
 let dadosDoProfessorGlobal = null;
@@ -55,6 +54,8 @@ function preencherCamposFormulario(professor) {
     document.getElementById("perfilCPF").value = professor.cpf || "";
     document.getElementById("perfilDepartamento").value = professor.departamento || "";
     document.getElementById("perfilSaldo").value = professor.saldoMoedas || 0;
+    document.getElementById("perfilEmail").value = professor.email || "";
+    document.getElementById("perfilSenha").value = professor.senha || "";
 }
 
 async function atualizarPerfil() {
