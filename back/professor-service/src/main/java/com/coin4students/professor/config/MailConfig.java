@@ -3,6 +3,7 @@ package com.coin4students.professor.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -29,13 +30,19 @@ public class MailConfig {
     @Value("${spring.mail.properties.mail.smtp.starttls.enable:true}")
     private String startTls;
 
+    private final Environment environment;
+
+    public MailConfig(Environment environment) {
+        this.environment = environment;
+    }
+
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password == null ? "" : password.replace(" ", ""));
+        mailSender.setUsername(valorConfigurado(username, "SPRING_MAIL_USERNAME"));
+        mailSender.setPassword(valorConfigurado(password, "SPRING_MAIL_PASSWORD").replaceAll("\\s+", ""));
         mailSender.setDefaultEncoding("UTF-8");
 
         Properties props = mailSender.getJavaMailProperties();
@@ -46,5 +53,14 @@ public class MailConfig {
         props.put("mail.smtp.writetimeout", "10000");
 
         return mailSender;
+    }
+
+    private String valorConfigurado(String valorPropriedade, String nomeVariavelAmbiente) {
+        if (valorPropriedade != null && !valorPropriedade.isBlank()) {
+            return valorPropriedade;
+        }
+
+        String valorAmbiente = environment.getProperty(nomeVariavelAmbiente);
+        return valorAmbiente == null ? "" : valorAmbiente;
     }
 }
