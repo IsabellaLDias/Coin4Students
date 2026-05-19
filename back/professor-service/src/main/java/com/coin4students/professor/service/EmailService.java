@@ -2,15 +2,21 @@ package com.coin4students.professor.service;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
 
     private final JavaMailSender mailSender;
+    private final String remetente;
 
-    public EmailService(JavaMailSender mailSender) {
+    public EmailService(
+        JavaMailSender mailSender,
+        @Value("${spring.mail.username:}") String remetente
+    ) {
         this.mailSender = mailSender;
+        this.remetente = remetente;
     }
 
     public void enviarEmailProfessor(String email, Integer valor, String nomeAluno) {
@@ -19,6 +25,7 @@ public class EmailService {
         }
 
         SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setFrom(remetente);
         mensagem.setTo(email);
         mensagem.setSubject("Confirmacao de envio de moedas - Coin4Students");
         mensagem.setText(
@@ -28,6 +35,7 @@ public class EmailService {
         );
 
         mailSender.send(mensagem);
+        System.out.println("Email de confirmacao enviado para professor: " + email);
     }
 
     public void enviarEmailAluno(String email, Integer valor, String nomeProfessor, String mensagemProfessor) {
@@ -36,6 +44,7 @@ public class EmailService {
         }
 
         SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setFrom(remetente);
         mensagem.setTo(email);
         mensagem.setSubject("Voce recebeu moedas! - Coin4Students");
         mensagem.setText(
@@ -46,5 +55,6 @@ public class EmailService {
         );
 
         mailSender.send(mensagem);
+        System.out.println("Email de recebimento enviado para aluno: " + email);
     }
 }

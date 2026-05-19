@@ -155,9 +155,17 @@ public class ProfessorService {
     }
 
     private void tentarEnviarEmails(Professor professor, AlunoResponse aluno, EnvioMoedasDTO dto) {
+        String emailProfessor = professor.getEmail() != null && !professor.getEmail().isBlank()
+                ? professor.getEmail()
+                : dto.getEmailProfessor();
+
+        String emailAluno = dto.getEmailAluno() != null && !dto.getEmailAluno().isBlank()
+                ? dto.getEmailAluno()
+                : aluno.getEmail();
+
         try {
             emailService.enviarEmailProfessor(
-                    professor.getEmail(),
+                    emailProfessor,
                     dto.getValor(),
                     aluno.getNome()
             );
@@ -167,9 +175,7 @@ public class ProfessorService {
 
         try {
             emailService.enviarEmailAluno(
-                    dto.getEmailAluno() != null && !dto.getEmailAluno().isBlank()
-                            ? dto.getEmailAluno()
-                            : aluno.getEmail(),
+                    emailAluno,
                     dto.getValor(),
                     professor.getNome(),
                     dto.getMensagem()
