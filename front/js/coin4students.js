@@ -269,7 +269,6 @@ document.getElementById("formProfessor").addEventListener("submit", async (e) =>
     departamento: document.getElementById("departamentoProfessor").value,
     saldoMoedas: 0
   };
-  console.log("Dados que estão indo para a API:", professor);
 
   try {
     const response = await fetch(PROFESSOR_API, {
