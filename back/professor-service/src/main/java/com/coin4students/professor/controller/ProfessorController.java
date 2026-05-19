@@ -32,6 +32,16 @@ public class ProfessorController {
         return professorService.listar();
     }
 
+    @PutMapping("/{id}")
+    public Professor atualizar(@PathVariable Long id, @RequestBody Professor professor) {
+        return professorService.atualizar(id, professor);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        professorService.deletar(id);
+    }
+
     @PostMapping("/{idProfessor}/enviar-moedas")
     public Professor enviarMoedas(
             @PathVariable Long idProfessor,

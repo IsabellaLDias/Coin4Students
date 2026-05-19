@@ -1,5 +1,6 @@
 package com.coin4students.professor.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +14,11 @@ public class Professor {
     private String cpf;
     private String departamento;
     private Integer saldoMoedas = 1000;
+
+    @JsonAlias("emailProfessor")
     private String email;   
+
+    @JsonAlias({"senhaProfessor", "password"})
     private String senha;
 
     public Long getId() {
@@ -60,11 +65,19 @@ public class Professor {
         this.email = email;
     }
 
+    public void setEmailProfessor(String emailProfessor) {
+        this.email = emailProfessor;
+    }
+
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public void setSenhaProfessor(String senhaProfessor) {
+        this.senha = senhaProfessor;
     }
 }

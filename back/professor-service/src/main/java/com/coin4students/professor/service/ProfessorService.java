@@ -34,9 +34,12 @@ public class ProfessorService {
     }
     
     public Professor cadastrar(Professor professor) {
+        validarCredenciais(professor);
+
         if (professor.getSaldoMoedas() == null) {
             professor.setSaldoMoedas(1000);
         }
+
         return professorRepository.save(professor);
     }
 
@@ -47,6 +50,25 @@ public class ProfessorService {
 
     public List<Professor> listar() {
         return professorRepository.findAll();
+    }
+
+    public Professor atualizar(Long id, Professor professorAtualizado) {
+        validarCredenciais(professorAtualizado);
+
+        Professor professor = buscarPorId(id);
+
+        professor.setNome(professorAtualizado.getNome());
+        professor.setEmail(professorAtualizado.getEmail());
+        professor.setSenha(professorAtualizado.getSenha());
+        professor.setCpf(professorAtualizado.getCpf());
+        professor.setDepartamento(professorAtualizado.getDepartamento());
+        professor.setSaldoMoedas(professorAtualizado.getSaldoMoedas());
+
+        return professorRepository.save(professor);
+    }
+
+    public void deletar(Long id) {
+        professorRepository.deleteById(id);
     }
 
     public Professor enviarMoedas(Long idProfessor, EnvioMoedasDTO dto) {
@@ -101,6 +123,16 @@ public class ProfessorService {
 
         public String getNome() {
             return nome;
+        }
+    }
+
+    private void validarCredenciais(Professor professor) {
+        if (professor.getEmail() == null || professor.getEmail().isBlank()) {
+            throw new RuntimeException("E-mail do professor e obrigatorio");
+        }
+
+        if (professor.getSenha() == null || professor.getSenha().isBlank()) {
+            throw new RuntimeException("Senha do professor e obrigatoria");
         }
     }
 }
