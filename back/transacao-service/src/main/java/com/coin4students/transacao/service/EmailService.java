@@ -11,20 +11,18 @@ import org.springframework.web.client.RestTemplate;
 public class EmailService {
 
     private static final String BREVO_EMAILS_URL = "https://api.brevo.com/v3/smtp/email";
+    private static final String REMETENTE_EMAIL = "ildsantos@sga.pucminas.br";
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String apiKey;
     private final String remetenteNome;
-    private final String remetenteEmail;
 
     public EmailService(
         @Value("${brevo.api.key:}") String apiKey,
-        @Value("${brevo.from.name:Coin4Students}") String remetenteNome,
-        @Value("${brevo.from.email:}") String remetenteEmail
+        @Value("${brevo.from.name:Coin4Students}") String remetenteNome
     ) {
         this.apiKey = apiKey;
         this.remetenteNome = remetenteNome;
-        this.remetenteEmail = remetenteEmail;
     }
 
     public void enviarEmailProfessor(String email, Integer valor, String nomeAluno) {
@@ -69,16 +67,12 @@ public class EmailService {
             throw new RuntimeException("BREVO_API_KEY nao configurada");
         }
 
-        if (normalizarEmail(remetenteEmail) == null) {
-            throw new RuntimeException("BREVO_FROM_EMAIL ausente ou invalido");
-        }
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("api-key", apiKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         BrevoEmailRequest body = new BrevoEmailRequest(
-                new BrevoSender(remetenteNome, remetenteEmail.trim()),
+                new BrevoSender(remetenteNome, REMETENTE_EMAIL),
                 new BrevoRecipient[] { new BrevoRecipient(destinatario) },
                 assunto,
                 texto.replace("\n", "<br>")
