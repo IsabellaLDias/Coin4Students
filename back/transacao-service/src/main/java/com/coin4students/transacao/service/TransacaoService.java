@@ -44,20 +44,50 @@ public class TransacaoService {
 
         restTemplate.put(url, null);
 
-        emailService.enviarEmailProfessor(
-                evento.getEmailProfessor(),
-                evento.getValor(),
-                evento.getNomeAluno()
-        );
-
-        emailService.enviarEmailAluno(
-                evento.getEmailAluno(),
-                evento.getValor(),
-                evento.getNomeProfessor(),
-                evento.getMensagem()
-        );
+        tentarEnviarEmailProfessor(evento);
+        tentarEnviarEmailAluno(evento);
 
         return transacaoSalva;
+    }
+
+    private void tentarEnviarEmailProfessor(EnvioMoedasEvent evento) {
+        try {
+            emailService.enviarEmailProfessor(
+                    evento.getEmailProfessor(),
+                    evento.getValor(),
+                    evento.getNomeAluno()
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email para professor: " + mensagemErroCompleta(e));
+        }
+    }
+
+    private void tentarEnviarEmailAluno(EnvioMoedasEvent evento) {
+        try {
+            emailService.enviarEmailAluno(
+                    evento.getEmailAluno(),
+                    evento.getValor(),
+                    evento.getNomeProfessor(),
+                    evento.getMensagem()
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email para aluno: " + mensagemErroCompleta(e));
+        }
+    }
+
+    private String mensagemErroCompleta(Exception e) {
+        StringBuilder mensagem = new StringBuilder(e.getClass().getSimpleName() + ": " + e.getMessage());
+        Throwable causa = e.getCause();
+
+        while (causa != null) {
+            mensagem.append(" | Causa: ")
+                    .append(causa.getClass().getSimpleName())
+                    .append(": ")
+                    .append(causa.getMessage());
+            causa = causa.getCause();
+        }
+
+        return mensagem.toString();
     }
 
     public List<Transacao> extratoAluno(Long idAluno) {

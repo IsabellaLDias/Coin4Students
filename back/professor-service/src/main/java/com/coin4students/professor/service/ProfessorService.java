@@ -111,7 +111,9 @@ public class ProfessorService {
                 dto.getMensagem()
         );
 
-        evento.setEmailProfessor(dto.getEmailProfessor());
+        evento.setEmailProfessor(professor.getEmail() != null && !professor.getEmail().isBlank()
+                ? professor.getEmail()
+                : dto.getEmailProfessor());
         evento.setEmailAluno(dto.getEmailAluno() != null && !dto.getEmailAluno().isBlank()
                 ? dto.getEmailAluno()
                 : aluno.getEmail());
