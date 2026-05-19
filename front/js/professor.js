@@ -273,7 +273,8 @@ async function distribuirMoedas() {
         );
 
         if (!response.ok) {
-            throw new Error("Erro ao distribuir moedas");
+            const mensagemErro = await response.text();
+            throw new Error(mensagemErro || "Erro ao distribuir moedas");
         }
 
         // Atualiza saldo local
@@ -293,7 +294,7 @@ async function distribuirMoedas() {
 
     } catch (error) {
         console.error(error);
-        showToast("Erro ao distribuir moedas.", "error");
+        showToast(error.message || "Erro ao distribuir moedas.", "error");
     }
 }
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,6 +25,9 @@ public class ProfessorService {
 
     @Value("${aluno.service.url}")
     private String alunoServiceUrl;
+
+    @Value("${transacao.service.url:}")
+    private String transacaoServiceUrl;
 
     public ProfessorService(
         ProfessorRepository professorRepository,
@@ -104,7 +108,7 @@ public class ProfessorService {
         professorRepository.save(professor);
 
         adicionarMoedasAoAluno(dto);
-        enviarEmails(professor, aluno, dto);
+        tentarEnviarEmails(professor, aluno, dto);
 
         EnvioMoedasEvent evento = new EnvioMoedasEvent(
                 idProfessor,
@@ -120,14 +124,25 @@ public class ProfessorService {
         evento.setNomeProfessor(professor.getNome());
         evento.setNomeAluno(aluno.getNome());
 
-        try {
-            String json = objectMapper.writeValueAsString(evento);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.FILA_ENVIO_MOEDAS, json);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao enviar mensagem para RabbitMQ", e);
-        }
+        publicarEventoEnvioMoedas(evento);
 
         return professor;
+    }
+
+    public List<?> historico(Long idProfessor) {
+        if (transacaoServiceUrl == null || transacaoServiceUrl.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        try {
+            return restTemplate.getForObject(
+                    transacaoServiceUrl + "/transacoes/extrato/professor/" + idProfessor,
+                    List.class
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar historico do professor: " + e.getMessage());
+            return Collections.emptyList();
+        }
     }
 
     private void adicionarMoedasAoAluno(EnvioMoedasDTO dto) {
@@ -139,21 +154,38 @@ public class ProfessorService {
         restTemplate.put(url, null);
     }
 
-    private void enviarEmails(Professor professor, AlunoResponse aluno, EnvioMoedasDTO dto) {
-        emailService.enviarEmailProfessor(
-                professor.getEmail(),
-                dto.getValor(),
-                aluno.getNome()
-        );
+    private void tentarEnviarEmails(Professor professor, AlunoResponse aluno, EnvioMoedasDTO dto) {
+        try {
+            emailService.enviarEmailProfessor(
+                    professor.getEmail(),
+                    dto.getValor(),
+                    aluno.getNome()
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email para professor: " + e.getMessage());
+        }
 
-        emailService.enviarEmailAluno(
-                dto.getEmailAluno() != null && !dto.getEmailAluno().isBlank()
-                        ? dto.getEmailAluno()
-                        : aluno.getEmail(),
-                dto.getValor(),
-                professor.getNome(),
-                dto.getMensagem()
-        );
+        try {
+            emailService.enviarEmailAluno(
+                    dto.getEmailAluno() != null && !dto.getEmailAluno().isBlank()
+                            ? dto.getEmailAluno()
+                            : aluno.getEmail(),
+                    dto.getValor(),
+                    professor.getNome(),
+                    dto.getMensagem()
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email para aluno: " + e.getMessage());
+        }
+    }
+
+    private void publicarEventoEnvioMoedas(EnvioMoedasEvent evento) {
+        try {
+            String json = objectMapper.writeValueAsString(evento);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.FILA_ENVIO_MOEDAS, json);
+        } catch (Exception e) {
+            System.err.println("Erro ao publicar evento de envio de moedas: " + e.getMessage());
+        }
     }
 
     private void validarCredenciais(Professor professor) {

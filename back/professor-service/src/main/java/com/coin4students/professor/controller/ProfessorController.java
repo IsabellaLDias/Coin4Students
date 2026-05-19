@@ -42,6 +42,11 @@ public class ProfessorController {
         professorService.deletar(id);
     }
 
+    @GetMapping("/{idProfessor}/historico")
+    public List<?> historico(@PathVariable Long idProfessor) {
+        return professorService.historico(idProfessor);
+    }
+
     @PostMapping({"/{idProfessor}/enviar-moedas", "/{idProfessor}/distribuir"})
     public Professor enviarMoedas(
             @PathVariable Long idProfessor,
