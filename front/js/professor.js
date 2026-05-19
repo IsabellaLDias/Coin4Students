@@ -3,6 +3,7 @@ const PROFESSOR_API = "https://professor-service-0rvu.onrender.com/professores";
 const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 
 let dadosDoProfessorGlobal = null;
+let alunosDisponiveis = [];
 
 // ==========================================
 // INICIALIZAÇÃO
@@ -55,7 +56,6 @@ function preencherCamposFormulario(professor) {
     document.getElementById("perfilDepartamento").value = professor.departamento || "";
     document.getElementById("perfilSaldo").value = professor.saldoMoedas || 0;
     document.getElementById("perfilEmail").value = professor.email || "";
-    document.getElementById("perfilSenha").value = professor.senha || "";
 }
 
 async function atualizarPerfil() {
@@ -178,6 +178,7 @@ async function carregarAlunos() {
         }
 
         const alunos = await response.json();
+        alunosDisponiveis = alunos;
 
         // Select da aba Distribuir
         const selectAluno = document.getElementById("selectAluno");
@@ -252,19 +253,21 @@ async function distribuirMoedas() {
     }
 
     try {
-        // Endpoint esperado no backend:
-        // POST /professores/{id}/distribuir
+        const alunoSelecionado = alunosDisponiveis.find(aluno => String(aluno.id) === String(alunoId));
+
         const response = await fetch(
-            `${PROFESSOR_API}/${dadosDoProfessorGlobal.id}/distribuir`,
+            `${PROFESSOR_API}/${dadosDoProfessorGlobal.id}/enviar-moedas`,
             {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    alunoId: Number(alunoId),
-                    quantidade,
-                    motivo
+                    idAluno: Number(alunoId),
+                    valor: quantidade,
+                    mensagem: motivo,
+                    emailProfessor: dadosDoProfessorGlobal.email,
+                    emailAluno: alunoSelecionado?.email || ""
                 })
             }
         );

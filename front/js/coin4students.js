@@ -266,8 +266,7 @@ document.getElementById("formProfessor").addEventListener("submit", async (e) =>
     email: document.getElementById("emailProfessor").value,
     senha: document.getElementById("senhaProfessor").value,
     cpf: document.getElementById("cpfProfessor").value,
-    departamento: document.getElementById("departamentoProfessor").value,
-    saldoMoedas: 0
+    departamento: document.getElementById("departamentoProfessor").value
   };
 
   try {

@@ -1,10 +1,18 @@
 package com.coin4students.professor.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class EnvioMoedasDTO {
 
+    @JsonAlias("alunoId")
     private Long idAluno;
+
+    @JsonAlias("quantidade")
     private Integer valor;
+
+    @JsonAlias("motivo")
     private String mensagem;
+
     private String emailProfessor;
     private String emailAluno;
     private String nomeProfessor;

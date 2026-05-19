@@ -13,7 +13,7 @@ public class Professor {
     private String nome;
     private String cpf;
     private String departamento;
-    private Integer saldoMoedas = 1000;
+    private Integer saldoMoedas = 50000;
 
     @JsonAlias("emailProfessor")
     private String email;   

@@ -42,7 +42,7 @@ public class ProfessorController {
         professorService.deletar(id);
     }
 
-    @PostMapping("/{idProfessor}/enviar-moedas")
+    @PostMapping({"/{idProfessor}/enviar-moedas", "/{idProfessor}/distribuir"})
     public Professor enviarMoedas(
             @PathVariable Long idProfessor,
             @RequestBody EnvioMoedasDTO dto
