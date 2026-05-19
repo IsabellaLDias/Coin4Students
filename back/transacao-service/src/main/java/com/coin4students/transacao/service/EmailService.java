@@ -1,6 +1,5 @@
 package com.coin4students.transacao.service;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,18 +10,21 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class EmailService {
 
-    private static final String RESEND_EMAILS_URL = "https://api.resend.com/emails";
+    private static final String BREVO_EMAILS_URL = "https://api.brevo.com/v3/smtp/email";
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String apiKey;
-    private final String remetente;
+    private final String remetenteNome;
+    private final String remetenteEmail;
 
     public EmailService(
-        @Value("${resend.api.key:}") String apiKey,
-        @Value("${resend.from:Coin4Students <onboarding@resend.dev>}") String remetente
+        @Value("${brevo.api.key:}") String apiKey,
+        @Value("${brevo.from.name:Coin4Students}") String remetenteNome,
+        @Value("${brevo.from.email:}") String remetenteEmail
     ) {
         this.apiKey = apiKey;
-        this.remetente = remetente;
+        this.remetenteNome = remetenteNome;
+        this.remetenteEmail = remetenteEmail;
     }
 
     public void enviarEmailProfessor(String email, Integer valor, String nomeAluno) {
@@ -64,22 +66,26 @@ public class EmailService {
 
     private void enviarEmail(String destinatario, String assunto, String texto) {
         if (apiKey == null || apiKey.isBlank()) {
-            throw new RuntimeException("RESEND_API_KEY nao configurada");
+            throw new RuntimeException("BREVO_API_KEY nao configurada");
+        }
+
+        if (normalizarEmail(remetenteEmail) == null) {
+            throw new RuntimeException("BREVO_FROM_EMAIL ausente ou invalido");
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(apiKey);
+        headers.set("api-key", apiKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        ResendEmailRequest body = new ResendEmailRequest(
-                remetente,
-                new String[] { destinatario },
+        BrevoEmailRequest body = new BrevoEmailRequest(
+                new BrevoSender(remetenteNome, remetenteEmail.trim()),
+                new BrevoRecipient[] { new BrevoRecipient(destinatario) },
                 assunto,
                 texto.replace("\n", "<br>")
         );
 
         restTemplate.postForEntity(
-                RESEND_EMAILS_URL,
+                BREVO_EMAILS_URL,
                 new HttpEntity<>(body, headers),
                 String.class
         );
@@ -99,24 +105,24 @@ public class EmailService {
         return emailNormalizado;
     }
 
-    static class ResendEmailRequest {
-        private final String from;
-        private final String[] to;
+    static class BrevoEmailRequest {
+        private final BrevoSender sender;
+        private final BrevoRecipient[] to;
         private final String subject;
-        private final String html;
+        private final String htmlContent;
 
-        ResendEmailRequest(String from, String[] to, String subject, String html) {
-            this.from = from;
+        BrevoEmailRequest(BrevoSender sender, BrevoRecipient[] to, String subject, String htmlContent) {
+            this.sender = sender;
             this.to = to;
             this.subject = subject;
-            this.html = html;
+            this.htmlContent = htmlContent;
         }
 
-        public String getFrom() {
-            return from;
+        public BrevoSender getSender() {
+            return sender;
         }
 
-        public String[] getTo() {
+        public BrevoRecipient[] getTo() {
             return to;
         }
 
@@ -124,9 +130,38 @@ public class EmailService {
             return subject;
         }
 
-        @JsonProperty("html")
-        public String getHtml() {
-            return html;
+        public String getHtmlContent() {
+            return htmlContent;
+        }
+    }
+
+    static class BrevoSender {
+        private final String name;
+        private final String email;
+
+        BrevoSender(String name, String email) {
+            this.name = name;
+            this.email = email;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+    }
+
+    static class BrevoRecipient {
+        private final String email;
+
+        BrevoRecipient(String email) {
+            this.email = email;
+        }
+
+        public String getEmail() {
+            return email;
         }
     }
 }
