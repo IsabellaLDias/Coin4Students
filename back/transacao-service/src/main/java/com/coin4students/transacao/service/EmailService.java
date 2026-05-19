@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 public class EmailService {
 
     private static final String BREVO_EMAILS_URL = "https://api.brevo.com/v3/smtp/email";
-    private static final String REMETENTE_EMAIL = "ildsantos@sga.pucminas.br";
+    private static final String REMETENTE_EMAIL = "isabellamg2017@gmail.com";
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String apiKey;
@@ -19,7 +19,7 @@ public class EmailService {
 
     public EmailService(
         @Value("${brevo.api.key:}") String apiKey,
-        @Value("${brevo.from.name:Coin4Students}") String remetenteNome
+        @Value("${brevo.from.name:coin4students}") String remetenteNome
     ) {
         this.apiKey = apiKey;
         this.remetenteNome = remetenteNome;
