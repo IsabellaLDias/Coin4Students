@@ -20,7 +20,6 @@ public class ProfessorService {
     private final ProfessorRepository professorRepository;
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper objectMapper;
-    private final EmailService emailService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${aluno.service.url}")
@@ -32,13 +31,11 @@ public class ProfessorService {
     public ProfessorService(
         ProfessorRepository professorRepository,
         RabbitTemplate rabbitTemplate,
-        ObjectMapper objectMapper,
-        EmailService emailService
+        ObjectMapper objectMapper
     ) {
         this.professorRepository = professorRepository;
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = objectMapper;
-        this.emailService = emailService;
     }
 
     public Professor cadastrar(Professor professor) {
@@ -107,9 +104,6 @@ public class ProfessorService {
         professor.setSaldoMoedas(professor.getSaldoMoedas() - dto.getValor());
         professorRepository.save(professor);
 
-        adicionarMoedasAoAluno(dto);
-        tentarEnviarEmails(professor, aluno, dto);
-
         EnvioMoedasEvent evento = new EnvioMoedasEvent(
                 idProfessor,
                 dto.getIdAluno(),
@@ -145,68 +139,13 @@ public class ProfessorService {
         }
     }
 
-    private void adicionarMoedasAoAluno(EnvioMoedasDTO dto) {
-        String url = alunoServiceUrl + "/alunos/"
-                + dto.getIdAluno()
-                + "/adicionar-moedas?valor="
-                + dto.getValor();
-
-        restTemplate.put(url, null);
-    }
-
-    private void tentarEnviarEmails(Professor professor, AlunoResponse aluno, EnvioMoedasDTO dto) {
-        String emailProfessor = professor.getEmail() != null && !professor.getEmail().isBlank()
-                ? professor.getEmail()
-                : dto.getEmailProfessor();
-
-        String emailAluno = dto.getEmailAluno() != null && !dto.getEmailAluno().isBlank()
-                ? dto.getEmailAluno()
-                : aluno.getEmail();
-
-        try {
-            emailService.enviarEmailProfessor(
-                    emailProfessor,
-                    dto.getValor(),
-                    aluno.getNome()
-            );
-        } catch (Exception e) {
-            System.err.println("Erro ao enviar email para professor: " + mensagemErroCompleta(e));
-        }
-
-        try {
-            emailService.enviarEmailAluno(
-                    emailAluno,
-                    dto.getValor(),
-                    professor.getNome(),
-                    dto.getMensagem()
-            );
-        } catch (Exception e) {
-            System.err.println("Erro ao enviar email para aluno: " + mensagemErroCompleta(e));
-        }
-    }
-
     private void publicarEventoEnvioMoedas(EnvioMoedasEvent evento) {
         try {
             String json = objectMapper.writeValueAsString(evento);
             rabbitTemplate.convertAndSend(RabbitMQConfig.FILA_ENVIO_MOEDAS, json);
         } catch (Exception e) {
-            System.err.println("Erro ao publicar evento de envio de moedas: " + e.getMessage());
+            throw new RuntimeException("Erro ao publicar evento de envio de moedas", e);
         }
-    }
-
-    private String mensagemErroCompleta(Exception e) {
-        StringBuilder mensagem = new StringBuilder(e.getClass().getSimpleName() + ": " + e.getMessage());
-        Throwable causa = e.getCause();
-
-        while (causa != null) {
-            mensagem.append(" | Causa: ")
-                    .append(causa.getClass().getSimpleName())
-                    .append(": ")
-                    .append(causa.getMessage());
-            causa = causa.getCause();
-        }
-
-        return mensagem.toString();
     }
 
     private void validarCredenciais(Professor professor) {
