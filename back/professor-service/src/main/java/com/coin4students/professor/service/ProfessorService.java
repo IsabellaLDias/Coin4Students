@@ -170,7 +170,7 @@ public class ProfessorService {
                     aluno.getNome()
             );
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email para professor: " + e.getMessage());
+            System.err.println("Erro ao enviar email para professor: " + mensagemErroCompleta(e));
         }
 
         try {
@@ -181,7 +181,7 @@ public class ProfessorService {
                     dto.getMensagem()
             );
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email para aluno: " + e.getMessage());
+            System.err.println("Erro ao enviar email para aluno: " + mensagemErroCompleta(e));
         }
     }
 
@@ -192,6 +192,21 @@ public class ProfessorService {
         } catch (Exception e) {
             System.err.println("Erro ao publicar evento de envio de moedas: " + e.getMessage());
         }
+    }
+
+    private String mensagemErroCompleta(Exception e) {
+        StringBuilder mensagem = new StringBuilder(e.getClass().getSimpleName() + ": " + e.getMessage());
+        Throwable causa = e.getCause();
+
+        while (causa != null) {
+            mensagem.append(" | Causa: ")
+                    .append(causa.getClass().getSimpleName())
+                    .append(": ")
+                    .append(causa.getMessage());
+            causa = causa.getCause();
+        }
+
+        return mensagem.toString();
     }
 
     private void validarCredenciais(Professor professor) {
