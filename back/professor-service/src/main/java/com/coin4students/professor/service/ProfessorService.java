@@ -19,6 +19,7 @@ public class ProfessorService {
     private final ProfessorRepository professorRepository;
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper objectMapper;
+    private final EmailService emailService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${aluno.service.url}")
@@ -27,11 +28,13 @@ public class ProfessorService {
     public ProfessorService(
         ProfessorRepository professorRepository,
         RabbitTemplate rabbitTemplate,
-        ObjectMapper objectMapper
+        ObjectMapper objectMapper,
+        EmailService emailService
     ) {
         this.professorRepository = professorRepository;
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = objectMapper;
+        this.emailService = emailService;
     }
 
     public Professor cadastrar(Professor professor) {
@@ -100,6 +103,9 @@ public class ProfessorService {
         professor.setSaldoMoedas(professor.getSaldoMoedas() - dto.getValor());
         professorRepository.save(professor);
 
+        adicionarMoedasAoAluno(dto);
+        enviarEmails(professor, aluno, dto);
+
         EnvioMoedasEvent evento = new EnvioMoedasEvent(
                 idProfessor,
                 dto.getIdAluno(),
@@ -122,6 +128,32 @@ public class ProfessorService {
         }
 
         return professor;
+    }
+
+    private void adicionarMoedasAoAluno(EnvioMoedasDTO dto) {
+        String url = alunoServiceUrl + "/alunos/"
+                + dto.getIdAluno()
+                + "/adicionar-moedas?valor="
+                + dto.getValor();
+
+        restTemplate.put(url, null);
+    }
+
+    private void enviarEmails(Professor professor, AlunoResponse aluno, EnvioMoedasDTO dto) {
+        emailService.enviarEmailProfessor(
+                professor.getEmail(),
+                dto.getValor(),
+                aluno.getNome()
+        );
+
+        emailService.enviarEmailAluno(
+                dto.getEmailAluno() != null && !dto.getEmailAluno().isBlank()
+                        ? dto.getEmailAluno()
+                        : aluno.getEmail(),
+                dto.getValor(),
+                professor.getNome(),
+                dto.getMensagem()
+        );
     }
 
     private void validarCredenciais(Professor professor) {
