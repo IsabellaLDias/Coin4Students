@@ -349,7 +349,8 @@ async function carregarHistorico() {
             }
 
             return itens.map(item => {
-                const nomeAluno = item.nomeAluno || item.alunoNome || `Aluno #${item.idAluno || ""}`;
+                const aluno = alunosDisponiveis.find(a => String(a.id) === String(item.idAluno));
+                const nomeAluno = item.nomeAluno || item.alunoNome || aluno?.nome || `Aluno #${item.idAluno || ""}`;
                 const mensagem = item.mensagem || item.descricao || item.motivo || "Envio de moedas";
                 const valor = item.valor || item.quantidade || 0;
                 const dataFormatada = formatarData(item.data);
