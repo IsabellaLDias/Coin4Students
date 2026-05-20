@@ -49,6 +49,23 @@ public class VantagemService {
         return cupomRepository.findAllByOrderByIdDesc();
     }
 
+    public Vantagem atualizar(Long id, Vantagem dadosAtualizados) {
+        if (cupomRepository.existsByIdVantagem(id)) {
+            throw new RuntimeException("Vantagem ja foi resgatada e nao pode ser editada");
+        }
+
+        Vantagem vantagem = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vantagem nao encontrada"));
+
+        vantagem.setTitulo(dadosAtualizados.getTitulo());
+        vantagem.setDescricao(dadosAtualizados.getDescricao());
+        vantagem.setCustoMoedas(dadosAtualizados.getCustoMoedas());
+        vantagem.setNomeEmpresa(dadosAtualizados.getNomeEmpresa());
+        vantagem.setImagemUrl(dadosAtualizados.getImagemUrl());
+
+        return repository.save(vantagem);
+    }
+
     public Cupom resgatar(Long idVantagem, ResgateDTO dto) {
         Vantagem vantagem = repository.findById(idVantagem)
                 .orElseThrow(() -> new RuntimeException("Vantagem não encontrada"));

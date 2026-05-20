@@ -17,6 +17,9 @@ public class Vantagem {
 
     private String nomeEmpresa;
 
+    @Column(columnDefinition = "TEXT")
+    private String imagemUrl;
+
     public Vantagem() {
     }
 
@@ -54,5 +57,13 @@ public class Vantagem {
 
     public void setNomeEmpresa(String nomeEmpresa) {
         this.nomeEmpresa = nomeEmpresa;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
     }
 }

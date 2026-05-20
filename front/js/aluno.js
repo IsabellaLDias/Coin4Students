@@ -330,9 +330,15 @@ async function carregarVantagens() {
                 const titulo = v.titulo || v.nome || "Vantagem";
                 const custo = v.custoMoedas || v.valor || 0;
                 const descricao = v.descricao ? `<small>${escaparHtml(v.descricao)}</small>` : "";
+                const imagem = v.imagemUrl
+                    ? `<img src="${escaparHtml(v.imagemUrl)}" alt="${escaparHtml(titulo)}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;" loading="lazy">`
+                    : "";
                 html += `
-                    <div class="vantagem-card" style="border-bottom:1px solid #eee; padding:10px 0; display:flex; justify-content:space-between; align-items:center;">
-                        <span><strong>${escaparHtml(titulo)}</strong> (${custo} moedas)<br>${descricao}</span>
+                    <div class="vantagem-card" style="border-bottom:1px solid #eee; padding:10px 0; display:flex; justify-content:space-between; align-items:center; gap:14px;">
+                        <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+                            ${imagem}
+                            <span><strong>${escaparHtml(titulo)}</strong> (${custo} moedas)<br>${descricao}</span>
+                        </div>
                         <button class="btn-resgatar" onclick="resgatarVantagem(${v.id}, ${custo})">Resgatar</button>
                     </div>`;
             });

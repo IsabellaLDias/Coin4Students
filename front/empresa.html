@@ -124,6 +124,13 @@
                         </div>
 
                         <div class="form-field form-field-wide">
+                            <label>Imagem do produto:</label>
+                            <input type="file" id="vantagemImagemArquivo" accept="image/png,image/jpeg,image/webp">
+                            <input type="url" id="vantagemImagemUrl" maxlength="500" placeholder="Ou cole uma URL https://exemplo.com/produto.jpg">
+                            <div id="previewImagemVantagem" class="imagem-preview"></div>
+                        </div>
+
+                        <div class="form-field form-field-wide">
                             <label>Descrição:</label>
                             <textarea id="vantagemDescricao" rows="4" maxlength="240" placeholder="Ex.: Cupom de 15% para uso na loja parceira" required></textarea>
                         </div>
@@ -132,7 +139,10 @@
                     <div class="perfil-acoes">
                         <button type="submit" class="btn-salvar-perfil">
                             <i class="ph ph-check-circle"></i>
-                            Cadastrar Vantagem
+                            <span id="textoBotaoVantagem">Cadastrar Vantagem</span>
+                        </button>
+                        <button type="button" id="btnCancelarEdicaoVantagem" class="btn-secundario" onclick="cancelarEdicaoVantagem()" style="display:none">
+                            Cancelar edição
                         </button>
                     </div>
                 </form>
@@ -152,6 +162,7 @@
                     <span class="section-badge" id="minhasVantagensResumo">0 ofertas</span>
                 </div>
                 <div id="minhasVantagensLista" class="grid-vantagens lista-ofertas"></div>
+                <div id="paginacaoMinhasVantagens" class="pagination"></div>
             </div>
         </div>
 

@@ -35,6 +35,11 @@ public class VantagemController {
         return service.listarResgates();
     }
 
+    @PutMapping("/{id}")
+    public Vantagem atualizar(@PathVariable Long id, @RequestBody Vantagem vantagem) {
+        return service.atualizar(id, vantagem);
+    }
+
     @PostMapping("/{idVantagem}/resgatar")
     public Cupom resgatar(
             @PathVariable Long idVantagem,
