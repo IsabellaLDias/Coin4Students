@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.UUID;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VantagemService {
@@ -47,6 +48,23 @@ public class VantagemService {
 
     public List<Cupom> listarResgates() {
         return cupomRepository.findAllByOrderByIdDesc();
+    }
+
+    public List<Cupom> listarResgatesPorEmpresa(String nomeEmpresa) {
+        if (nomeEmpresa == null || nomeEmpresa.isBlank()) {
+            return List.of();
+        }
+
+        List<Long> idsVantagens = repository.findByNomeEmpresaIgnoreCase(nomeEmpresa.trim())
+                .stream()
+                .map(Vantagem::getId)
+                .collect(Collectors.toList());
+
+        if (idsVantagens.isEmpty()) {
+            return List.of();
+        }
+
+        return cupomRepository.findByIdVantagemInOrderByIdDesc(idsVantagens);
     }
 
     public Vantagem atualizar(Long id, Vantagem dadosAtualizados) {

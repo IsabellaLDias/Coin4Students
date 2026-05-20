@@ -35,6 +35,11 @@ public class VantagemController {
         return service.listarResgates();
     }
 
+    @GetMapping("/resgates/empresa")
+    public List<Cupom> listarResgatesPorEmpresa(@RequestParam String nomeEmpresa) {
+        return service.listarResgatesPorEmpresa(nomeEmpresa);
+    }
+
     @PutMapping("/{id}")
     public Vantagem atualizar(@PathVariable Long id, @RequestBody Vantagem vantagem) {
         return service.atualizar(id, vantagem);

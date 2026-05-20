@@ -145,7 +145,8 @@ async function carregarVantagensEmpresa() {
 
 async function carregarResgatesEmpresa() {
     try {
-        const response = await fetch(`${VANTAGEM_API}/resgates`);
+        const nomeEmpresa = encodeURIComponent(obterNomeEmpresa());
+        const response = await fetch(`${VANTAGEM_API}/resgates/empresa?nomeEmpresa=${nomeEmpresa}`);
         if (!response.ok) throw new Error("Erro ao buscar resgates");
 
         const resgates = await response.json();
