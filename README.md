@@ -49,14 +49,12 @@
 - [Arquitetura](#-arquitetura)
 - [Instalação e Execução](#-instalação-e-execução)
 - [Execução com Docker](#-execução-com-docker)
-- [Segurança](#-segurança)
 - [Deploy](#-deploy)
 - [Estrutura de Pastas](#-estrutura-de-pastas)
 - [Demonstração](#-demonstração)
   - [Aplicativo Mobile](#-aplicativo-mobile)
   - [Aplicação Web](#-aplicação-web)
   - [Exemplo de saída no Terminal (para Back-end, API, CLI)](#-exemplo-de-saída-no-terminal-para-back-end-api-cli)
-- [Testes](#-testes)
 - [Documentações utilizadas](#-documentações-utilizadas)
 - [Autores](#-autores)
 - [Contribuição](#-contribuição)
@@ -907,26 +905,6 @@ npm run cli validate:schema --target=production
 [SUCCESS] Validação concluída. Nenhum erro crítico encontrado.
 Tempo de execução: 1.25s
 ```
-
----
-
-## 🧪 Testes
-
-### Testes Unitários e de Integração
-Para rodar os testes da unidade e integração:
-
-```
-npm run test
-```
-*Ferramenta utilizada: Jest, Vitest, Mocha, etc.*
-
-### Testes End-to-End (E2E)
-Para rodar os testes de ponta a ponta (E2E):
-
-```
-npm run test:e2e
-```
-*Ferramenta utilizada: Cypress, Playwright, Selenium, etc.*
 
 ---
 
