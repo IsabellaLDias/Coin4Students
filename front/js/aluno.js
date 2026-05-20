@@ -1,5 +1,7 @@
 const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
+const TRANSACAO_API = "https://transacao-service.onrender.com/transacoes";
+const VANTAGEM_API = "https://vantagem-service.onrender.com/vantagens";
 
 // ==========================================
 // FUNÇÕES DE MÁSCARA
@@ -315,7 +317,7 @@ function trocarTab(tab) {
 
 async function carregarVantagens() {
     try {
-        const response = await fetch("https://empresa-service.onrender.com/vantagens");
+        const response = await fetch(VANTAGEM_API);
         if (!response.ok) throw new Error("Erro ao buscar vantagens");
         
         const vantagens = await response.json();
@@ -325,10 +327,13 @@ async function carregarVantagens() {
             html = "<p>Nenhuma vantagem cadastrada no momento.</p>";
         } else {
             vantagens.forEach(v => {
+                const titulo = v.titulo || v.nome || "Vantagem";
+                const custo = v.custoMoedas || v.valor || 0;
+                const descricao = v.descricao ? `<small>${escaparHtml(v.descricao)}</small>` : "";
                 html += `
                     <div class="vantagem-card" style="border-bottom:1px solid #eee; padding:10px 0; display:flex; justify-content:space-between; align-items:center;">
-                        <span><strong>${v.nome}</strong> (${v.valor} moedas)</span>
-                        <button class="btn-resgatar" onclick="resgatarVantagem(${v.id}, ${v.valor})">Resgatar</button>
+                        <span><strong>${escaparHtml(titulo)}</strong> (${custo} moedas)<br>${descricao}</span>
+                        <button class="btn-resgatar" onclick="resgatarVantagem(${v.id}, ${custo})">Resgatar</button>
                     </div>`;
             });
         }
@@ -343,7 +348,7 @@ async function carregarVantagens() {
 
 async function carregarExtrato() {
     try {
-        const response = await fetch(`${ALUNO_API}/${dadosDoAlunoGlobal.id}/extrato`);
+        const response = await fetch(`${TRANSACAO_API}/extrato/aluno/${dadosDoAlunoGlobal.id}`);
         if (!response.ok) throw new Error("Erro ao buscar extrato");
 
         const transacoes = await response.json();
@@ -384,7 +389,7 @@ async function carregarExtrato() {
     }
 }
 
-async function resgatarVantagem(vantagemId, valor) {
+async function resgatarVantagemLegado(vantagemId, valor) {
     if (dadosDoAlunoGlobal.saldoMoedas < valor) {
         showToast("Saldo insuficiente, diva! 💸", 'error');
         return;
@@ -392,6 +397,36 @@ async function resgatarVantagem(vantagemId, valor) {
 
     if (confirm("Deseja resgatar esta vantagem?")) {
         showToast("Resgate realizado! O código foi enviado para o seu e-mail.", 'success');
+    }
+}
+
+async function resgatarVantagem(vantagemId, valor) {
+    if (dadosDoAlunoGlobal.saldoMoedas < valor) {
+        showToast("Saldo insuficiente.", 'error');
+        return;
+    }
+
+    if (confirm("Deseja resgatar esta vantagem?")) {
+        try {
+            const response = await fetch(`${VANTAGEM_API}/${vantagemId}/resgatar`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idAluno: dadosDoAlunoGlobal.id,
+                    emailAluno: dadosDoAlunoGlobal.email
+                })
+            });
+
+            if (!response.ok) throw new Error(await response.text());
+
+            dadosDoAlunoGlobal.saldoMoedas -= Number(valor || 0);
+            preencherDadosAluno(dadosDoAlunoGlobal);
+            showToast("Resgate realizado! O codigo foi enviado para o seu e-mail.", 'success');
+            await carregarVantagens();
+        } catch (error) {
+            console.error(error);
+            showToast("Erro ao resgatar vantagem.", 'error');
+        }
     }
 }
 

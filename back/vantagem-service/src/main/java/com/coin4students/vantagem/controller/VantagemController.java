@@ -30,6 +30,11 @@ public class VantagemController {
         return service.listar();
     }
 
+    @GetMapping("/resgates")
+    public List<Cupom> listarResgates() {
+        return service.listarResgates();
+    }
+
     @PostMapping("/{idVantagem}/resgatar")
     public Cupom resgatar(
             @PathVariable Long idVantagem,

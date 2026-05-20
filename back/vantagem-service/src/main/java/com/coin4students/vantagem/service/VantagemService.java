@@ -20,7 +20,7 @@ public class VantagemService {
 
     private final VantagemRepository repository;
 
-    @Value("${aluno.service.url}")
+    @Value("${aluno.service.url:https://aluno-service-orux.onrender.com}")
     private String alunoServiceUrl;
 
     private final CupomRepository cupomRepository;
@@ -43,6 +43,10 @@ public class VantagemService {
 
     public List<Vantagem> listar() {
         return repository.findAll();
+    }
+
+    public List<Cupom> listarResgates() {
+        return cupomRepository.findAllByOrderByIdDesc();
     }
 
     public Cupom resgatar(Long idVantagem, ResgateDTO dto) {

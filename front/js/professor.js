@@ -1,9 +1,13 @@
 
 const PROFESSOR_API = "https://professor-service-0rvu.onrender.com/professores";
 const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
+const TRANSACAO_API = "https://transacao-service.onrender.com/transacoes";
 
 let dadosDoProfessorGlobal = null;
 let alunosDisponiveis = [];
+let historicoCompleto = [];
+let paginaHistoricoAtual = 1;
+const ITENS_POR_PAGINA_HISTORICO = 8;
 
 function escaparHtml(valor) {
     return String(valor ?? "")
@@ -29,6 +33,34 @@ function formatarData(data) {
     });
 }
 
+function atualizarSaldoNaTela(valor) {
+    const saldo = valor || 0;
+    const valorSaldo = document.getElementById("valorSaldo");
+    const perfilSaldo = document.getElementById("perfilSaldo");
+    const saldoDistribuicao = document.getElementById("saldoDistribuicao");
+
+    if (valorSaldo) valorSaldo.innerText = saldo;
+    if (perfilSaldo) perfilSaldo.value = saldo;
+    if (saldoDistribuicao) saldoDistribuicao.innerText = saldo;
+}
+
+function selecionarDepartamento(departamento) {
+    const select = document.getElementById("perfilDepartamento");
+    if (!select) return;
+
+    if (!departamento) {
+        select.value = "";
+        return;
+    }
+
+    const existe = Array.from(select.options).some(option => option.value === departamento);
+    if (!existe) {
+        select.add(new Option(departamento, departamento));
+    }
+
+    select.value = departamento;
+}
+
 // ==========================================
 // INICIALIZAÇÃO
 // ==========================================
@@ -52,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Preenche informações da página
         document.getElementById("nomeProfessor").innerText = professor.nome || "Professor";
-        document.getElementById("valorSaldo").innerText = professor.saldoMoedas || 0;
+        atualizarSaldoNaTela(professor.saldoMoedas);
 
         preencherCamposFormulario(professor);
 
@@ -77,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 function preencherCamposFormulario(professor) {
     document.getElementById("perfilNome").value = professor.nome || "";
     document.getElementById("perfilCPF").value = professor.cpf || "";
-    document.getElementById("perfilDepartamento").value = professor.departamento || "";
+    selecionarDepartamento(professor.departamento || "");
     document.getElementById("perfilSaldo").value = professor.saldoMoedas || 0;
     document.getElementById("perfilEmail").value = professor.email || "";
 }
@@ -227,11 +259,16 @@ async function carregarAlunos() {
                 alunosHome.innerHTML = "<p>Nenhum aluno cadastrado.</p>";
             } else {
                 alunosHome.innerHTML = alunos
-                    .slice(0, 5)
+                    .slice(0, 4)
                     .map(aluno => `
-                        <div class="lista-item"
-                             style="padding:10px 0; border-bottom:1px solid #f5f5f5;">
-                            ${aluno.nome}
+                        <div class="lista-item" style="display:flex; justify-content:space-between; gap:16px;">
+                            <div>
+                                <span><strong>${escaparHtml(aluno.nome || "Aluno")}</strong></span><br>
+                                <small>${escaparHtml(aluno.email || "Sem email cadastrado")}</small>
+                            </div>
+                            <strong style="color:#2e7d32; white-space:nowrap;">
+                                ${aluno.saldoMoedas || 0}
+                            </strong>
                         </div>
                     `)
                     .join("");
@@ -303,10 +340,7 @@ async function distribuirMoedas() {
 
         // Atualiza saldo local
         dadosDoProfessorGlobal.saldoMoedas -= quantidade;
-        document.getElementById("valorSaldo").innerText =
-            dadosDoProfessorGlobal.saldoMoedas;
-        document.getElementById("perfilSaldo").value =
-            dadosDoProfessorGlobal.saldoMoedas;
+        atualizarSaldoNaTela(dadosDoProfessorGlobal.saldoMoedas);
 
         // Limpa formulário
         document.getElementById("formDistribuir").reset();
@@ -327,10 +361,8 @@ async function distribuirMoedas() {
 // ==========================================
 async function carregarHistorico() {
     try {
-        // Endpoint esperado:
-        // GET /professores/{id}/historico
         const response = await fetch(
-            `${PROFESSOR_API}/${dadosDoProfessorGlobal.id}/historico`
+            `${TRANSACAO_API}/extrato/professor/${dadosDoProfessorGlobal.id}`
         );
 
         if (!response.ok) {
@@ -342,6 +374,32 @@ async function carregarHistorico() {
         const historicoOrdenado = Array.isArray(historico)
             ? [...historico].sort((a, b) => new Date(b.data || 0) - new Date(a.data || 0))
             : [];
+        historicoCompleto = historicoOrdenado;
+        paginaHistoricoAtual = Math.min(
+            paginaHistoricoAtual,
+            Math.max(1, Math.ceil(historicoCompleto.length / ITENS_POR_PAGINA_HISTORICO))
+        );
+
+        const totalMoedas = historicoOrdenado.reduce(
+            (total, item) => total + (Number(item.valor || item.quantidade || 0)),
+            0
+        );
+        const alunosImpactados = new Set(
+            historicoOrdenado.map(item => item.idAluno).filter(Boolean)
+        ).size;
+
+        const totalDistribuicoes = document.getElementById("totalDistribuicoes");
+        const totalMoedasEnviadas = document.getElementById("totalMoedasEnviadas");
+        const totalAlunosImpactados = document.getElementById("totalAlunosImpactados");
+        const historicoResumo = document.getElementById("historicoResumo");
+
+        if (totalDistribuicoes) totalDistribuicoes.innerText = historicoOrdenado.length;
+        if (totalMoedasEnviadas) totalMoedasEnviadas.innerText = totalMoedas;
+        if (totalAlunosImpactados) totalAlunosImpactados.innerText = alunosImpactados;
+        if (historicoResumo) {
+            historicoResumo.innerText =
+                `${historicoOrdenado.length} ${historicoOrdenado.length === 1 ? "registro" : "registros"}`;
+        }
 
         const montarHtml = (itens, mensagemVazia) => {
             if (!itens || itens.length === 0) {
@@ -370,8 +428,14 @@ async function carregarHistorico() {
             }).join("");
         };
 
-        const htmlHome = montarHtml(historicoOrdenado.slice(0, 5), "Nenhuma distribuicao recente.");
-        const htmlLista = montarHtml(historicoOrdenado, "Nenhuma distribuicao realizada.");
+        const inicioPagina = (paginaHistoricoAtual - 1) * ITENS_POR_PAGINA_HISTORICO;
+        const itensPagina = historicoOrdenado.slice(
+            inicioPagina,
+            inicioPagina + ITENS_POR_PAGINA_HISTORICO
+        );
+
+        const htmlHome = montarHtml(historicoOrdenado.slice(0, 4), "Nenhuma distribuição recente.");
+        const htmlLista = montarHtml(itensPagina, "Nenhuma distribuição realizada.");
 
         const historicoHome = document.getElementById("historicoHome");
         const historicoLista = document.getElementById("historicoLista");
@@ -384,6 +448,8 @@ async function carregarHistorico() {
             historicoLista.innerHTML = htmlLista;
         }
 
+        renderizarPaginacaoHistorico();
+
     } catch (error) {
         console.error(error);
 
@@ -391,13 +457,46 @@ async function carregarHistorico() {
         const historicoLista = document.getElementById("historicoLista");
 
         if (historicoHome) {
-            historicoHome.innerHTML = "<p>Historico indisponivel no momento.</p>";
+            historicoHome.innerHTML = "<p>Histórico indisponível no momento.</p>";
         }
 
         if (historicoLista) {
-            historicoLista.innerHTML = "<p>Nao foi possivel carregar o historico. Verifique a URL do transacao-service.</p>";
+            historicoLista.innerHTML = "<p>Não foi possível carregar o histórico. Verifique a URL do transacao-service.</p>";
         }
     }
+}
+
+function renderizarPaginacaoHistorico() {
+    const paginacao = document.getElementById("paginacaoHistorico");
+    if (!paginacao) return;
+
+    const totalPaginas = Math.ceil(historicoCompleto.length / ITENS_POR_PAGINA_HISTORICO);
+    if (totalPaginas <= 1) {
+        paginacao.innerHTML = "";
+        return;
+    }
+
+    paginacao.innerHTML = `
+        <button type="button" onclick="mudarPaginaHistorico(-1)" ${paginaHistoricoAtual === 1 ? "disabled" : ""}>
+            <i class="ph ph-caret-left"></i>
+            Anterior
+        </button>
+        <span>Página ${paginaHistoricoAtual} de ${totalPaginas}</span>
+        <button type="button" onclick="mudarPaginaHistorico(1)" ${paginaHistoricoAtual === totalPaginas ? "disabled" : ""}>
+            Próxima
+            <i class="ph ph-caret-right"></i>
+        </button>
+    `;
+}
+
+function mudarPaginaHistorico(direcao) {
+    const totalPaginas = Math.ceil(historicoCompleto.length / ITENS_POR_PAGINA_HISTORICO);
+    paginaHistoricoAtual = Math.min(
+        Math.max(1, paginaHistoricoAtual + direcao),
+        Math.max(1, totalPaginas)
+    );
+
+    carregarHistorico();
 }
 
 // ==========================================

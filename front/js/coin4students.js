@@ -226,7 +226,7 @@ document.getElementById("formAluno").addEventListener("submit", async (e) => {
   }
 });
 
-// CORREÇÃO APLICADA: Inclusão de try/catch, verificação de erro e redirecionamento.
+// Cadastro de empresa com tratamento de erro e redirecionamento.
 document.getElementById("formEmpresa").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -295,33 +295,21 @@ document.getElementById("formProfessor").addEventListener("submit", async (e) =>
 });
 
 // ==========================================
-// ACCORDION E UI
+// SELETOR DE CADASTRO E UI
 // ==========================================
 
-const items = document.querySelectorAll(".accordion-item");
+const botoesCadastro = document.querySelectorAll(".profile-option");
+const paineisCadastro = document.querySelectorAll(".cadastro-panel");
 
-items.forEach(item => {
-  const header = item.querySelector(".accordion-header");
+botoesCadastro.forEach(botao => {
+  botao.addEventListener("click", () => {
+    const tipo = botao.dataset.cadastro;
 
-  header.addEventListener("click", () => {
-    const isCurrentlyActive = item.classList.contains("active");
+    botoesCadastro.forEach(item => item.classList.remove("active"));
+    paineisCadastro.forEach(painel => painel.classList.remove("active"));
 
-    items.forEach(otherItem => {
-      if (otherItem !== item) {
-        otherItem.classList.remove("active");
-        const otherContent = otherItem.querySelector(".accordion-content");
-        if(otherContent) otherContent.style.maxHeight = null;
-      }
-    });
-
-    const content = item.querySelector(".accordion-content");
-    if (!isCurrentlyActive) {
-      item.classList.add("active");
-      if(content) content.style.maxHeight = "400px";
-    } else {
-      item.classList.remove("active");
-      if(content) content.style.maxHeight = null;
-    }
+    botao.classList.add("active");
+    document.getElementById(`cadastro-${tipo}`)?.classList.add("active");
   });
 });
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
@@ -12,18 +12,41 @@
 <body>
   <div class="background-image"></div>
 
-  <div class="container">
+  <main class="container">
+    <div class="auth-brand">
+      <img src="./img/logo.png" alt="Coin4Students">
+      <div>
+        <span>Coin4Students</span>
+        <small>Reconhecimento acadêmico em moedas</small>
+      </div>
+    </div>
+
     <div id="secaoCadastro">
       <div class="titulo">Acesso / Cadastro</div>
 
+      <div class="profile-selector" role="tablist" aria-label="Tipo de cadastro">
+        <button type="button" class="profile-option active" data-cadastro="aluno">
+          <i class="fa-solid fa-user-graduate"></i>
+          Aluno
+        </button>
+        <button type="button" class="profile-option" data-cadastro="professor">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          Professor
+        </button>
+        <button type="button" class="profile-option" data-cadastro="empresa">
+          <i class="fa-solid fa-building"></i>
+          Empresa
+        </button>
+      </div>
 
-      <div class="accordion-item">
-        <button class="accordion-header">Cadastro de Aluno</button>
-        <div class="accordion-content">
-
+      <section class="cadastro-panel active" id="cadastro-aluno">
+        <div class="cadastro-heading">
+          <h2>Cadastro de aluno</h2>
+          <p>Preencha seus dados para acompanhar saldo e resgatar vantagens.</p>
+        </div>
           <form id="formAluno">
             <input id="nomeAluno" placeholder="Nome">
-            <input id="emailAluno" placeholder="Email">
+            <input id="emailAluno" type="email" placeholder="E-mail">
             <input type="password" id="senhaAluno" placeholder="Digite sua senha">
             <input id="cpfAluno" placeholder="CPF" maxlength="14" oninput="formatarCPF(this)">
             <input id="rgAluno" placeholder="RG" maxlength="12" oninput="formatarRG(this)">
@@ -42,46 +65,102 @@
             </div>
             <button type="submit">Cadastrar Aluno</button>
           </form>
+      </section>
+
+      <section class="cadastro-panel" id="cadastro-professor">
+        <div class="cadastro-heading">
+          <h2>Cadastro de professor</h2>
+          <p>Crie sua conta para distribuir moedas e registrar reconhecimentos.</p>
         </div>
-      </div>
+          <form id="formProfessor">
+            <input id="nomeProfessor" placeholder="Nome" required>
+            <input id="emailProfessor" type="email" placeholder="E-mail" required>
+            <input type="password" id="senhaProfessor" placeholder="Senha" required>
+            <input id="cpfProfessor" placeholder="CPF" maxlength="14" oninput="formatarCPF(this)" required>
+            <select id="departamentoProfessor" required>
+              <option value="">Selecione um departamento</option>
+              <optgroup label="FAPSI - Faculdade de Psicologia">
+                <option value="DEPTO DE PSICOLOGIA">DEPTO DE PSICOLOGIA</option>
+              </optgroup>
+              <optgroup label="FCA - Faculdade de Comunicação e Artes">
+                <option value="DEPTO DE COMUNICAÇÃO SOCIAL">DEPTO DE COMUNICAÇÃO SOCIAL</option>
+              </optgroup>
+              <optgroup label="FMD - Faculdade Mineira de Direito">
+                <option value="DEPTO DE DIREITO">DEPTO DE DIREITO</option>
+              </optgroup>
+              <optgroup label="ICBS - Instituto de Ciências Biológicas e da Saúde">
+                <option value="DEPTO DE MEDICINA">DEPTO DE MEDICINA</option>
+                <option value="DEPTO DE ODONTOLOGIA">DEPTO DE ODONTOLOGIA</option>
+                <option value="DEPTO DE CIÊNCIAS BIOLÓGICAS">DEPTO DE CIÊNCIAS BIOLÓGICAS</option>
+                <option value="DEPTO DE MEDICINA VETERINÁRIA">DEPTO DE MEDICINA VETERINÁRIA</option>
+                <option value="DEPTO DE FISIOTERAPIA">DEPTO DE FISIOTERAPIA</option>
+                <option value="DEPTO DE ENFERMAGEM">DEPTO DE ENFERMAGEM</option>
+                <option value="DEPTO DE EDUCAÇÃO FÍSICA">DEPTO DE EDUCAÇÃO FÍSICA</option>
+                <option value="DEPTO DE FONOAUDIOLOGIA">DEPTO DE FONOAUDIOLOGIA</option>
+                <option value="DEPTO DE NUTRIÇÃO">DEPTO DE NUTRIÇÃO</option>
+                <option value="DEPTO DE FARMÁCIA">DEPTO DE FARMÁCIA</option>
+              </optgroup>
+              <optgroup label="ICEG - Instituto de Ciências Econômicas e Gerenciais">
+                <option value="DEPTO DE ADMINISTRAÇÃO">DEPTO DE ADMINISTRAÇÃO</option>
+                <option value="DEPTO DE CIÊNCIAS CONTÁBEIS">DEPTO DE CIÊNCIAS CONTÁBEIS</option>
+                <option value="DEPTO DE CIÊNCIAS ECONÔMICAS">DEPTO DE CIÊNCIAS ECONÔMICAS</option>
+              </optgroup>
+              <optgroup label="ICEI - Instituto de Ciências Exatas e Informática">
+                <option value="DEPTO DE CIÊNCIA DA COMPUTAÇÃO">DEPTO DE CIÊNCIA DA COMPUTAÇÃO</option>
+                <option value="DEPTO DE MATEMÁTICA E ESTATÍSTICA">DEPTO DE MATEMÁTICA E ESTATÍSTICA</option>
+                <option value="DEPTO DE FÍSICA E QUÍMICA">DEPTO DE FÍSICA E QUÍMICA</option>
+              </optgroup>
+              <optgroup label="ICH - Instituto de Ciências Humanas">
+                <option value="DEPTO DE LETRAS">DEPTO DE LETRAS</option>
+                <option value="DEPTO DE EDUCAÇÃO">DEPTO DE EDUCAÇÃO</option>
+                <option value="DEPTO DE GEOGRAFIA">DEPTO DE GEOGRAFIA</option>
+                <option value="DEPTO DE HISTÓRIA">DEPTO DE HISTÓRIA</option>
+              </optgroup>
+              <optgroup label="ICS - Instituto de Ciências Sociais">
+                <option value="DEPTO DE ARQUITETURA E URBANISMO">DEPTO DE ARQUITETURA E URBANISMO</option>
+                <option value="DEPTO DE CIÊNCIAS SOCIAIS">DEPTO DE CIÊNCIAS SOCIAIS</option>
+                <option value="DEPTO DE RELAÇÕES INTERNACIONAIS">DEPTO DE RELAÇÕES INTERNACIONAIS</option>
+                <option value="DEPTO DE SERVIÇO SOCIAL">DEPTO DE SERVIÇO SOCIAL</option>
+              </optgroup>
+              <optgroup label="IFTDJ - Instituto de Filosofia e Teologia Dom João Resende Costa">
+                <option value="DEPTO DE FILOSOFIA">DEPTO DE FILOSOFIA</option>
+                <option value="DEPTO DE CIÊNCIAS DA RELIGIÃO">DEPTO DE CIÊNCIAS DA RELIGIÃO</option>
+                <option value="DEPTO DE TEOLOGIA">DEPTO DE TEOLOGIA</option>
+              </optgroup>
+              <optgroup label="IPUC - Instituto Politécnico">
+                <option value="DEPTO DE ENGENHARIA MECÂNICA">DEPTO DE ENGENHARIA MECÂNICA</option>
+                <option value="DEPTO DE ENGENHARIA CIVIL">DEPTO DE ENGENHARIA CIVIL</option>
+                <option value="DEPTO DE ENGENHARIA ELÉTRICA">DEPTO DE ENGENHARIA ELÉTRICA</option>
+                <option value="DEPTO DE ENGENHARIA DE PRODUÇÃO">DEPTO DE ENGENHARIA DE PRODUÇÃO</option>
+                <option value="DEPTO DE ENGENHARIA QUÍMICA">DEPTO DE ENGENHARIA QUÍMICA</option>
+                <option value="DEPTO DE ENG. ELET. E TELECOMUNICAÇÕES">DEPTO DE ENG. ELET. E TELECOMUNICAÇÕES</option>
+                <option value="DEPTO DE ENG. CONTROLE AUTOMAÇÃO">DEPTO DE ENG. CONTROLE AUTOMAÇÃO</option>
+                <option value="DEPTO DE ENGENHARIA DE ENERGIA">DEPTO DE ENGENHARIA DE ENERGIA</option>
+              </optgroup>
+            </select>
+            <button type="submit">Cadastrar Professor</button>
+          </form>
+      </section>
 
-      <div class="accordion-item">
-        <button class="accordion-header">Cadastro de Empresa</button>
-        <div class="accordion-content">
-
+      <section class="cadastro-panel" id="cadastro-empresa">
+        <div class="cadastro-heading">
+          <h2>Cadastro de empresa</h2>
+          <p>Cadastre sua empresa para oferecer vantagens aos estudantes.</p>
+        </div>
           <form id="formEmpresa">
             <input id="nomeEmpresa" placeholder="Nome">
-            <input id="emailEmpresa" placeholder="Email">
+            <input id="emailEmpresa" type="email" placeholder="E-mail">
             <input type="password" id="senhaEmpresa" placeholder="Senha">
             <input id="cnpjEmpresa" placeholder="CNPJ" maxlength="18" oninput="formatarCNPJ(this)">
             <button type="submit">Cadastrar Empresa</button>
           </form>
-        </div>
-      </div>
-        <!-- Cadastro de Professor -->
-<div class="accordion-item">
-  <button class="accordion-header">Cadastro de Professor</button>
-  <div class="accordion-content">
+      </section>
 
-    <form id="formProfessor">
-      <input id="nomeProfessor" placeholder="Nome" required>
-      <input id="emailProfessor" type="email" placeholder="Email" required>
-      <input type="password" id="senhaProfessor" placeholder="Senha" required>
-      <input id="cpfProfessor" placeholder="CPF" maxlength="14"
-             oninput="formatarCPF(this)" required>
-      <input id="departamentoProfessor" placeholder="Departamento" required>
-
-      <!-- saldoMoedas inicia em 0 automaticamente -->
-      <button type="submit">Cadastrar Professor</button>
-    </form>
-
-  </div>
-</div>
-
-      <p style="margin-top: 20px;">
-        Já tem uma conta? <a href="#" id="btnIrParaLogin" style="color: #d4af37; font-weight: bold;">Fazer Login</a>
+      <p class="switch-text">
+        Já tem uma conta? <a href="#" id="btnIrParaLogin">Fazer login</a>
       </p>
     </div>
+
     <div id="secaoLogin" style="display: none;">
       <div class="titulo">Bem-vinda de volta!</div>
       <form id="formLogin">
@@ -89,36 +168,33 @@
         <input id="loginSenha" type="password" placeholder="Senha" required>
         <button type="submit">Entrar</button>
       </form>
-      <p style="margin-top: 20px;">
-        Não tem conta? <a href="#" id="btnIrParaCadastro" style="color: #d4af37; font-weight: bold;">Criar Cadastro</a>
+      <p class="switch-text">
+        Não tem conta? <a href="#" id="btnIrParaCadastro">Criar cadastro</a>
       </p>
     </div>
-
-
-
-  </div>
+  </main>
 
   <div id="toastContainer" class="toast-container"></div>
 
   <script src="./js/coin4students.js"></script>
   <script>
     function showToast(message, type = 'info', duration = 4000) {
-        const container = document.getElementById('toastContainer');
-        if (!container) return;
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
 
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.innerHTML = `
-            <span>${message}</span>
-            <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
-        `;
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span>${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+      `;
 
-        container.appendChild(toast);
+      container.appendChild(toast);
 
-        setTimeout(() => {
-            toast.style.animation = 'toastFadeOut 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
-        }, duration);
+      setTimeout(() => {
+        toast.style.animation = 'toastFadeOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, duration);
     }
 
     window.showSystemMessage = showToast;

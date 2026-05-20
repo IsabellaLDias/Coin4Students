@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal da Empresa - Coin4Students</title>
-    <link rel="stylesheet" href="./css/style-aluno.css"> 
     <link rel="stylesheet" href="./css/empresa.css">
-   
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
@@ -17,73 +16,179 @@
             <img src="./img/logo - Copia.png" alt="Coin4Students">
             <span>Coin4Students <strong>Business</strong></span>
         </div>
+
         <nav class="menu">
-            <a href="#" onclick="trocarTab('home')" id="btn-home" ><i class="ph ph-house"></i> Dashboard</a>
-            <a href="#" onclick="trocarTab('cadastrar-vantagem')" id="btn-vantagens"><i class="ph ph-plus-circle"></i> Criar Vantagem</a>
-            <a href="#" onclick="trocarTab('minhas-vantagens')" id="btn-extrato"><i class="ph ph-tag"></i> Minhas Ofertas</a>
-            <a href="#" onclick="trocarTab('perfil')" id="btn-perfil"><i class="ph ph-buildings"></i> Dados da Empresa</a>
+            <a href="#" onclick="trocarTab('home')" id="btn-home" class="active">
+                <i class="ph ph-house"></i> Home
+            </a>
+            <a href="#" onclick="trocarTab('cadastrar-vantagem')" id="btn-cadastrar-vantagem">
+                <i class="ph ph-plus-circle"></i> Criar Vantagem
+            </a>
+            <a href="#" onclick="trocarTab('minhas-vantagens')" id="btn-minhas-vantagens">
+                <i class="ph ph-tag"></i> Minhas Ofertas
+            </a>
+            <a href="#" onclick="trocarTab('perfil')" id="btn-perfil">
+                <i class="ph ph-buildings"></i> Dados da Empresa
+            </a>
         </nav>
-        <button class="btn-logout" onclick="logout()"><i class="ph ph-sign-out"></i> Sair</button>
+
+        <button class="btn-logout" onclick="logout()">
+            <i class="ph ph-sign-out"></i> Sair
+        </button>
     </aside>
 
     <main class="main-content">
         <header class="header">
             <div class="user-info">
-                <strong id="nomeEmpresa">Carregando...</strong>
+                <span class="eyebrow">Portal da empresa</span>
+                <h1>Olá, <strong id="nomeEmpresa">Carregando...</strong></h1>
+                <p>Cadastre vantagens, acompanhe resgates e mantenha suas ofertas visíveis para os alunos.</p>
+            </div>
+            <div class="header-status">
+                <i class="ph ph-check-circle"></i>
+                <span>Parceiro ativo</span>
             </div>
         </header>
 
         <div id="secao-home">
             <div class="saldo-card">
-                <p>Vantagens Ativas</p>
-                <span class="saldo-valor" id="totalVantagens">0</span> itens
+                <div>
+                    <p>Vantagens ativas</p>
+                    <div class="saldo-linha">
+                        <span class="saldo-valor" id="totalVantagens">0</span>
+                        <span>ofertas</span>
+                    </div>
+                </div>
+                <div class="saldo-icon">
+                    <i class="ph ph-storefront"></i>
+                </div>
             </div>
 
+            <section class="metric-grid">
+                <div class="metric-card">
+                    <span class="metric-label">Resgates</span>
+                    <strong id="totalResgates">0</strong>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Moedas em ofertas</span>
+                    <strong id="totalMoedasOfertas">0</strong>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Custo médio</span>
+                    <strong id="custoMedio">0</strong>
+                </div>
+            </section>
+
             <section class="content-grid">
-                <div class="card">
-                    <h3><i class="ph ph-chart-line-up"></i> Resgates Recentes</h3>
-                    <div id="resgatesRecentes" class="lista-dinamica">
-                        </div>
+                <div class="card dashboard-card">
+                    <h3>
+                        <i class="ph ph-clock-counter-clockwise"></i>
+                        Resgates Recentes
+                    </h3>
+                    <div id="resgatesRecentes" class="lista-dinamica"></div>
                 </div>
 
-                <div class="card">
-                    <h3><i class="ph ph-star"></i> Vantagem em Destaque</h3>
+                <div class="card dashboard-card">
+                    <h3>
+                        <i class="ph ph-star"></i>
+                        Vantagens em Destaque
+                    </h3>
                     <div id="destaqueEmpresa" class="grid-vantagens"></div>
                 </div>
             </section>
         </div>
 
+        <div id="secao-cadastrar-vantagem" style="display:none">
+            <div class="card perfil-card form-card">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">Nova oferta</span>
+                        <h3>
+                            <i class="ph ph-plus-circle"></i>
+                            Cadastrar Vantagem
+                        </h3>
+                    </div>
+                    <span class="section-badge">Empresa: <strong id="nomeEmpresaCadastro">...</strong></span>
+                </div>
+
+                <form id="formVantagem" onsubmit="event.preventDefault(); cadastrarVantagem();">
+                    <div class="perfil-grid">
+                        <div class="form-field">
+                            <label>Título:</label>
+                            <input type="text" id="vantagemTitulo" maxlength="80" placeholder="Ex.: Desconto em lanche" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label>Custo em moedas:</label>
+                            <input type="number" id="vantagemCusto" min="1" step="1" placeholder="Ex.: 150" required>
+                        </div>
+
+                        <div class="form-field form-field-wide">
+                            <label>Descrição:</label>
+                            <textarea id="vantagemDescricao" rows="4" maxlength="240" placeholder="Ex.: Cupom de 15% para uso na loja parceira" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="perfil-acoes">
+                        <button type="submit" class="btn-salvar-perfil">
+                            <i class="ph ph-check-circle"></i>
+                            Cadastrar Vantagem
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="secao-minhas-vantagens" style="display:none">
+            <div class="card history-card">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">Catálogo</span>
+                        <h3>
+                            <i class="ph ph-tag"></i>
+                            Minhas Ofertas
+                        </h3>
+                    </div>
+                    <span class="section-badge" id="minhasVantagensResumo">0 ofertas</span>
+                </div>
+                <div id="minhasVantagensLista" class="grid-vantagens lista-ofertas"></div>
+            </div>
+        </div>
+
         <div id="secao-perfil" style="display:none">
             <div class="card perfil-card">
-                <h3><i class="ph ph-buildings"></i> Perfil Corporativo</h3>
+                <h3>
+                    <i class="ph ph-buildings"></i>
+                    Perfil Corporativo
+                </h3>
                 <form id="formPerfilEmpresa" onsubmit="event.preventDefault();">
                     <div class="perfil-grid">
-                        <div>
-                            <label>Razão Social / Nome Fantasia:</label>
-                            <input type="text" id="perfilNome" value="Tech Solutions Ltda">
+                        <div class="form-field">
+                            <label>Razão social / nome fantasia:</label>
+                            <input type="text" id="perfilNome">
                         </div>
-                        <div>
-                            <label>E-mail Corporativo:</label>
-                            <input type="email" id="perfilEmail" readonly style="background: #f0f0f0; cursor: not-allowed;">
+                        <div class="form-field">
+                            <label>E-mail corporativo:</label>
+                            <input type="email" id="perfilEmail" readonly>
                         </div>
-                        <div>
+                        <div class="form-field">
                             <label>CNPJ:</label>
-                            <input type="text" id="perfilCNPJ" readonly style="background: #f0f0f0; cursor: not-allowed;">
+                            <input type="text" id="perfilCNPJ" readonly>
                         </div>
-                        <div class="password-field">
-                            <label>Nova Senha:</label>
+                        <div class="form-field password-field">
+                            <label>Nova senha:</label>
                             <div class="password-input-wrapper">
                                 <input type="password" id="perfilNovaSenha" placeholder="Deixe em branco para manter atual">
-                                <button type="button" class="password-toggle" onclick="togglePassword('perfilNovaSenha')">
+                                <button type="button" class="password-toggle" onclick="togglePassword('perfilNovaSenha')" aria-label="Mostrar ou ocultar senha">
                                     <i class="ph ph-eye" id="perfilNovaSenha-icon"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="password-field">
-                            <label>Confirmar Nova Senha:</label>
+                        <div class="form-field password-field">
+                            <label>Confirmar nova senha:</label>
                             <div class="password-input-wrapper">
                                 <input type="password" id="perfilConfirmarSenha" placeholder="Repita a nova senha">
-                                <button type="button" class="password-toggle" onclick="togglePassword('perfilConfirmarSenha')">
+                                <button type="button" class="password-toggle" onclick="togglePassword('perfilConfirmarSenha')" aria-label="Mostrar ou ocultar senha">
                                     <i class="ph ph-eye" id="perfilConfirmarSenha-icon"></i>
                                 </button>
                             </div>
@@ -91,26 +196,25 @@
                     </div>
 
                     <div class="perfil-acoes">
-                        <button type="button" class="btn-salvar-perfil" onclick="atualizarPerfil()">Atualizar Dados</button>
-                        <button type="button" class="btn-excluir-perfil" onclick="excluirConta()">Encerrar Parceria</button>
+                        <button type="button" class="btn-salvar-perfil" onclick="atualizarPerfil()">
+                            <i class="ph ph-floppy-disk"></i>
+                            Atualizar Dados
+                        </button>
+                        <button type="button" class="btn-excluir-perfil" onclick="excluirConta()">
+                            <i class="ph ph-trash"></i>
+                            Encerrar Parceria
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
-
-        <div id="secao-cadastrar-vantagem" style="display:none">
-             <div class="card">
-                <h3><i class="ph ph-plus-circle"></i> Nova Vantagem/Produto</h3>
-                </div>
-        </div>
-
     </main>
 
     <div id="toastContainer" class="toast-container"></div>
 
     <div id="confirmModal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
-            <h3>Confirmar Encerramento</h3>
+            <h3>Confirmar encerramento</h3>
             <p>Tem certeza que deseja remover sua empresa da plataforma?</p>
             <div class="modal-buttons">
                 <button class="btn-modal-cancel" onclick="fecharConfirmModal()">Cancelar</button>
@@ -120,6 +224,6 @@
     </div>
 
     <script src="./js/empresa.js"></script>
-    
 </body>
+
 </html>
