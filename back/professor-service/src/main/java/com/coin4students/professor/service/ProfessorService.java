@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -127,7 +126,7 @@ public class ProfessorService {
 
     public List<?> historico(Long idProfessor) {
         if (transacaoServiceUrl == null || transacaoServiceUrl.isBlank()) {
-            return Collections.emptyList();
+            throw new RuntimeException("TRANSACAO_SERVICE_URL nao configurada no professor-service");
         }
 
         try {
@@ -137,7 +136,7 @@ public class ProfessorService {
             );
         } catch (Exception e) {
             System.err.println("Erro ao buscar historico do professor: " + e.getMessage());
-            return Collections.emptyList();
+            throw new RuntimeException("Erro ao buscar historico do professor", e);
         }
     }
 

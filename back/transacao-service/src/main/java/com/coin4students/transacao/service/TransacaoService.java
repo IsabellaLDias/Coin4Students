@@ -30,6 +30,8 @@ public class TransacaoService {
 
         transacao.setIdProfessor(evento.getIdProfessor());
         transacao.setIdAluno(evento.getIdAluno());
+        transacao.setNomeProfessor(evento.getNomeProfessor());
+        transacao.setNomeAluno(evento.getNomeAluno());
         transacao.setValor(evento.getValor());
         transacao.setMensagem(evento.getMensagem());
         transacao.setTipo("ENVIO_MOEDAS");

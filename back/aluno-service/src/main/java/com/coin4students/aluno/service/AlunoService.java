@@ -2,16 +2,21 @@ package com.coin4students.aluno.service;
 
 import com.coin4students.aluno.model.Aluno;
 import com.coin4students.aluno.repository.AlunoRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class AlunoService {
 
     private final AlunoRepository repository;
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @Value("${transacao.service.url:}")
+    private String transacaoServiceUrl;
 
     public AlunoService(AlunoRepository repository) {
         this.repository = repository;
@@ -23,6 +28,22 @@ public class AlunoService {
 
     public List<Aluno> listar() {
         return repository.findAll();
+    }
+
+    public List<?> extrato(Long idAluno) {
+        if (transacaoServiceUrl == null || transacaoServiceUrl.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        try {
+            return restTemplate.getForObject(
+                    transacaoServiceUrl + "/transacoes/extrato/aluno/" + idAluno,
+                    List.class
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar extrato do aluno: " + e.getMessage());
+            return Collections.emptyList();
+        }
     }
 
     public Aluno buscarPorId(Long id) {

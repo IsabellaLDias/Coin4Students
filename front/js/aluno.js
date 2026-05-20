@@ -153,6 +153,30 @@ function separarEndereco(enderecoCompleto) {
 
 let dadosDoAlunoGlobal = null;
 
+function escaparHtml(valor) {
+    return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function formatarData(data) {
+    if (!data) return "";
+
+    const dataObj = new Date(data);
+    if (Number.isNaN(dataObj.getTime())) return "";
+
+    return dataObj.toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     const alunoId = localStorage.getItem("alunoIdLogado");
 
@@ -323,27 +347,38 @@ async function carregarExtrato() {
         if (!response.ok) throw new Error("Erro ao buscar extrato");
 
         const transacoes = await response.json();
-        let html = "";
+        const transacoesOrdenadas = Array.isArray(transacoes)
+            ? [...transacoes].sort((a, b) => new Date(b.data || 0) - new Date(a.data || 0))
+            : [];
 
-        if (transacoes.length === 0) {
-            html = "<p>Nenhuma transação encontrada.</p>";
-        } else {
-            transacoes.forEach(t => {
-                const cor = t.tipo === 'RECEBIDO' ? 'green' : 'red';
-                const sinal = t.tipo === 'RECEBIDO' ? '+' : '-';
-                html += `
-                    <div class="lista-item" style="padding:10px 0; border-bottom: 1px solid #f5f5f5; display:flex; justify-content:space-between;">
+        const montarHtml = (itens, mensagemVazia) => {
+            if (!itens || itens.length === 0) {
+                return `<p>${mensagemVazia}</p>`;
+            }
+
+            return itens.map(t => {
+                const nomeProfessor = t.nomeProfessor || `Professor #${t.idProfessor || ""}`;
+                const mensagem = t.mensagem || t.descricao || "Recebimento de moedas";
+                const valor = t.valor || 0;
+                const dataFormatada = formatarData(t.data);
+
+                return `
+                    <div class="lista-item" style="padding:10px 0; border-bottom:1px solid #f5f5f5; display:flex; justify-content:space-between; gap:16px;">
                         <div>
-                            <span>${t.descricao}</span><br>
-                            <small>${new Date(t.data).toLocaleDateString()}</small>
+                            <span><strong>${escaparHtml(nomeProfessor)}</strong></span><br>
+                            <small>${escaparHtml(mensagem)}</small><br>
+                            <small>${escaparHtml(dataFormatada)}</small>
                         </div>
-                        <strong style="color:${cor}">${sinal}${t.valor} moedas</strong>
+                        <strong style="color:#15803d; white-space:nowrap;">+${valor} moedas</strong>
                     </div>`;
-            });
-        }
+            }).join("");
+        };
 
-        document.getElementById("extratoHome").innerHTML = html;
-        document.getElementById("extratoLista").innerHTML = html;
+        document.getElementById("extratoHome").innerHTML =
+            montarHtml(transacoesOrdenadas.slice(0, 5), "Sem transacoes recentes.");
+        document.getElementById("extratoLista").innerHTML =
+            montarHtml(transacoesOrdenadas, "Nenhuma transacao encontrada.");
+        return;
     } catch (error) {
         document.getElementById("extratoHome").innerHTML = "Sem transações recentes.";
     }

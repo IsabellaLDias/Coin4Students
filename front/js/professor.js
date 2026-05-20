@@ -5,6 +5,30 @@ const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
 let dadosDoProfessorGlobal = null;
 let alunosDisponiveis = [];
 
+function escaparHtml(valor) {
+    return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function formatarData(data) {
+    if (!data) return "";
+
+    const dataObj = new Date(data);
+    if (Number.isNaN(dataObj.getTime())) return "";
+
+    return dataObj.toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
 // ==========================================
 // INICIALIZAÇÃO
 // ==========================================
@@ -315,42 +339,48 @@ async function carregarHistorico() {
 
         const historico = await response.json();
 
-        let html = "";
+        const historicoOrdenado = Array.isArray(historico)
+            ? [...historico].sort((a, b) => new Date(b.data || 0) - new Date(a.data || 0))
+            : [];
 
-        if (!historico || historico.length === 0) {
-            html = "<p>Nenhuma distribuição realizada.</p>";
-        } else {
-            historico.forEach(item => {
-                const dataFormatada = item.data
-                    ? new Date(item.data).toLocaleDateString("pt-BR")
-                    : "";
+        const montarHtml = (itens, mensagemVazia) => {
+            if (!itens || itens.length === 0) {
+                return `<p>${mensagemVazia}</p>`;
+            }
 
-                html += `
-                    <div class="lista-item"
-                         style="padding:10px 0; border-bottom:1px solid #f5f5f5; display:flex; justify-content:space-between;">
+            return itens.map(item => {
+                const nomeAluno = item.nomeAluno || item.alunoNome || `Aluno #${item.idAluno || ""}`;
+                const mensagem = item.mensagem || item.descricao || item.motivo || "Envio de moedas";
+                const valor = item.valor || item.quantidade || 0;
+                const dataFormatada = formatarData(item.data);
+
+                return `
+                    <div class="lista-item" style="padding:10px 0; border-bottom:1px solid #f5f5f5; display:flex; justify-content:space-between; gap:16px;">
                         <div>
-                            <span>
-                                ${item.alunoNome || "Aluno"} - ${item.descricao || item.motivo || ""}
-                            </span><br>
-                            <small>${dataFormatada}</small>
+                            <span><strong>${escaparHtml(nomeAluno)}</strong></span><br>
+                            <small>${escaparHtml(mensagem)}</small><br>
+                            <small>${escaparHtml(dataFormatada)}</small>
                         </div>
-                        <strong style="color: green;">
-                            -${item.valor || item.quantidade || 0} moedas
+                        <strong style="color:#b91c1c; white-space:nowrap;">
+                            -${valor} moedas
                         </strong>
                     </div>
                 `;
-            });
-        }
+            }).join("");
+        };
+
+        const htmlHome = montarHtml(historicoOrdenado.slice(0, 5), "Nenhuma distribuicao recente.");
+        const htmlLista = montarHtml(historicoOrdenado, "Nenhuma distribuicao realizada.");
 
         const historicoHome = document.getElementById("historicoHome");
         const historicoLista = document.getElementById("historicoLista");
 
         if (historicoHome) {
-            historicoHome.innerHTML = html;
+            historicoHome.innerHTML = htmlHome;
         }
 
         if (historicoLista) {
-            historicoLista.innerHTML = html;
+            historicoLista.innerHTML = htmlLista;
         }
 
     } catch (error) {
@@ -360,11 +390,11 @@ async function carregarHistorico() {
         const historicoLista = document.getElementById("historicoLista");
 
         if (historicoHome) {
-            historicoHome.innerHTML = "<p>Nenhuma distribuição recente.</p>";
+            historicoHome.innerHTML = "<p>Historico indisponivel no momento.</p>";
         }
 
         if (historicoLista) {
-            historicoLista.innerHTML = "<p>Nenhuma distribuição encontrada.</p>";
+            historicoLista.innerHTML = "<p>Nao foi possivel carregar o historico. Verifique a URL do transacao-service.</p>";
         }
     }
 }

@@ -12,6 +12,8 @@ public class Transacao {
 
     private Long idProfessor;
     private Long idAluno;
+    private String nomeProfessor;
+    private String nomeAluno;
     private Integer valor;
     private String tipo;
     private String mensagem;
@@ -35,6 +37,22 @@ public class Transacao {
 
     public void setIdAluno(Long idAluno) {
         this.idAluno = idAluno;
+    }
+
+    public String getNomeProfessor() {
+        return nomeProfessor;
+    }
+
+    public void setNomeProfessor(String nomeProfessor) {
+        this.nomeProfessor = nomeProfessor;
+    }
+
+    public String getNomeAluno() {
+        return nomeAluno;
+    }
+
+    public void setNomeAluno(String nomeAluno) {
+        this.nomeAluno = nomeAluno;
     }
 
     public Integer getValor() {

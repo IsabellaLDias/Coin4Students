@@ -32,6 +32,11 @@ public class AlunoController {
         return service.buscarPorId(id);
     }
 
+    @GetMapping("/{id}/extrato")
+    public List<?> extrato(@PathVariable Long id) {
+        return service.extrato(id);
+    }
+
     @PutMapping("/{id}")
     public Aluno atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
         return service.atualizar(id, aluno);
