@@ -14,5 +14,7 @@ public interface CupomRepository extends JpaRepository<Cupom, Long> {
 
     List<Cupom> findByIdVantagemInOrderByIdDesc(List<Long> idsVantagens);
 
+    List<Cupom> findByIdAlunoOrderByIdDesc(Long idAluno);
+
     boolean existsByIdVantagem(Long idVantagem);
 }

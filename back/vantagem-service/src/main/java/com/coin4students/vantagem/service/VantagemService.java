@@ -67,6 +67,10 @@ public class VantagemService {
         return cupomRepository.findByIdVantagemInOrderByIdDesc(idsVantagens);
     }
 
+    public List<Cupom> listarResgatesPorAluno(Long idAluno) {
+        return cupomRepository.findByIdAlunoOrderByIdDesc(idAluno);
+    }
+
     public Vantagem atualizar(Long id, Vantagem dadosAtualizados) {
         if (cupomRepository.existsByIdVantagem(id)) {
             throw new RuntimeException("Vantagem ja foi resgatada e nao pode ser editada");
@@ -106,11 +110,15 @@ public class VantagemService {
 
         Cupom cupomSalvo = cupomRepository.save(cupom);
 
-        emailCupomService.enviarCupomPorEmail(
-                dto.getEmailAluno(),
-                cupomSalvo,
-                vantagem
-        );
+        try {
+            emailCupomService.enviarCupomPorEmail(
+                    dto.getEmailAluno(),
+                    cupomSalvo,
+                    vantagem
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email do cupom: " + e.getMessage());
+        }
 
         return cupomSalvo;
     }

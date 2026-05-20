@@ -168,6 +168,12 @@ async function carregarAlunosResgates() {
         return;
     }
 
+    const idsAlunosResgates = [...new Set(
+        resgatesEmpresa
+            .map(resgate => Number(resgate.idAluno))
+            .filter(id => Number.isFinite(id))
+    )];
+
     try {
         const response = await fetch(ALUNO_API);
         if (!response.ok) throw new Error("Erro ao buscar alunos");
@@ -177,12 +183,25 @@ async function carregarAlunosResgates() {
 
         alunos.forEach(aluno => {
             if (aluno?.id != null) {
-                alunosPorId.set(Number(aluno.id), aluno.nome || aluno.email || `Aluno #${aluno.id}`);
+                alunosPorId.set(Number(aluno.id), aluno.nome || aluno.email || "Aluno sem nome");
             }
         });
     } catch (error) {
         console.error(error);
     }
+
+    const idsFaltantes = idsAlunosResgates.filter(id => !alunosPorId.has(id));
+    await Promise.all(idsFaltantes.map(async idAluno => {
+        try {
+            const response = await fetch(`${ALUNO_API}/${idAluno}`);
+            if (!response.ok) return;
+
+            const aluno = await response.json();
+            alunosPorId.set(Number(idAluno), aluno.nome || aluno.email || "Aluno sem nome");
+        } catch (error) {
+            console.error(error);
+        }
+    }));
 }
 
 async function cadastrarVantagem() {
@@ -426,7 +445,7 @@ function renderizarResgatesRecentes() {
         const titulo = vantagem?.titulo || `Vantagem #${resgate.idVantagem}`;
         const custo = vantagem?.custoMoedas || 0;
         const status = resgate.utilizado ? "Utilizado" : "Disponível";
-        const nomeAluno = alunosPorId.get(Number(resgate.idAluno)) || `Aluno #${resgate.idAluno}`;
+        const nomeAluno = alunosPorId.get(Number(resgate.idAluno)) || "Aluno não encontrado";
 
         return `
             <div class="lista-item">
