@@ -19,17 +19,20 @@ public class EmailCupomService {
     private final String remetenteEmail;
     private final String remetenteNome;
     private final String logoUrl;
+    private final String publicUrl;
 
     public EmailCupomService(
             @Value("${brevo.api.key:}") String apiKey,
             @Value("${brevo.from.email:isabellamg2017@gmail.com}") String remetenteEmail,
             @Value("${brevo.from.name:coin4students}") String remetenteNome,
-            @Value("${brevo.logo.url:}") String logoUrl
+            @Value("${brevo.logo.url:}") String logoUrl,
+            @Value("${app.public.url:https://vantagem-service.onrender.com}") String publicUrl
     ) {
         this.apiKey = apiKey;
         this.remetenteEmail = remetenteEmail;
         this.remetenteNome = remetenteNome;
         this.logoUrl = logoUrl;
+        this.publicUrl = removerBarraFinal(publicUrl);
     }
 
     public void enviarCupomPorEmail(String emailAluno, Cupom cupom, Vantagem vantagem) {
@@ -38,6 +41,8 @@ public class EmailCupomService {
             System.err.println("Email do aluno ausente ou invalido para envio de cupom: " + emailAluno);
             return;
         }
+
+        String qrCodeUrl = publicUrl + "/vantagens/cupons/" + cupom.getCodigo() + "/qr-code";
 
         String html = templateBase(
                 "Seu cupom foi gerado",
@@ -64,13 +69,13 @@ public class EmailCupomService {
                 <tr>
                     <td align="center" style="padding: 0 28px 22px;">
                         <div style="display:inline-block; padding: 14px; border:1px solid #dfe8df; border-radius:8px; background:#ffffff;">
-                            <img src="data:image/png;base64,%s" alt="QR Code do cupom" style="display:block; width:190px; height:190px;">
+                            <img src="%s" alt="QR Code do cupom" style="display:block; width:190px; height:190px;">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 0 28px 30px; color: #66756b; font-size: 14px; line-height: 1.6;">
-                        Este cupom também foi registrado no seu portal. Guarde o código para apresentar no momento da validação.
+                        Este cupom também foi registrado no seu portal. Se o QR Code não aparecer, abra este link: <a href="%s" style="color:#256d2b; font-weight:700;">ver QR Code</a>.
                     </td>
                 </tr>
                 """.formatted(
@@ -79,7 +84,8 @@ public class EmailCupomService {
                         linhaDetalhe("Vantagem", vantagem.getTitulo()),
                         linhaDetalhe("Código do cupom", cupom.getCodigo()),
                         linhaDetalhe("Status", "Disponível para uso"),
-                        cupom.getQrCodeBase64()
+                        escaparHtml(qrCodeUrl),
+                        escaparHtml(qrCodeUrl)
                 )
         );
 
@@ -176,6 +182,11 @@ public class EmailCupomService {
         String emailNormalizado = email.trim();
         if (!emailNormalizado.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) return null;
         return emailNormalizado;
+    }
+
+    private String removerBarraFinal(String url) {
+        if (url == null || url.isBlank()) return "";
+        return url.replaceAll("/+$", "");
     }
 
     private String escaparHtml(String valor) {

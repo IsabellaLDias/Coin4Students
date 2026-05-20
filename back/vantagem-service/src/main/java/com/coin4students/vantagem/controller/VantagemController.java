@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.coin4students.vantagem.dto.ResgateDTO;
 import com.coin4students.vantagem.model.Cupom;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -43,6 +46,17 @@ public class VantagemController {
     @GetMapping("/resgates/aluno/{idAluno}")
     public List<Cupom> listarResgatesPorAluno(@PathVariable Long idAluno) {
         return service.listarResgatesPorAluno(idAluno);
+    }
+
+    @GetMapping(value = "/cupons/{codigo}/qr-code", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> qrCodeCupom(@PathVariable String codigo) {
+        Cupom cupom = service.buscarCupomPorCodigo(codigo);
+        byte[] imagem = Base64.getDecoder().decode(cupom.getQrCodeBase64());
+
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .body(imagem);
     }
 
     @PutMapping("/{id}")

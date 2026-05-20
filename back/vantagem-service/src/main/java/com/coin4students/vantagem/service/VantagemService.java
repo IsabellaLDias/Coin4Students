@@ -71,6 +71,11 @@ public class VantagemService {
         return cupomRepository.findByIdAlunoOrderByIdDesc(idAluno);
     }
 
+    public Cupom buscarCupomPorCodigo(String codigo) {
+        return cupomRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new RuntimeException("Cupom nao encontrado"));
+    }
+
     public Vantagem atualizar(Long id, Vantagem dadosAtualizados) {
         if (cupomRepository.existsByIdVantagem(id)) {
             throw new RuntimeException("Vantagem ja foi resgatada e nao pode ser editada");
