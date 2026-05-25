@@ -314,7 +314,7 @@ Além disso, o uso do Supabase resolveu a limitação do banco gratuito do Rende
 
 ### 📌 Diagrama de Componentes
 
-![Diagrama de Componentes](https://github.com/IsabellaLDias/Coin4Students/blob/main/Diagramas/DiagramaDeComponentes.png?raw=true)
+![Diagrama de Componentes](https://github.com/IsabellaLDias/Coin4Students/blob/main/Diagramas/DiagramaDeComponentes%20(Microsservi%C3%A7os).png)
 
 ---
 
