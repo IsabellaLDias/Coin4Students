@@ -20,6 +20,8 @@ public class EnvioMoedasConsumer {
 
     @RabbitListener(queues = RabbitMQConfig.FILA_ENVIO_MOEDAS)
     public void consumirEnvioMoedas(String mensagemJson) throws Exception {
+        System.out.println("Mensagem recebida do RabbitMQ em fila.envio.moedas: " + mensagemJson);
+
         EnvioMoedasEvent evento = objectMapper.readValue(mensagemJson, EnvioMoedasEvent.class);
 
         service.registrarEnvioMoedas(evento);

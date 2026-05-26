@@ -146,6 +146,12 @@ public class ProfessorService {
     private void publicarEventoEnvioMoedas(EnvioMoedasEvent evento) throws Exception {
         String json = objectMapper.writeValueAsString(evento);
         rabbitTemplate.convertAndSend(RabbitMQConfig.FILA_ENVIO_MOEDAS, json);
+        System.out.println("Evento de envio de moedas publicado no RabbitMQ: professor "
+                + evento.getIdProfessor()
+                + " -> aluno "
+                + evento.getIdAluno()
+                + " | valor "
+                + evento.getValor());
     }
 
     private void registrarEnvioMoedas(EnvioMoedasEvent evento) {
@@ -166,6 +172,11 @@ public class ProfessorService {
         }
 
         try {
+            System.err.println("RabbitMQ indisponivel para envio de moedas. Tentando fallback REST: "
+                    + erroRabbitMq.getClass().getSimpleName()
+                    + ": "
+                    + erroRabbitMq.getMessage());
+
             restTemplate.postForObject(
                     transacaoServiceUrl + "/transacoes/envio-moedas",
                     evento,
