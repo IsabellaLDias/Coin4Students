@@ -122,7 +122,7 @@ public class ProfessorService {
         evento.setNomeProfessor(professor.getNome());
         evento.setNomeAluno(aluno.getNome());
 
-        publicarEventoEnvioMoedas(evento);
+        registrarEnvioMoedas(evento);
 
         return professor;
     }
@@ -143,14 +143,38 @@ public class ProfessorService {
         }
     }
 
-    private void publicarEventoEnvioMoedas(EnvioMoedasEvent evento) {
+    private void publicarEventoEnvioMoedas(EnvioMoedasEvent evento) throws Exception {
+        String json = objectMapper.writeValueAsString(evento);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.FILA_ENVIO_MOEDAS, json);
+    }
+
+    private void registrarEnvioMoedas(EnvioMoedasEvent evento) {
         try {
-            String json = objectMapper.writeValueAsString(evento);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.FILA_ENVIO_MOEDAS, json);
+            publicarEventoEnvioMoedas(evento);
         } catch (Exception e) {
+            registrarEnvioMoedasPorRest(evento, e);
+        }
+    }
+
+    private void registrarEnvioMoedasPorRest(EnvioMoedasEvent evento, Exception erroRabbitMq) {
+        if (transacaoServiceUrl == null || transacaoServiceUrl.isBlank()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_GATEWAY,
                     "Erro ao publicar evento de envio de moedas",
+                    erroRabbitMq
+            );
+        }
+
+        try {
+            restTemplate.postForObject(
+                    transacaoServiceUrl + "/transacoes/envio-moedas",
+                    evento,
+                    Object.class
+            );
+        } catch (RestClientException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_GATEWAY,
+                    "Erro ao registrar envio de moedas no transacao-service",
                     e
             );
         }

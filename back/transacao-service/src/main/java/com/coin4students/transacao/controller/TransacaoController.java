@@ -1,5 +1,6 @@
 package com.coin4students.transacao.controller;
 
+import com.coin4students.transacao.dto.EnvioMoedasEvent;
 import com.coin4students.transacao.model.Transacao;
 import com.coin4students.transacao.service.TransacaoService;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +26,10 @@ public class TransacaoController {
     @GetMapping("/extrato/professor/{idProfessor}")
     public List<Transacao> extratoProfessor(@PathVariable Long idProfessor) {
         return service.extratoProfessor(idProfessor);
+    }
+
+    @PostMapping("/envio-moedas")
+    public Transacao registrarEnvioMoedas(@RequestBody EnvioMoedasEvent evento) {
+        return service.registrarEnvioMoedas(evento);
     }
 }
