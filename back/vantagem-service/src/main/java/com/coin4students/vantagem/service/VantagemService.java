@@ -21,7 +21,7 @@ public class VantagemService {
 
     private final VantagemRepository repository;
 
-    @Value("${aluno.service.url:https://aluno-service-orux.onrender.com}")
+    @Value("${aluno.service.url:https://aluno-service-aqwz.onrender.com}")
     private String alunoServiceUrl;
 
     private final CupomRepository cupomRepository;

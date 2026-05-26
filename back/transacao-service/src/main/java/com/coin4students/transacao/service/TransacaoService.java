@@ -17,7 +17,7 @@ public class TransacaoService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final EmailService emailService;
 
-    @Value("${aluno.service.url}")
+    @Value("${aluno.service.url:https://aluno-service-aqwz.onrender.com}")
     private String alunoServiceUrl;
 
     public TransacaoService(TransacaoRepository repository, EmailService emailService) {

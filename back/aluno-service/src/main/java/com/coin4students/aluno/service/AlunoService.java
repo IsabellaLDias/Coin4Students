@@ -15,7 +15,7 @@ public class AlunoService {
     private final AlunoRepository repository;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${transacao.service.url:}")
+    @Value("${transacao.service.url:https://transacao-service-hc98.onrender.com}")
     private String transacaoServiceUrl;
 
     public AlunoService(AlunoRepository repository) {

@@ -27,7 +27,7 @@ body {
     color: var(--ink);
     background:
         linear-gradient(120deg, rgba(247, 252, 247, 0.88), rgba(255, 251, 227, 0.72)),
-        url('/front/img/imagem.png') no-repeat center/cover fixed;
+        url('../img/imagem.png') no-repeat center/cover fixed;
 }
 
 .sidebar {

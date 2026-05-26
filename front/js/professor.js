@@ -32,6 +32,19 @@ function formatarData(data) {
     });
 }
 
+async function obterMensagemErro(response, mensagemPadrao) {
+    const texto = await response.text();
+
+    if (!texto) return mensagemPadrao;
+
+    try {
+        const erro = JSON.parse(texto);
+        return erro.message || erro.error || erro.detail || mensagemPadrao;
+    } catch {
+        return texto;
+    }
+}
+
 function atualizarSaldoNaTela(valor) {
     const saldo = valor || 0;
     const valorSaldo = document.getElementById("valorSaldo");
@@ -333,7 +346,7 @@ async function distribuirMoedas() {
         );
 
         if (!response.ok) {
-            const mensagemErro = await response.text();
+            const mensagemErro = await obterMensagemErro(response, "Erro ao distribuir moedas");
             throw new Error(mensagemErro || "Erro ao distribuir moedas");
         }
 

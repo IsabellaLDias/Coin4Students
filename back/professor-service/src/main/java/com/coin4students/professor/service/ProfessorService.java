@@ -8,8 +8,13 @@ import com.coin4students.professor.repository.ProfessorRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,10 +26,10 @@ public class ProfessorService {
     private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${aluno.service.url}")
+    @Value("${aluno.service.url:https://aluno-service-aqwz.onrender.com}")
     private String alunoServiceUrl;
 
-    @Value("${transacao.service.url:}")
+    @Value("${transacao.service.url:https://transacao-service-hc98.onrender.com}")
     private String transacaoServiceUrl;
 
     public ProfessorService(
@@ -72,32 +77,30 @@ public class ProfessorService {
         professorRepository.deleteById(id);
     }
 
+    @Transactional
     public Professor enviarMoedas(Long idProfessor, EnvioMoedasDTO dto) {
         Professor professor = buscarPorId(idProfessor);
 
         if (dto.getIdAluno() == null) {
-            throw new RuntimeException("Aluno e obrigatorio");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno e obrigatorio");
         }
 
         if (dto.getValor() == null || dto.getValor() <= 0) {
-            throw new RuntimeException("O valor deve ser maior que zero");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O valor deve ser maior que zero");
         }
 
         if (dto.getMensagem() == null || dto.getMensagem().isBlank()) {
-            throw new RuntimeException("A mensagem e obrigatoria");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A mensagem e obrigatoria");
         }
 
         if (professor.getSaldoMoedas() < dto.getValor()) {
-            throw new RuntimeException("Saldo insuficiente");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo insuficiente");
         }
 
-        AlunoResponse aluno = restTemplate.getForObject(
-                alunoServiceUrl + "/alunos/" + dto.getIdAluno(),
-                AlunoResponse.class
-        );
+        AlunoResponse aluno = buscarAluno(dto.getIdAluno());
 
         if (aluno == null) {
-            throw new RuntimeException("Aluno nao encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aluno nao encontrado");
         }
 
         professor.setSaldoMoedas(professor.getSaldoMoedas() - dto.getValor());
@@ -145,7 +148,28 @@ public class ProfessorService {
             String json = objectMapper.writeValueAsString(evento);
             rabbitTemplate.convertAndSend(RabbitMQConfig.FILA_ENVIO_MOEDAS, json);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao publicar evento de envio de moedas", e);
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_GATEWAY,
+                    "Erro ao publicar evento de envio de moedas",
+                    e
+            );
+        }
+    }
+
+    private AlunoResponse buscarAluno(Long idAluno) {
+        try {
+            return restTemplate.getForObject(
+                    alunoServiceUrl + "/alunos/" + idAluno,
+                    AlunoResponse.class
+            );
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aluno nao encontrado", e);
+        } catch (RestClientException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_GATEWAY,
+                    "Erro ao consultar aluno-service",
+                    e
+            );
         }
     }
 
