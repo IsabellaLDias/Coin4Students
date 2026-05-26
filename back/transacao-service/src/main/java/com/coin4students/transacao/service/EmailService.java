@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -204,7 +205,14 @@ public class EmailService {
                 html
         );
 
-        restTemplate.postForEntity(BREVO_EMAILS_URL, new HttpEntity<>(body, headers), String.class);
+        try {
+            restTemplate.postForEntity(BREVO_EMAILS_URL, new HttpEntity<>(body, headers), String.class);
+        } catch (HttpClientErrorException.Unauthorized e) {
+            throw new RuntimeException(
+                    "BREVO_API_KEY invalida ou sem permissao para enviar e-mail pela API HTTP da Brevo",
+                    e
+            );
+        }
     }
 
     private String limparConfiguracao(String valor) {
