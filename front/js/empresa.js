@@ -1,6 +1,6 @@
-const EMPRESA_API = "https://empresa-service.onrender.com/empresas";
-const VANTAGEM_API = "https://vantagem-service.onrender.com/vantagens";
-const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
+const EMPRESA_API = "https://empresa-service-h2xg.onrender.com/empresas";
+const VANTAGEM_API = "https://vantagem-service-1lv1.onrender.com/vantagens";
+const ALUNO_API = "https://aluno-service-aqwz.onrender.com/alunos";
 const LIMITE_HOME_EMPRESA = 4;
 const ITENS_POR_PAGINA_OFERTAS = 8;
 
