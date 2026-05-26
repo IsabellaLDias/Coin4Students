@@ -24,10 +24,10 @@ public class EmailService {
         @Value("${brevo.from.name:coin4students}") String remetenteNome,
         @Value("${brevo.logo.url:}") String logoUrl
     ) {
-        this.apiKey = apiKey;
-        this.remetenteEmail = remetenteEmail;
-        this.remetenteNome = remetenteNome;
-        this.logoUrl = logoUrl;
+        this.apiKey = limparConfiguracao(apiKey);
+        this.remetenteEmail = limparConfiguracao(remetenteEmail);
+        this.remetenteNome = limparConfiguracao(remetenteNome);
+        this.logoUrl = limparConfiguracao(logoUrl);
     }
 
     public void enviarEmailProfessor(String email, Integer valor, String nomeAluno) {
@@ -205,6 +205,18 @@ public class EmailService {
         );
 
         restTemplate.postForEntity(BREVO_EMAILS_URL, new HttpEntity<>(body, headers), String.class);
+    }
+
+    private String limparConfiguracao(String valor) {
+        if (valor == null) return "";
+        String valorLimpo = valor.trim();
+
+        if ((valorLimpo.startsWith("\"") && valorLimpo.endsWith("\""))
+                || (valorLimpo.startsWith("'") && valorLimpo.endsWith("'"))) {
+            return valorLimpo.substring(1, valorLimpo.length() - 1).trim();
+        }
+
+        return valorLimpo;
     }
 
     private String normalizarEmail(String email) {
