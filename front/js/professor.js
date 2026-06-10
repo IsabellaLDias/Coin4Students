@@ -1,6 +1,6 @@
-const PROFESSOR_API = "https://professor-service-f8yr.onrender.com/professores";
-const ALUNO_API = "https://aluno-service-aqwz.onrender.com/alunos";
-const TRANSACAO_API = "https://transacao-service-hc98.onrender.com/transacoes";
+const PROFESSOR_API = "https://professor-service-0rvu.onrender.com/professores";
+const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
+const TRANSACAO_API = "https://transacao-service.onrender.com/transacoes";
 
 let dadosDoProfessorGlobal = null;
 let alunosDisponiveis = [];
