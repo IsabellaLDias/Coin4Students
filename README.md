@@ -30,19 +30,18 @@
 
 ## 🚧 Status do Projeto
 
-[![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-blue)]()
-[![Versão](https://img.shields.io/badge/Versão-v1.0.0-6A5ACD)]()
-[![Licença](https://img.shields.io/badge/Licença-MIT-green)](#-licença)
-[![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)]()
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.6-6DB33F?logo=springboot&logoColor=white)]()
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-336791?logo=postgresql&logoColor=white)]()
-[![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=black)]()
-[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)]()
+[![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-blue)](https://github.com/IsabellaLDias/Coin4Students)
+[![Versão](https://img.shields.io/badge/Versão-v1.0.0-6A5ACD)](https://github.com/IsabellaLDias/Coin4Students/releases)
+[![Licença](https://img.shields.io/badge/Licença-MIT-green)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/21/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.6-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-336791?logo=postgresql&logoColor=white)](https://supabase.com/)
+[![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=black)](https://render.com/)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 
 ---
 
 ## 📚 Índice
-- [Links Úteis](#-links-úteis)
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Funcionalidades Principais](#-funcionalidades-principais)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
@@ -60,16 +59,6 @@
 - [Contribuição](#-contribuição)
 - [Agradecimentos](#-agradecimentos)
 - [Licença](#-licença)
-
----
-
-## 🔗 Links Úteis
-* 🌐 **Demo Online:** [Acesse a Aplicação Web](<link-da-demo-web>)
-  > 💻 **Descrição:** Link para a aplicação em ambiente de produção (Ex: hospedado na Vercel, Netlify ou AWS S3).
-* 📱 **Download Mobile:** [App Store](<link-app-store>) | [Google Play](<link-google-play>) | [APK Direto](<link-para-apk-direto>)
-  > 📱 **Descrição:** Links diretos para download nas lojas de aplicativos (se aplicável) e para o arquivo de instalação direta no Android (APK).
-* 📖 **Documentação:** [Leia a Wiki/Docs](<link-para-docs>)
-  > 📚 **Descrição:** Acesso à documentação técnica completa do projeto (Ex: Swagger/OpenAPI para API, ou Wiki interna).
 
 ---
 
@@ -645,15 +634,16 @@ Render → Manual Deploy → Deploy latest commit
 ### 🌐 Endpoints
 
 ```txt
-https://aluno-service-orux.onrender.com/alunos
+https://aluno-service-aqwz.onrender.com/alunos
 
-https://professor-service-0rvu.onrender.com/professores
+https://professor-service-f8yr.onrender.com/professores
 
-https://empresa-service.onrender.com/empresas
+https://empresa-service-h2xg.onrender.com/empresas
 
-https://transacao-service.onrender.com/transacoes
+https://transacao-service-hc98.onrender.com/transacoes
 
-https://vantagem-service.onrender.com/vantagens
+https://vantagem-service-1lv1.onrender.com/vantagens
+
 ```
 
 ---
@@ -850,63 +840,6 @@ Para melhor visualização, as telas principais estão organizadas lado a lado.
 | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela de Cadastro de Clientes" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela de Cadastro de Produtos" width="120px" height="120px"> |
 | **Dashboard (Visão Geral)** | **Página Admin / Configurações** |
 | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela de Dashboard" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela Administrativa" width="120px" height="120px"> |
-
-### 💻 Exemplo de Saída no Terminal (para Back-end, API, CLI)
-
-Caso o projeto seja focado em serviços de Back-end (API, microserviço, CLI), utilize esta seção para demonstrar a interação com o sistema e a resposta esperada.
-
-#### 1. Demonstração da API (Exemplo com cURL)
-
-Mostra uma chamada simples para um endpoint da API (ex: GET de listagem).
-
-```bash
-# Chama o endpoint de listagem de usuários com o token de autenticação
-curl -X GET 'http://localhost:3000/api/v1/users' \
-     -H 'Authorization: Bearer <seu-jwt-token>'
-```
-
-**Saída Esperada:**
-```json
-{
-  "total": 2,
-  "users": [
-    {
-      "id": "1a2b3c",
-      "name": "Prof. Aramuni",
-      "email": "contato@exemplo.com",
-      "status": "active"
-    },
-    {
-      "id": "4d5e6f",
-      "name": "Colaborador Teste",
-      "email": "teste@exemplo.com",
-      "status": "inactive"
-    }
-  ]
-}
-```
-
----
-
-#### 2. Demonstração de Execução de CLI/Script
-
-Mostra como executar uma ferramenta de linha de comando ou um script de manutenção do projeto (ex: rodar migrações ou um job agendado).
-
-```bash
-# Executa a ferramenta de validação de Schema
-npm run cli validate:schema --target=production
-```
-
-**Saída Esperada:**
-```text
-[INFO] Iniciando validação do banco de dados...
-[SUCCESS] 15/15 tabelas verificadas.
-[WARNING] Coluna 'descricao' na tabela 'produtos' é nullable.
-[SUCCESS] Validação concluída. Nenhum erro crítico encontrado.
-Tempo de execução: 1.25s
-```
-
----
 
 ## 🔗 Documentações utilizadas
 
