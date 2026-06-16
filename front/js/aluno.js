@@ -1,7 +1,7 @@
-const ALUNO_API = "https://aluno-service-orux.onrender.com/alunos";
-const PROFESSOR_API = "https://professor-service-0rvu.onrender.com/professores";
-const TRANSACAO_API = "https://transacao-service.onrender.com/transacoes";
-const VANTAGEM_API = "https://vantagem-service.onrender.com/vantagens";
+const ALUNO_API = "https://aluno-service-kzwc.onrender.com/alunos";
+const PROFESSOR_API = "https://professor-service-eg6z.onrender.com/professores";
+const TRANSACAO_API = "https://transacao-service-9trg.onrender.com/transacoes";
+const VANTAGEM_API = "https://vantagem-service-msqr.onrender.com/vantagens";
 
 const LIMITE_HOME = 4;
 const ITENS_POR_PAGINA_EXTRATO = 8;
