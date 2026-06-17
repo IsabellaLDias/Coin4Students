@@ -125,7 +125,14 @@
 
                         <div class="form-field form-field-wide">
                             <label>Imagem do produto:</label>
-                            <input type="file" id="vantagemImagemArquivo" accept="image/png,image/jpeg,image/webp">
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="vantagemImagemArquivo" accept="image/png,image/jpeg,image/webp" class="file-upload-input">
+                                <div class="file-upload-content">
+                                    <i class="ph ph-upload-simple"></i>
+                                    <span><strong>Clique para selecionar</strong> ou arraste a imagem</span>
+                                    <small>PNG, JPG ou WEBP até 1.5MB</small>
+                                </div>
+                            </div>
                             <input type="url" id="vantagemImagemUrl" maxlength="500" placeholder="Ou cole uma URL https://exemplo.com/produto.jpg">
                             <div id="previewImagemVantagem" class="imagem-preview"></div>
                         </div>
