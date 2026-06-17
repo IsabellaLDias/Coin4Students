@@ -42,7 +42,8 @@ public class EmailCupomService {
             return;
         }
 
-        String qrCodeUrl = publicUrl + "/vantagens/cupons/" + cupom.getCodigo() + "/qr-code";
+        String qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + cupom.getCodigo();
+
 
         String html = templateBase(
                 "Seu cupom foi gerado",
