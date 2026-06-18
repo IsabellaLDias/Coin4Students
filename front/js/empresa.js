@@ -13,6 +13,15 @@ let vantagemEmEdicaoId = null;
 let imagemAtualEdicao = "";
 
 document.addEventListener("DOMContentLoaded", async () => {
+    if (window.NotificationSystem) {
+        window.empresaNotif = new window.NotificationSystem(
+            'empresa',
+            document.getElementById('notifBadge'),
+            document.getElementById('notifDropdown'),
+            document.getElementById('notifBtn')
+        );
+    }
+
     const empresaId = localStorage.getItem("empresaIdLogada");
 
     if (!empresaId) {
@@ -30,6 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const empresa = await response.json();
         dadosDaEmpresaGlobal = empresa;
+        if (window.empresaNotif) window.empresaNotif.setUserId(empresaId);
 
         preencherDadosEmpresa(empresa);
         await carregarPainelEmpresa();
@@ -134,7 +144,7 @@ async function carregarVantagensEmpresa() {
         const nomeEmpresa = normalizarTexto(obterNomeEmpresa());
 
         vantagensEmpresa = Array.isArray(vantagens)
-            ? vantagens.filter(v => normalizarTexto(v.nomeEmpresa) === nomeEmpresa)
+            ? vantagens.filter(v => normalizarTexto(v.nomeEmpresa) === nomeEmpresa).reverse()
             : [];
     } catch (error) {
         console.error(error);
@@ -155,6 +165,24 @@ async function carregarResgatesEmpresa() {
         resgatesEmpresa = Array.isArray(resgates)
             ? resgates.filter(r => idsVantagensEmpresa.has(Number(r.idVantagem)))
             : [];
+            
+        const lastResgatesLenStr = localStorage.getItem(`resgates_empresa_len_${dadosDaEmpresaGlobal?.id}`);
+        const lastResgatesLen = lastResgatesLenStr ? parseInt(lastResgatesLenStr, 10) : 0;
+        
+        if (resgatesEmpresa.length > lastResgatesLen && lastResgatesLen > 0) {
+            const diff = resgatesEmpresa.length - lastResgatesLen;
+            // Iterate the last 'diff' items since it's not reversed
+            for (let i = resgatesEmpresa.length - diff; i < resgatesEmpresa.length; i++) {
+                const r = resgatesEmpresa[i];
+                const v = vantagensEmpresa.find(vant => Number(vant.id) === Number(r.idVantagem));
+                const nomeVant = v ? v.titulo : "uma vantagem";
+                if (window.empresaNotif) {
+                    window.empresaNotif.addNotification(`Um aluno resgatou a oferta '${nomeVant}'!`, "🎁");
+                }
+            }
+        }
+        localStorage.setItem(`resgates_empresa_len_${dadosDaEmpresaGlobal?.id}`, resgatesEmpresa.length.toString());
+        
     } catch (error) {
         console.error(error);
         resgatesEmpresa = [];
@@ -318,10 +346,18 @@ function atualizarResumo() {
     const totalMoedas = vantagensEmpresa.reduce((soma, v) => soma + Number(v.custoMoedas || 0), 0);
     const custoMedio = totalVantagens ? Math.round(totalMoedas / totalVantagens) : 0;
 
-    document.getElementById("totalVantagens").innerText = totalVantagens;
-    document.getElementById("totalResgates").innerText = totalResgates;
-    document.getElementById("totalMoedasOfertas").innerText = formatarMoedas(totalMoedas);
-    document.getElementById("custoMedio").innerText = formatarMoedas(custoMedio);
+    if (window.animateCountUp) {
+        window.animateCountUp(document.getElementById("totalVantagens"), totalVantagens);
+        window.animateCountUp(document.getElementById("totalResgates"), totalResgates);
+        window.animateCountUp(document.getElementById("totalMoedasOfertas"), totalMoedas);
+        window.animateCountUp(document.getElementById("custoMedio"), custoMedio);
+    } else {
+        document.getElementById("totalVantagens").innerText = totalVantagens;
+        document.getElementById("totalResgates").innerText = totalResgates;
+        document.getElementById("totalMoedasOfertas").innerText = formatarMoedas(totalMoedas);
+        document.getElementById("custoMedio").innerText = formatarMoedas(custoMedio);
+    }
+
     document.getElementById("minhasVantagensResumo").innerText =
         `${totalVantagens} ${totalVantagens === 1 ? "oferta" : "ofertas"}`;
 }
@@ -408,7 +444,7 @@ function montarCardVantagem(vantagem) {
         : "";
     const resgatada = vantagemFoiResgatada(vantagem.id);
     const acaoEdicao = resgatada
-        ? `<span class="vantagem-status">Já resgatada</span>`
+        ? `<span class="vantagem-status">Já resgatada por um estudante</span>`
         : `<button type="button" class="btn-editar-vantagem" onclick="editarVantagem(${vantagem.id})">Editar</button>`;
 
     return `
@@ -635,7 +671,8 @@ function trocarTab(tab) {
         "secao-home",
         "secao-perfil",
         "secao-cadastrar-vantagem",
-        "secao-minhas-vantagens"
+        "secao-minhas-vantagens",
+        "secao-validar"
     ];
 
     secoes.forEach(id => {
@@ -650,4 +687,100 @@ function trocarTab(tab) {
 
     const btnAtivo = document.getElementById(`btn-${tab}`);
     if (btnAtivo) btnAtivo.classList.add("active");
+}
+
+async function validarCupomSistema() {
+    const inputCodigo = document.getElementById("codigoCupomValidacao");
+    const codigo = inputCodigo.value.trim();
+    const btnValidar = document.getElementById("btnValidarAcao");
+    const divResultado = document.getElementById("resultadoValidacao");
+    
+    if (!codigo) {
+        showToast("Digite o código do cupom.", "error");
+        return;
+    }
+
+    btnValidar.disabled = true;
+    btnValidar.innerHTML = `<i class="ph ph-spinner ph-spin"></i> <span>Validando...</span>`;
+    divResultado.style.display = "none";
+    
+    try {
+        const response = await fetch(`${VANTAGEM_API}/validar?codigo=${codigo}`, {
+            method: "PUT"
+        });
+        
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+        
+        const cupom = await response.json();
+        inputCodigo.value = "";
+        
+        divResultado.style.display = "block";
+        divResultado.innerHTML = `
+            <div class="empty-state" style="border: 1px solid var(--green-500); background-color: rgba(76, 175, 80, 0.1); border-radius: 12px; padding: 20px;">
+                <i class="ph ph-check-circle" style="font-size: 48px; color: var(--green-600);"></i>
+                <h4 style="color: var(--green-600); margin: 8px 0;">Cupom Validado com Sucesso!</h4>
+                <p>O resgate foi validado e baixado no sistema.</p>
+            </div>
+        `;
+        
+        showToast("Cupom validado e baixa efetuada!", "success");
+        if (window.triggerCoinRain) window.triggerCoinRain();
+        await carregarResgatesEmpresa();
+        
+    } catch (error) {
+        console.error("Erro na validação:", error);
+        
+        divResultado.style.display = "block";
+        divResultado.innerHTML = `
+            <div class="empty-state" style="border: 1px solid #ef5350; background-color: rgba(239, 83, 80, 0.1); border-radius: 12px; padding: 20px;">
+                <i class="ph ph-x-circle" style="font-size: 48px; color: #ef5350;"></i>
+                <h4 style="color: #ef5350; margin: 8px 0;">Erro na Validação</h4>
+                <p>O cupom não foi encontrado, já foi utilizado ou é inválido.</p>
+            </div>
+        `;
+        showToast("Código inválido ou já utilizado.", "error");
+    } finally {
+        btnValidar.disabled = false;
+        btnValidar.innerHTML = `<i class="ph ph-check-circle"></i> <span>Validar e Dar Baixa</span>`;
+    }
+}
+
+let html5QrcodeScanner = null;
+
+function abrirLeitorQR() {
+    const container = document.getElementById("leitorQRContainer");
+    container.style.display = "block";
+    
+    if (!html5QrcodeScanner) {
+        html5QrcodeScanner = new Html5Qrcode("reader");
+    }
+    
+    html5QrcodeScanner.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        (decodedText, decodedResult) => {
+            document.getElementById("codigoCupomValidacao").value = decodedText;
+            fecharLeitorQR();
+            validarCupomSistema();
+        },
+        (errorMessage) => {
+            // Pode ignorar os erros constantes de não encontrar QR na imagem
+        }
+    ).catch(err => {
+        showToast("Erro ao acessar a câmera. Verifique as permissões.", "error");
+        console.error(err);
+        fecharLeitorQR();
+    });
+}
+
+function fecharLeitorQR() {
+    const container = document.getElementById("leitorQRContainer");
+    container.style.display = "none";
+    if (html5QrcodeScanner) {
+        html5QrcodeScanner.stop().then(() => {
+            html5QrcodeScanner.clear();
+        }).catch(err => console.error("Erro ao parar leitor", err));
+    }
 }

@@ -5,111 +5,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/ui-fx.css">
     <link rel="stylesheet" href="./css/home.css">
     <title>Coin4Students</title>
+  <link rel="icon" type="image/png" href="./img/logo - Copia.png">
 </head>
 
 <body>
 
-    <header class="main-header">
+    <header class="main-header glass-header">
         <a class="logo" href="./home.html">
-            <img src="./img/logo.png" alt="Coin4Students" class="logo-img">
+            <img src="./img/logo.png" alt="Coin4Students" class="logo-img glow-effect">
             <span>Coin4Students</span>
         </a>
         <nav>
-            <a href="./coin4students.html" class="btn-acesso">Entrar / Cadastrar</a>
+            <a href="./coin4students.html" class="btn-acesso-premium">Entrar na Plataforma <i class="fa-solid fa-arrow-right"></i></a>
         </nav>
     </header>
 
-    <section class="hero">
+    <section class="hero hero-premium">
         <div class="hero-content">
-            <span class="eyebrow">Moedas acadêmicas</span>
-            <h1>Transforme esforço em recompensas reais.</h1>
-            <p>Um sistema de mérito para professores reconhecerem alunos, alunos acompanharem conquistas e empresas oferecerem benefícios.</p>
+            <div class="badge-premium">Reconhecendo o talento universitário</div>
+            <h1 class="gradient-text">Transforme seu esforço<br>em <span>recompensas reais.</span></h1>
+            <p class="hero-subtitle">Conectando alunos brilhantes, professores inspiradores e empresas parceiras em um sistema de moedas e vantagens exclusivas.</p>
             <div class="hero-actions">
-                <a href="./coin4students.html" class="btn-principal">Começar agora</a>
-                <a href="#como-funciona" class="btn-secundario">Ver como funciona</a>
+                <a href="./coin4students.html" class="btn-principal-premium">Começar Agora</a>
+                <a href="#como-funciona" class="btn-secundario-premium"><i class="fa-solid fa-arrow-down"></i> Entenda o Sistema</a>
             </div>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="falling-coins-container">
+                <div class="coin-single fall-1"></div>
+                <div class="coin-single fall-2"></div>
+                <div class="coin-single fall-3"></div>
+                <div class="coin-single fall-4"></div>
+                <div class="coin-single fall-5"></div>
+                <div class="coin-single fall-6"></div>
+                <div class="coin-single fall-7"></div>
+            </div>
+            <img src="./img/hero-criativo.png" alt="Coin4Students Illustration" class="hero-illustration-img">
         </div>
     </section>
 
-    <main id="como-funciona" class="container">
-        <div class="section-title">
-            <span class="eyebrow">Fluxo simples</span>
-            <h2>Como funciona?</h2>
+    <main id="como-funciona" class="container how-it-works">
+        <div class="section-title center">
+            <span class="eyebrow glow">Tríade do Conhecimento</span>
+            <h2>Como a plataforma funciona?</h2>
         </div>
 
-        <div class="grid-servicos">
-            <div class="card-info">
-                <div class="icon"><i class="fa-solid fa-user-graduate"></i></div>
+        <div class="grid-servicos premium-grid">
+            <div class="card-info glass-card">
+                <div class="icon-wrapper"><i class="fa-solid fa-user-graduate"></i></div>
                 <h3>Alunos</h3>
-                <p>Recebem moedas por mérito acadêmico, acompanham o saldo e resgatam vantagens cadastradas.</p>
+                <p>Recebem moedas pelo seu mérito e dedicação acadêmica, sobem de nível e trocam pontos por benefícios únicos.</p>
             </div>
-            <div class="card-info">
-                <div class="icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div class="card-info glass-card">
+                <div class="icon-wrapper"><i class="fa-solid fa-chalkboard-user"></i></div>
                 <h3>Professores</h3>
-                <p>Distribuem moedas, registram o motivo e acompanham o histórico de reconhecimento.</p>
+                <p>Valorizam o esforço dos alunos em sala de aula, enviando moedas e criando uma cultura de reconhecimento.</p>
             </div>
-            <div class="card-info">
-                <div class="icon"><i class="fa-solid fa-store"></i></div>
+            <div class="card-info glass-card">
+                <div class="icon-wrapper"><i class="fa-solid fa-store"></i></div>
                 <h3>Empresas</h3>
-                <p>Oferecem vantagens que aproximam estudantes, comunidade acadêmica e mercado.</p>
+                <p>Oferecem produtos e serviços, conectando suas marcas com o talento jovem das universidades.</p>
             </div>
         </div>
     </main>
 
-    <section class="vantagens-preview">
-        <div class="container">
-            <div class="section-title">
-                <span class="eyebrow">Benefícios</span>
-                <h2>Vantagens que esperam pelos alunos</h2>
-            </div>
-            <div class="lista-badges">
-                <span><i class="fa-solid fa-book"></i> Descontos em livrarias</span>
-                <span><i class="fa-solid fa-mug-hot"></i> Vales café</span>
-                <span><i class="fa-solid fa-display"></i> Cursos online</span>
-                <span><i class="fa-solid fa-utensils"></i> Cupons de alimentação</span>
-            </div>
+    <section class="cta-section premium-cta">
+        <div class="cta-content">
+            <span class="eyebrow">Faça parte agora</span>
+            <h2>Pronto para valorizar o conhecimento?</h2>
+            <p>Faça login ou cadastre seu perfil gratuitamente.</p>
+            <a href="./coin4students.html" class="btn-principal-premium light">Acessar a Plataforma</a>
         </div>
     </section>
 
-    <section class="cta-section">
-        <div>
-            <span class="eyebrow">Coin4Students</span>
-            <h2>Pronto para começar?</h2>
-            <p>Entre ou cadastre seu perfil para participar do sistema de moedas acadêmicas.</p>
-        </div>
-        <a href="./coin4students.html" class="btn-principal">Acessar sistema</a>
-    </section>
-
-    <footer>
+    <footer class="glass-footer">
         <p>&copy; 2026 Coin4Students</p>
     </footer>
 
     <div id="toastContainer" class="toast-container"></div>
-
-    <script>
-        function showToast(message, type = 'info', duration = 4000) {
-            const container = document.getElementById('toastContainer');
-            if (!container) return;
-
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                <span>${message}</span>
-                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
-            `;
-
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.animation = 'toastFadeOut 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, duration);
-        }
-
-        window.showSystemMessage = showToast;
-    </script>
+    <script src="./js/ui-fx.js"></script>
 </body>
 
 </html>

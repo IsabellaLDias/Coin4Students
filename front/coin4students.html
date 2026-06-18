@@ -6,13 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="./css/coin4students.css">
+  <link rel="stylesheet" href="./css/ui-fx.css">
   <title>Coin4Students</title>
+  <link rel="icon" type="image/png" href="./img/logo - Copia.png">
 </head>
 
 <body>
   <div class="background-image"></div>
+  
+  <div class="split-layout">
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Onde o conhecimento vale <span>ouro</span>.</h1>
+        <p class="hero-subtitle">Reconhecimento acadêmico transformado em moedas. Resgate vantagens exclusivas com seus professores e empresas parceiras.</p>
+        <div class="floating-icons">
+          <i class="ph-fill ph-coin float-1"></i>
+          <i class="ph-fill ph-graduation-cap float-2"></i>
+          <i class="ph-fill ph-star float-3"></i>
+        </div>
+      </div>
+    </div>
 
-  <main class="container">
+    <main class="container">
     <div class="auth-brand">
       <img src="./img/logo.png" alt="Coin4Students">
       <div>
@@ -21,8 +36,8 @@
       </div>
     </div>
 
-    <div id="secaoCadastro">
-      <div class="titulo">Acesso / Cadastro</div>
+    <div id="secaoCadastro" style="display: none;">
+      <div class="titulo">Criar Cadastro</div>
 
       <div class="profile-selector" role="tablist" aria-label="Tipo de cadastro">
         <button type="button" class="profile-option active" data-cadastro="aluno">
@@ -161,8 +176,8 @@
       </p>
     </div>
 
-    <div id="secaoLogin" style="display: none;">
-      <div class="titulo">bem vindo de volta!</div>
+    <div id="secaoLogin">
+      <div class="titulo">Bem-vindo de volta!</div>
       <form id="formLogin">
         <input id="loginEmail" type="email" placeholder="E-mail" required>
         <input id="loginSenha" type="password" placeholder="Senha" required>
@@ -173,6 +188,7 @@
       </p>
     </div>
   </main>
+  </div>
 
   <div id="toastContainer" class="toast-container"></div>
 
@@ -199,6 +215,7 @@
 
     window.showSystemMessage = showToast;
   </script>
+  <script src="./js/ui-fx.js"></script>
 </body>
 
 </html>

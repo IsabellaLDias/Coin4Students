@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal do Aluno - Coin4Students</title>
+    <link rel="stylesheet" href="./css/ui-fx.css">
     <link rel="stylesheet" href="./css/style-aluno.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="icon" type="image/png" href="./img/logo - Copia.png">
 </head>
 
 <body class="dashboard-body">
@@ -43,14 +45,30 @@
                 <h1>Olá, <strong id="nomeAluno">Carregando...</strong></h1>
                 <p>Acompanhe suas moedas, veja o extrato e resgate vantagens disponíveis.</p>
             </div>
-            <div class="header-status">
-                <i class="ph ph-check-circle"></i>
-                <span>Conta ativa</span>
+            <div class="header-actions">
+                <div class="notification-wrapper">
+                    <button class="btn-bell" id="notifBtn" aria-label="Notificações">
+                        <i class="ph ph-bell"></i>
+                        <span class="bell-badge" id="notifBadge" style="display:none">0</span>
+                    </button>
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            Notificações
+                        </div>
+                        <div class="notif-body">
+                            <!-- Injetado via JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="header-status">
+                    <i class="ph ph-check-circle"></i>
+                    <span>Conta ativa</span>
+                </div>
             </div>
         </header>
 
         <div id="secao-home">
-            <div class="saldo-card">
+            <div class="saldo-card tilt-card">
                 <div>
                     <p>Saldo disponível</p>
                     <div class="saldo-linha">
@@ -58,6 +76,18 @@
                         <span>moedas</span>
                     </div>
                 </div>
+                
+                <div class="level-container">
+                    <div class="level-badge">
+                        <svg class="level-circle" width="80" height="80">
+                            <circle class="bg" cx="40" cy="40" r="35"></circle>
+                            <circle class="progress" cx="40" cy="40" r="35" id="levelProgress"></circle>
+                        </svg>
+                        <i class="ph ph-star level-icon"></i>
+                    </div>
+                    <span class="level-name" id="levelName">Iniciante</span>
+                </div>
+
                 <div class="saldo-icon">
                     <i class="ph ph-coins"></i>
                 </div>
@@ -232,6 +262,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="./js/ui-fx.js"></script>
     <script src="./js/aluno.js"></script>
 </body>
 

@@ -51,7 +51,10 @@ function atualizarSaldoNaTela(valor) {
     const perfilSaldo = document.getElementById("perfilSaldo");
     const saldoDistribuicao = document.getElementById("saldoDistribuicao");
 
-    if (valorSaldo) valorSaldo.innerText = saldo;
+    if (valorSaldo) {
+        if (window.animateCountUp) window.animateCountUp(valorSaldo, saldo);
+        else valorSaldo.innerText = saldo;
+    }
     if (perfilSaldo) perfilSaldo.value = saldo;
     if (saldoDistribuicao) saldoDistribuicao.innerText = saldo;
 }
@@ -72,11 +75,16 @@ function selecionarDepartamento(departamento) {
 
     select.value = departamento;
 }
-
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
 document.addEventListener("DOMContentLoaded", async () => {
+    if (window.NotificationSystem) {
+        window.professorNotif = new window.NotificationSystem(
+            'professor',
+            document.getElementById('notifBadge'),
+            document.getElementById('notifDropdown'),
+            document.getElementById('notifBtn')
+        );
+    }
+
     const professorId = localStorage.getItem("professorIdLogado");
 
     if (!professorId) {
@@ -93,18 +101,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const professor = await response.json();
         dadosDoProfessorGlobal = professor;
+        if (window.professorNotif) window.professorNotif.setUserId(professorId);
 
-        // Preenche informações da página
         document.getElementById("nomeProfessor").innerText = professor.nome || "Professor";
         atualizarSaldoNaTela(professor.saldoMoedas);
 
         preencherCamposFormulario(professor);
 
-        // Carrega dados das seções
         await carregarAlunos();
         await carregarHistorico();
 
-        // Botões de mostrar/ocultar senha
         criarBotaoOlhinho("perfilNovaSenha");
         criarBotaoOlhinho("perfilConfirmarSenha");
 
@@ -115,9 +121,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-// ==========================================
-// PERFIL
-// ==========================================
 function preencherCamposFormulario(professor) {
     document.getElementById("perfilNome").value = professor.nome || "";
     document.getElementById("perfilCPF").value = professor.cpf || "";
@@ -180,9 +183,6 @@ async function atualizarPerfil() {
     }
 }
 
-// ==========================================
-// EXCLUSÃO DE CONTA
-// ==========================================
 function excluirConta() {
     document.getElementById("confirmModal").style.display = "flex";
 }
@@ -213,9 +213,6 @@ async function confirmarExclusao() {
     }
 }
 
-// ==========================================
-// NAVEGAÇÃO ENTRE ABAS
-// ==========================================
 function trocarTab(tab) {
     const secoes = ["home", "distribuir", "historico", "perfil"];
 
@@ -234,9 +231,6 @@ function trocarTab(tab) {
     if (botaoAtivo) botaoAtivo.classList.add("active");
 }
 
-// ==========================================
-// CARREGAR ALUNOS
-// ==========================================
 async function carregarAlunos() {
     try {
         const response = await fetch(ALUNO_API);
@@ -248,7 +242,6 @@ async function carregarAlunos() {
         const alunos = await response.json();
         alunosDisponiveis = alunos;
 
-        // Select da aba Distribuir
         const selectAluno = document.getElementById("selectAluno");
         if (selectAluno) {
             selectAluno.innerHTML = `
@@ -264,7 +257,6 @@ async function carregarAlunos() {
             });
         }
 
-        // Home - lista de alunos recentes
         const alunosHome = document.getElementById("alunosHome");
         if (alunosHome) {
             if (alunos.length === 0) {
@@ -297,9 +289,6 @@ async function carregarAlunos() {
     }
 }
 
-// ==========================================
-// DISTRIBUIR MOEDAS
-// ==========================================
 async function distribuirMoedas() {
     const alunoId = document.getElementById("selectAluno").value;
     const quantidade = parseInt(document.getElementById("quantidadeMoedas").value);
@@ -350,16 +339,17 @@ async function distribuirMoedas() {
             throw new Error(mensagemErro || "Erro ao distribuir moedas");
         }
 
-        // Atualiza saldo local
         dadosDoProfessorGlobal.saldoMoedas -= quantidade;
         atualizarSaldoNaTela(dadosDoProfessorGlobal.saldoMoedas);
 
-        // Limpa formulário
         document.getElementById("formDistribuir").reset();
 
         showToast("Moedas enviadas com sucesso!", "success");
+        if (window.professorNotif) {
+            const nomeAluno = alunoSelecionado?.nome || "um aluno";
+            window.professorNotif.addNotification(`Você enviou ${quantidade} moedas para ${nomeAluno}!`, "💸");
+        }
 
-        // Recarrega histórico
         await carregarHistorico();
 
     } catch (error) {
@@ -368,9 +358,6 @@ async function distribuirMoedas() {
     }
 }
 
-// ==========================================
-// HISTÓRICO
-// ==========================================
 async function carregarHistorico() {
     try {
         const response = await fetch(
@@ -511,17 +498,11 @@ function mudarPaginaHistorico(direcao) {
     carregarHistorico();
 }
 
-// ==========================================
-// LOGOUT
-// ==========================================
 function logout() {
     localStorage.removeItem("professorIdLogado");
     window.location.href = "coin4students.html";
 }
 
-// ==========================================
-// BOTÃO MOSTRAR/OCULTAR SENHA
-// ==========================================
 function criarBotaoOlhinho(inputId) {
     const input = document.getElementById(inputId);
     if (!input) return;
