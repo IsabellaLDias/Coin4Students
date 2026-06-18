@@ -13,13 +13,24 @@ import java.util.List;
 public class AlunoService {
 
     private final AlunoRepository repository;
+    private final EmailRecuperacaoService emailRecuperacaoService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${transacao.service.url:https://transacao-service-hc98.onrender.com}")
     private String transacaoServiceUrl;
 
-    public AlunoService(AlunoRepository repository) {
+    public AlunoService(AlunoRepository repository, EmailRecuperacaoService emailRecuperacaoService) {
         this.repository = repository;
+        this.emailRecuperacaoService = emailRecuperacaoService;
+    }
+
+    public void recuperarSenha(String email) {
+        repository.findByEmail(email).ifPresent(aluno -> {
+            String novaSenha = java.util.UUID.randomUUID().toString().substring(0, 8);
+            aluno.setSenha(novaSenha);
+            repository.save(aluno);
+            emailRecuperacaoService.enviarEmailRecuperacao(email, novaSenha, aluno.getNome());
+        });
     }
 
     public Aluno salvar(Aluno aluno) {
@@ -71,7 +82,6 @@ public class AlunoService {
     }
 
     public Aluno adicionarMoedas(Long id, Integer valor) {
-
         Aluno aluno = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 

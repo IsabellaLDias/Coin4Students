@@ -26,6 +26,13 @@ public class EmpresaController {
         this.service = service;
     }
 
+    @PostMapping("/recuperar-senha")
+    public void recuperarSenha(@RequestBody java.util.Map<String, String> body) {
+        if (body.containsKey("email")) {
+            service.recuperarSenha(body.get("email"));
+        }
+    }
+
     @PostMapping
     public Empresa criar(@RequestBody Empresa empresa) {
         return service.salvar(empresa);

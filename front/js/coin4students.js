@@ -1,10 +1,6 @@
 const ALUNO_API = "https://aluno-service-kzwc.onrender.com/alunos";
 const EMPRESA_API = "https://empresa-service-3lvw.onrender.com/empresas";
 const PROFESSOR_API = "https://professor-service-eg6z.onrender.com/professores";
-
-// ==========================================
-// FUNÇÕES DE MÁSCARA
-// ==========================================
 function formatarCPF(input) {
     let value = input.value.replace(/\D/g, '');
     if (value.length > 11) value = value.slice(0, 11);
@@ -116,26 +112,76 @@ function combinarEndereco() {
     return enderecoCompleto.trim();
 }
 
-// ==========================================
-// NAVEGAÇÃO E AUTENTICAÇÃO
-// ==========================================
-
 const secaoCadastro = document.getElementById("secaoCadastro");
 const secaoLogin = document.getElementById("secaoLogin");
+const secaoRecuperarSenha = document.getElementById("secaoRecuperarSenha");
 const btnIrParaLogin = document.getElementById("btnIrParaLogin");
 const btnIrParaCadastro = document.getElementById("btnIrParaCadastro");
+const btnEsqueciSenha = document.getElementById("btnEsqueciSenha");
+const btnVoltarParaLogin = document.getElementById("btnVoltarParaLogin");
 
 btnIrParaLogin.onclick = (e) => {
   e.preventDefault();
   secaoCadastro.style.display = "none";
+  if(secaoRecuperarSenha) secaoRecuperarSenha.style.display = "none";
   secaoLogin.style.display = "block";
 };
 
 btnIrParaCadastro.onclick = (e) => {
   e.preventDefault();
   secaoLogin.style.display = "none";
+  if(secaoRecuperarSenha) secaoRecuperarSenha.style.display = "none";
   secaoCadastro.style.display = "block";
 };
+
+if (btnEsqueciSenha) {
+  btnEsqueciSenha.onclick = (e) => {
+    e.preventDefault();
+    secaoLogin.style.display = "none";
+    secaoCadastro.style.display = "none";
+    secaoRecuperarSenha.style.display = "block";
+  };
+}
+
+if (btnVoltarParaLogin) {
+  btnVoltarParaLogin.onclick = (e) => {
+    e.preventDefault();
+    secaoRecuperarSenha.style.display = "none";
+    secaoCadastro.style.display = "none";
+    secaoLogin.style.display = "block";
+  };
+}
+
+const formRecuperarSenha = document.getElementById("formRecuperarSenha");
+if (formRecuperarSenha) {
+  formRecuperarSenha.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("recuperarEmail").value;
+    if (email) {
+      const btn = formRecuperarSenha.querySelector("button[type='submit']");
+      const btnOriginalText = btn.innerHTML;
+      btn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+      btn.disabled = true;
+
+      try {
+        await Promise.all([
+          fetch(`${ALUNO_API}/recuperar-senha`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) }).catch(() => {}),
+          fetch(`${PROFESSOR_API}/recuperar-senha`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) }).catch(() => {}),
+          fetch(`${EMPRESA_API}/recuperar-senha`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) }).catch(() => {})
+        ]);
+        if (typeof showToast === "function") showToast("Se este e-mail estiver cadastrado, você receberá uma nova senha provisória em breve.", "success", 5000);
+        document.getElementById("recuperarEmail").value = "";
+        secaoRecuperarSenha.style.display = "none";
+        secaoLogin.style.display = "block";
+      } catch (err) {
+        if (typeof showToast === "function") showToast("Erro ao processar a solicitação.", "error");
+      } finally {
+        btn.innerHTML = btnOriginalText;
+        btn.disabled = false;
+      }
+    }
+  });
+}
 
 document.getElementById("formLogin").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -143,7 +189,6 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
   const senha = document.getElementById("loginSenha").value;
 
   try {
-    // 1. Busca Alunos
     const respAlunos = await fetch(ALUNO_API);
     const alunos = await respAlunos.json();
     const aluno = alunos.find(a => a.email === email && a.senha === senha);
@@ -155,7 +200,6 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
       return;
     }
 
-    // 2. Busca Professores
     const respProfessores = await fetch(PROFESSOR_API);
     const professores = await respProfessores.json();
     const professor = professores.find(p => p.email === email && p.senha === senha);
@@ -167,7 +211,6 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
       return;
     }
 
-    // 3. Busca Empresas
     const respEmpresas = await fetch(EMPRESA_API);
     const empresas = await respEmpresas.json();
     const empresa = empresas.find(emp => emp.email === email && emp.senha === senha);
@@ -178,18 +221,12 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
       setTimeout(() => window.location.href = "empresa.html", 1000);
       return;
     }
-
-    // Se passou por todos e não encontrou, exibe o erro APENAS AQUI.
     if (typeof showToast === "function") showToast("E-mail ou senha incorretos.", 'error');
 
   } catch (error) {
     if (typeof showToast === "function") showToast("Erro ao conectar com o servidor.", 'error');
   }
 });
-
-// ==========================================
-// CADASTROS
-// ==========================================
 
 document.getElementById("formAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -226,7 +263,6 @@ document.getElementById("formAluno").addEventListener("submit", async (e) => {
   }
 });
 
-// Cadastro de empresa com tratamento de erro e redirecionamento.
 document.getElementById("formEmpresa").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -293,10 +329,6 @@ document.getElementById("formProfessor").addEventListener("submit", async (e) =>
     if (typeof showToast === "function") showToast("Erro de conexão com o servidor.", "error");
   }
 });
-
-// ==========================================
-// SELETOR DE CADASTRO E UI
-// ==========================================
 
 const botoesCadastro = document.querySelectorAll(".profile-option");
 const paineisCadastro = document.querySelectorAll(".cadastro-panel");

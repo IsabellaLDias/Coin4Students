@@ -18,6 +18,13 @@ public class ProfessorController {
         this.professorService = professorService;
     }
 
+    @PostMapping("/recuperar-senha")
+    public void recuperarSenha(@RequestBody java.util.Map<String, String> body) {
+        if (body.containsKey("email")) {
+            professorService.recuperarSenha(body.get("email"));
+        }
+    }
+
     @PostMapping
     public Professor cadastrar(@RequestBody Professor professor) {
         return professorService.cadastrar(professor);

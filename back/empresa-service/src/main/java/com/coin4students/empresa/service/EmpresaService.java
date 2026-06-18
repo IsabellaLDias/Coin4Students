@@ -11,9 +11,20 @@ import com.coin4students.empresa.repository.EmpresaRepository;
 public class EmpresaService {
 
     private final EmpresaRepository repository;
+    private final EmailRecuperacaoService emailRecuperacaoService;
 
-    public EmpresaService(EmpresaRepository repository) {
+    public EmpresaService(EmpresaRepository repository, EmailRecuperacaoService emailRecuperacaoService) {
         this.repository = repository;
+        this.emailRecuperacaoService = emailRecuperacaoService;
+    }
+
+    public void recuperarSenha(String email) {
+        repository.findByEmail(email).ifPresent(empresa -> {
+            String novaSenha = java.util.UUID.randomUUID().toString().substring(0, 8);
+            empresa.setSenha(novaSenha);
+            repository.save(empresa);
+            emailRecuperacaoService.enviarEmailRecuperacao(email, novaSenha, empresa.getNome());
+        });
     }
 
     public Empresa salvar(Empresa empresa) {

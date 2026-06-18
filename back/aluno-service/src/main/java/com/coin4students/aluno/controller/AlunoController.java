@@ -17,6 +17,13 @@ public class AlunoController {
         this.service = service;
     }
 
+    @PostMapping("/recuperar-senha")
+    public void recuperarSenha(@RequestBody java.util.Map<String, String> body) {
+        if (body.containsKey("email")) {
+            service.recuperarSenha(body.get("email"));
+        }
+    }
+
     @PostMapping
     public Aluno criar(@RequestBody Aluno aluno) {
         return service.salvar(aluno);

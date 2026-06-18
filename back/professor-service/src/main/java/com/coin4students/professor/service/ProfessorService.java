@@ -24,6 +24,7 @@ public class ProfessorService {
     private final ProfessorRepository professorRepository;
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper objectMapper;
+    private final EmailRecuperacaoService emailRecuperacaoService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${aluno.service.url:https://aluno-service-aqwz.onrender.com}")
@@ -35,11 +36,22 @@ public class ProfessorService {
     public ProfessorService(
         ProfessorRepository professorRepository,
         RabbitTemplate rabbitTemplate,
-        ObjectMapper objectMapper
+        ObjectMapper objectMapper,
+        EmailRecuperacaoService emailRecuperacaoService
     ) {
         this.professorRepository = professorRepository;
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = objectMapper;
+        this.emailRecuperacaoService = emailRecuperacaoService;
+    }
+
+    public void recuperarSenha(String email) {
+        professorRepository.findByEmail(email).ifPresent(professor -> {
+            String novaSenha = java.util.UUID.randomUUID().toString().substring(0, 8);
+            professor.setSenha(novaSenha);
+            professorRepository.save(professor);
+            emailRecuperacaoService.enviarEmailRecuperacao(email, novaSenha, professor.getNome());
+        });
     }
 
     public Professor cadastrar(Professor professor) {
