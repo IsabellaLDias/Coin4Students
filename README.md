@@ -2,7 +2,7 @@
 
 ---
 
-# Coin4Students 🪙
+# Coin4Students
 
 <table>
   <tr>
@@ -17,7 +17,7 @@
     <td>
       <div>
         <img 
-          src="Coin4Students.png" 
+          src="/front/img/logo.png" 
           alt="Logo do Projeto"
           height="180"
         />
@@ -53,7 +53,6 @@
 - [Demonstração](#-demonstração)
   - [Aplicativo Mobile](#-aplicativo-mobile)
   - [Aplicação Web](#-aplicação-web)
-  - [Exemplo de saída no Terminal (para Back-end, API, CLI)](#-exemplo-de-saída-no-terminal-para-back-end-api-cli)
 - [Documentações utilizadas](#-documentações-utilizadas)
 - [Autores](#-autores)
 - [Contribuição](#-contribuição)
