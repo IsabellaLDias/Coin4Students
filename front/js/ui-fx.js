@@ -320,6 +320,9 @@ class NotificationSystem {
     
     addNotification(text, icon = "🌟", playToast = true) {
         this.notifications.unshift({ text, icon, time: new Date() });
+        if (this.notifications.length > 3) {
+            this.notifications.length = 3;
+        }
         this.unreadCount++;
         this.saveToStorage();
         this.updateUI();

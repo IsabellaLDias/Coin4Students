@@ -284,7 +284,7 @@ async function cadastrarVantagem() {
         limparFormularioVantagem();
         showToast(estavaEditando ? "Oferta atualizada com sucesso!" : "Vantagem cadastrada com sucesso!", "success");
         await carregarPainelEmpresa();
-        paginaOfertasAtual = Math.max(1, Math.ceil(vantagensEmpresa.length / ITENS_POR_PAGINA_OFERTAS));
+        paginaOfertasAtual = 1;
         renderizarMinhasVantagens();
         trocarTab("minhas-vantagens");
     } catch (error) {

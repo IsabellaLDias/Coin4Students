@@ -222,8 +222,24 @@ body {
 
 [data-theme="dark"] .lista-badges span,
 [data-theme="dark"] .eyebrow {
-    background: rgba(255,255,255,0.1) !important;
-    color: var(--ui-text-color) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--ui-secondary) !important;
+}
+
+.eyebrow {
+    display: inline-block !important;
+    padding: 6px 14px !important;
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(214, 182, 66, 0.1)) !important;
+    color: var(--ui-primary) !important;
+    border: 1px solid rgba(46, 125, 50, 0.2) !important;
+    border-radius: 20px !important;
+    font-weight: 800 !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03) !important;
 }
 
 [data-theme="dark"] .cupom-detalhes {

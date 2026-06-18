@@ -219,6 +219,10 @@ body {
     font-weight: 700;
 }
 
+.saldo-card .level-name {
+    color: white !important;
+}
+
 .saldo-linha {
     display: flex;
     align-items: baseline;
